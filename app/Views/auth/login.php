@@ -72,48 +72,87 @@
                 <!-- Right Section (Login Form) -->
                 <div class="col-12 col-md-7 p-4 form-section d-flex flex-column justify-content-center">
                     <div class="text-center mb-4">
-                        <h3 class="fw-bold">Sign In</h3>
+                        <h3 class="fw-bold"><?= lang('Auth.login') ?></h3>
                         <p class="">Access your account</p>
                     </div>
 
-                    <form action="<?= base_url("auth/login"); ?>" method="post">
-                        <?= csrf_field(); ?>
-                        <?php if (session()->getFlashdata('error')): ?>
-                            <div class="alert alert-danger">
-                                <?= session()->getFlashdata('error') ?>
-                            </div>
-                        <?php endif; ?>
+                    <form action="<?= url_to('login') ?>" method="post">
+                        <?= csrf_field() ?>
 
+                        <!-- Error / Success Messages -->
+                        <?php if (session('error') !== null) : ?>
+                            <div class="alert alert-danger"><?= esc(session('error')) ?></div>
+                        <?php elseif (session('errors') !== null) : ?>
+                            <div class="alert alert-danger">
+                                <?php if (is_array(session('errors'))) : ?>
+                                    <?php foreach (session('errors') as $error) : ?>
+                                        <?= esc($error) ?><br>
+                                    <?php endforeach ?>
+                                <?php else : ?>
+                                    <?= esc(session('errors')) ?>
+                                <?php endif ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php if (session('message') !== null) : ?>
+                            <div class="alert alert-success"><?= esc(session('message')) ?></div>
+                        <?php endif ?>
+
+                        <!-- Email -->
                         <div class="input-group mb-3">
                             <div class="form-floating flex-grow-1">
-                                <input id="username" name="username" type="text" class="form-control bg-light bg-opacity-75" placeholder="Username">
-                                <label for="username">Username</label>
+                                <input type="email" class="form-control bg-light bg-opacity-75"
+                                    id="floatingEmailInput"
+                                    name="email"
+                                    inputmode="email"
+                                    autocomplete="email"
+                                    placeholder="<?= lang('Auth.email') ?>"
+                                    value="<?= old('email') ?>" required>
+                                <label for="floatingEmailInput"><?= lang('Auth.email') ?></label>
                             </div>
                             <div class="input-group-text bg-light bg-opacity-75"><i class="fa fa-envelope"></i></div>
                         </div>
 
-                        <div class="input-group mb-3">
+                        <!-- Password -->
+                        <div class="input-group mb-3 position-relative">
                             <div class="form-floating flex-grow-1">
-                                <input id="password" name="password" type="password" class="form-control bg-light bg-opacity-75" placeholder="Password">
-                                <label for="password">Password</label>
+                                <input type="password" class="form-control bg-light bg-opacity-75"
+                                    id="floatingPasswordInput"
+                                    name="password"
+                                    inputmode="text"
+                                    autocomplete="current-password"
+                                    placeholder="<?= lang('Auth.password') ?>" required>
+                                <label for="floatingPasswordInput"><?= lang('Auth.password') ?></label>
                             </div>
-                            <div class="input-group-text bg-light bg-opacity-75"><i class="fa fa-lock"></i></div>
+                            <div class="input-group-text bg-light bg-opacity-75 toggle-password" style="cursor: pointer;">
+                                <i class="fa fa-eye"></i>
+                            </div>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                            <!-- <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        <!-- Remember me -->
+                        <?php if (setting('Auth.sessionConfig')['allowRemembering']): ?>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" name="remember" class="form-check-input" <?php if (old('remember')): ?> checked<?php endif ?>>
+                                <label class="form-check-label"><?= lang('Auth.rememberMe') ?></label>
                             </div>
-                            <a href="forgot-password.html" class="small text-decoration-none mt-2 mt-sm-0">Forgot Password?</a> -->
+                        <?php endif; ?>
+
+                        <div class="d-grid col-12 col-md-8 mx-auto mb-3">
+                            <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.login') ?></button>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+                        <?php if (setting('Auth.allowMagicLinkLogins')) : ?>
+                            <p class="text-center"><?= lang('Auth.forgotPassword') ?>
+                                <a href="<?= url_to('magic-link') ?>"><?= lang('Auth.useMagicLink') ?></a>
+                            </p>
+                        <?php endif ?>
+
+                        <?php if (setting('Auth.allowRegistration')) : ?>
+                            <p class="text-center"><?= lang('Auth.needAccount') ?>
+                                <a href="<?= url_to('register') ?>"><?= lang('Auth.register') ?></a>
+                            </p>
+                        <?php endif ?>
                     </form>
-
-                    <p class="text-center mb-0">
-                        <a href="<?= base_url("auth/register"); ?>" class="text-decoration-none">Register an account</a>
-                    </p>
                 </div>
             </div>
         </div>
@@ -209,23 +248,18 @@
     <script src="<?= base_url('dist/adminLte/js/adminlte.js') ?>"></script>
 
     <script>
-        const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
-        const Default = {
-            scrollbarTheme: 'os-theme-light',
-            scrollbarAutoHide: 'leave',
-            scrollbarClickScroll: true,
-        };
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-            if (sidebarWrapper && OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined) {
-                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                    scrollbars: {
-                        theme: Default.scrollbarTheme,
-                        autoHide: Default.scrollbarAutoHide,
-                        clickScroll: Default.scrollbarClickScroll,
-                    },
-                });
-            }
+        $(document).ready(function() {
+            $('.toggle-password').click(function() {
+                const input = $(this).closest('.input-group').find('input');
+                const icon = $(this).find('i');
+                if (input.attr('type') === 'password') {
+                    input.attr('type', 'text');
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    input.attr('type', 'password');
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
         });
     </script>
     <!--end::OverlayScrollbars Configure-->

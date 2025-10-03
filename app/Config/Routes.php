@@ -5,10 +5,21 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-// $routes->get('/', 'Auth::index');
 
-$routes->get('auth/(:any)', 'Auth::$1');
-$routes->post('auth/(:any)', 'Auth::$1');
+service('auth')->routes($routes);
+
+$routes->get('/', function () {
+    if (! auth()->loggedIn()) {
+        return redirect()->to('/login');
+    }
+    return redirect()->to('/home/index');
+});
+
+$routes->get('test-shield', 'TestShield::index');
+$routes->get('test-shield/manage', 'TestShield::manageUsers', ['filter' => 'group:admin']);  // Admin only
+$routes->match(['get', 'post'], 'test-shield/edit/(:num)', 'TestShield::editUser/$1', ['filter' => 'group:admin']);
+$routes->get('test-shield/delete/(:num)', 'TestShield::deleteUser/$1', ['filter' => 'group:admin']);
+$routes->post('test-shield/logout', 'TestShield::logout');
 
 $routes->get('home/(:any)', 'Home::$1');
 $routes->post('home/(:any)', 'Home::$1');
@@ -18,5 +29,3 @@ $routes->post('recruitment/(:any)', 'Recruitment::$1');
 
 $routes->get('onboarding/(:any)', 'Onboarding::$1');
 $routes->post('onboarding/(:any)', 'Onboarding::$1');
-
-service('auth')->routes($routes);

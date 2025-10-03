@@ -46,8 +46,8 @@ class Auth extends ShieldAuth
      * --------------------------------------------------------------------
      */
     public array $views = [
-        'login'                       => '\CodeIgniter\Shield\Views\login',
-        'register'                    => '\CodeIgniter\Shield\Views\register',
+        'login'                       => 'auth\login',
+        'register'                    => 'auth\register',
         'layout'                      => '\CodeIgniter\Shield\Views\layout',
         'action_email_2fa'            => '\CodeIgniter\Shield\Views\email_2fa_show',
         'action_email_2fa_verify'     => '\CodeIgniter\Shield\Views\email_2fa_verify',
@@ -74,11 +74,11 @@ class Auth extends ShieldAuth
      * to apply any logic you may need.
      */
     public array $redirects = [
-        'register'          => '/',
-        'login'             => '/',
+        'register'          => 'login',
+        'login'             => 'home/index',
         'logout'            => 'login',
         'force_reset'       => '/',
-        'permission_denied' => '/',
+        'permission_denied' => 'login',
         'group_denied'      => '/',
     ];
 
@@ -257,7 +257,7 @@ class Auth extends ShieldAuth
      * The minimum length that a password must be to be accepted.
      * Recommended minimum value by NIST = 8 characters.
      */
-    public int $minimumPasswordLength = 8;
+    public int $minimumPasswordLength = 6;
 
     /**
      * --------------------------------------------------------------------
@@ -271,9 +271,9 @@ class Auth extends ShieldAuth
      * @var list<class-string<ValidatorInterface>>
      */
     public array $passwordValidators = [
-        CompositionValidator::class,
-        NothingPersonalValidator::class,
-        DictionaryValidator::class,
+        // CompositionValidator::class,
+        // NothingPersonalValidator::class,
+        // DictionaryValidator::class,
         // PwnedValidator::class,
     ];
 

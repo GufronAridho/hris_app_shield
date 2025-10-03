@@ -97,7 +97,7 @@ $menu_items = Menu::$menus[$module] ?? [];
                     </div>
 
                     <div class="d-flex align-items-center flex-wrap">
-                        <span class="me-1 text-warning fw-semibold">Gufron Aridho</span>
+                        <span class="me-1 text-warning fw-semibold"><?= $username = auth()->user()->username; ?></span>
                         <i class="fas fa-user-circle fa-2x text-white me-2"></i>
 
                         <div class="dropdown me-2">
@@ -114,7 +114,7 @@ $menu_items = Menu::$menus[$module] ?? [];
                             <i class="fas fa-question-circle me-1"></i> Help
                         </a>
 
-                        <a href="<?= base_url('auth/index') ?>" class="btn btn-sm btn-outline-warning rounded-pill layout-btn">
+                        <a href="<?= url_to('logout') ?>" class="btn btn-sm btn-outline-warning rounded-pill layout-btn">
                             <i class="fas fa-sign-out-alt me-1"></i> Logout
                         </a>
                     </div>
