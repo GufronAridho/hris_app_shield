@@ -111,7 +111,7 @@
     } */
 
     .custom-card-purple {
-        background: linear-gradient(135deg, #800080, #7030a0);
+        background: #800080;
         border: none;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -119,7 +119,7 @@
     }
 
     .custom-card-breadcrumb {
-        background: linear-gradient(135deg, #7030a0, #800080);
+        background: #7030a0;
         border: none;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);

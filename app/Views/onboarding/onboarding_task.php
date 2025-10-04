@@ -7,11 +7,10 @@
         <div class="container-fluid">
             <div class="row align-items-stretch g-2">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Home</a></li>
-                            <li class="breadcrumb-item">Onboarding</li>
+                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Onboarding</a></li>
                             <li class="breadcrumb-item active">Onboarding Task</li>
                         </ol>
                     </div>
@@ -32,7 +31,7 @@
 </main>
 <style>
     .custom-card-breadcrumb {
-        background: linear-gradient(135deg, #7030a0, #800080);
+        background: #7030a0;
         border: none;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);

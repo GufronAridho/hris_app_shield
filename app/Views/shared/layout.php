@@ -268,31 +268,33 @@ $menu_items = Menu::$menus[$module] ?? [];
 
     <script>
         $(function() {
-            // Before sending any AJAX request, attach CSRF
             $.ajaxSetup({
                 beforeSend: function(xhr, settings) {
-                    let csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    let csrfHeader = $('meta[name="csrf-header"]').attr('content');
-
-                    if (settings.type === 'POST' || settings.type === 'PUT' || settings.type === 'DELETE') {
-                        if (typeof settings.data === 'string') {
-                            settings.data += '&' + csrfHeader + '=' + csrfToken;
-                        } else if (typeof settings.data === 'object') {
-                            settings.data = settings.data || {};
-                            settings.data[csrfHeader] = csrfToken;
+                    if (settings.type.toUpperCase() === "POST") {
+                        let token = $('meta[name="csrf-token"]').attr("content");
+                        let header = $('meta[name="csrf-header"]').attr("content");
+                        xhr.setRequestHeader(header, token);
+                        if (settings.data instanceof FormData) {
+                            settings.data.append("csrf_test_name", token);
+                        } else if (typeof settings.data === "string") {
+                            if (settings.data.length > 0) {
+                                settings.data += "&csrf_test_name=" + encodeURIComponent(token);
+                            } else {
+                                settings.data = "csrf_test_name=" + encodeURIComponent(token);
+                            }
+                        } else if (typeof settings.data === "object" && settings.data !== null) {
+                            // Add CSRF token to data object
+                            settings.data.csrf_test_name = token;
                         }
                     }
                 },
                 complete: function(xhr) {
-                    // If server sends new token in JSON, update it
                     try {
-                        let response = JSON.parse(xhr.responseText);
-                        if (response.csrfHash) {
-                            $('meta[name="csrf-token"]').attr('content', response.csrfHash);
+                        let res = JSON.parse(xhr.responseText);
+                        if (res.csrfHash) {
+                            $('meta[name="csrf-token"]').attr("content", res.csrfHash);
                         }
-                    } catch (e) {
-                        // ignore non-JSON responses
-                    }
+                    } catch (e) {}
                 }
             });
         });

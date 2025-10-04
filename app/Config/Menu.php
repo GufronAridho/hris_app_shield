@@ -25,9 +25,13 @@ class Menu
             ['label' => 'IT Checklist', 'url' => 'onboarding/it_checklist', 'icon' => 'fas fa-desktop'],
             ['label' => 'Onboarding Task', 'url' => 'onboarding/onboarding_task', 'icon' => 'fas fa-tasks'],
         ],
-        'module4' => [
-            ['label' => 'Page A', 'url' => 'module4/pagea', 'icon' => 'fas fa-file'],
-            ['label' => 'Page B', 'url' => 'module4/pageb', 'icon' => 'fas fa-file-alt'],
+        'employee_info' => [
+            ['label' => 'Home', 'url' => 'home/index', 'icon' => 'fas fa-home'],
+            ['label' => 'Employee Management', 'url' => 'employee_info/employee_managment', 'icon' => 'fas fa-users-cog'],
+            ['label' => 'People', 'url' => 'employee_info/people', 'icon' => 'fas fa-user-friends'],
+            ['label' => 'Department', 'url' => 'employee_info/department', 'icon' => 'fas fa-building'],
+            ['label' => 'Employee Profile', 'url' => 'employee_info/employee_profile', 'icon' => 'fas fa-id-card'],
         ],
+
     ];
 }

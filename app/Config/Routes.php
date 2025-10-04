@@ -29,3 +29,8 @@ $routes->post('recruitment/(:any)', 'Recruitment::$1');
 
 $routes->get('onboarding/(:any)', 'Onboarding::$1');
 $routes->post('onboarding/(:any)', 'Onboarding::$1');
+
+$routes->get('employee_info/(:any)', 'Employee_info::$1');
+$routes->post('employee_info/(:any)', 'Employee_info::$1');
+
+$routes->get('select_form/(:any)', 'Select_form::$1');

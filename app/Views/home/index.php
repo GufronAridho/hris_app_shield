@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <a href="<?= base_url("recruitment/summary"); ?>" class="card-link">
+                    <a href="<?= base_url("employee_info/employee_managment"); ?>" class="card-link">
                         <div class="card gradient-card card-employee">
                             <div class="card-body icon-container">
                                 <i class="fas fa-id-badge icon-large"></i>

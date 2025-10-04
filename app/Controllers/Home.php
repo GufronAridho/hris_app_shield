@@ -43,4 +43,12 @@ class Home extends BaseController
             'title' => 'Report',
         ]);
     }
+
+    public function test_csrf()
+    {
+        return $this->response->setJSON([
+            'success' => true,
+            'csrfHash' => csrf_hash()
+        ]);
+    }
 }
