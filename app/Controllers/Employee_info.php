@@ -23,9 +23,12 @@ class Employee_info extends BaseController
 
     public function people()
     {
-        return view('employee_info/people', [
+        $count = $this->EmployeeModel->where('status', 'active')->countAllResults();
+        $data = [
             'title' => 'People',
-        ]);
+            'count' => $count,
+        ];
+        return view('employee_info/people', $data);
     }
 
     public function department()
@@ -162,9 +165,74 @@ class Employee_info extends BaseController
         ]);
     }
 
+    function compressImage($file, $destinationFolder, $maxSizeMB = 1, $startQuality = 90, $minQuality = 10, $step = 5)
+    {
+        if (!$file->isValid() || $file->hasMoved()) {
+            throw new \RuntimeException('Invalid file upload.');
+        }
+
+        // Ensure folder exists
+        if (!is_dir($destinationFolder)) {
+            mkdir($destinationFolder, 0755, true);
+        }
+
+        $fileName = $file->getRandomName();
+        $fileSizeMB = $file->getSize() / 1024 / 1024;
+
+        // If file is already small enough, just move it
+        if ($fileSizeMB <= $maxSizeMB) {
+            $file->move($destinationFolder, $fileName);
+            return $fileName;
+        }
+
+        // Temp path inside destination folder
+        $tempPath = $destinationFolder . '/temp_' . $fileName;
+        $image = \Config\Services::image()->withFile($file->getRealPath());
+        $quality = $startQuality;
+
+        do {
+            $image->save($tempPath, $quality);
+            $fileSizeMB = filesize($tempPath) / 1024 / 1024;
+            $quality -= $step;
+            if ($quality < $minQuality) break;
+        } while ($fileSizeMB > $maxSizeMB);
+
+        // Move final image to destination folder
+        rename($tempPath, $destinationFolder . '/' . $fileName);
+
+        return $fileName;
+    }
+
+
     public function create_employee()
     {
         if ($this->request->is('post')) {
+            $validationRules = [
+                'photo' => [
+                    'rules' => 'uploaded[photo]|is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/gif,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Please select an image file.',
+                        'is_image' => 'The uploaded file is not a valid image.',
+                        'mime_in'  => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
+                    ]
+                ]
+            ];
+
+            if (!$this->validate($validationRules)) {
+                $errors = $this->validator->getErrors();
+                $message = implode('<br>', $errors);
+                return $this->_json_response(false, $message);
+            }
+
+            $photoFile = $this->request->getFile('photo');
+            $destinationFolder = FCPATH . 'assets/profile';
+
+            if ($photoFile && $photoFile->isValid()) {
+                $photoName = $this->compressImage($photoFile, $destinationFolder);
+            } else {
+                $photoName = null;
+            }
+
             $data = [
                 'emp_id' => $this->request->getPost('emp_id'),
                 'name' => $this->request->getPost('name'),
@@ -181,6 +249,9 @@ class Employee_info extends BaseController
                 'status' => $this->request->getPost('status'),
                 'resign_date' => $this->request->getPost('resign_date') ?: null,
                 'created_at' => date('Y-m-d H:i:s'),
+                'photo' => $photoName,
+                'email' => $this->request->getPost('email') ?: null,
+                'no_hp' => $this->request->getPost('no_hp') ?: null,
             ];
             try {
                 if ($this->EmployeeModel->insert($data)) {
@@ -204,6 +275,33 @@ class Employee_info extends BaseController
             if (!$id) {
                 return $this->_json_response(false, 'Employee ID is required');
             }
+
+            $employee = $this->EmployeeModel->select('photo')->where('id', $id)->first();
+            $existing_photo = $employee['photo'] ?? null;
+            $photoFile = $this->request->getFile('photo');
+            $photoName = $existing_photo;
+
+            if ($photoFile && $photoFile->isValid() && !$photoFile->hasMoved()) {
+                $validationRules = [
+                    'photo' => [
+                        'rules' => 'is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/gif,image/png]',
+                        'errors' => [
+                            'is_image' => 'The uploaded file is not a valid image.',
+                            'mime_in'  => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
+                        ]
+                    ]
+                ];
+
+                if (!$this->validate($validationRules)) {
+                    $errors = $this->validator->getErrors();
+                    $message = implode('<br>', $errors);
+                    return $this->_json_response(false, $message);
+                }
+
+                $destinationFolder = FCPATH . 'assets/profile';
+                $photoName = $this->compressImage($photoFile, $destinationFolder);
+            }
+
             $data = [
                 'name' => $this->request->getPost('name'),
                 'gender' => $this->request->getPost('gender'),
@@ -219,6 +317,9 @@ class Employee_info extends BaseController
                 'status' => $this->request->getPost('status'),
                 'resign_date' => $this->request->getPost('resign_date') ?: null,
                 'updated_at' => date('Y-m-d H:i:s'),
+                'photo' => $photoName,
+                'email' => $this->request->getPost('email') ?: null,
+                'no_hp' => $this->request->getPost('no_hp') ?: null,
             ];
             try {
                 if ($this->EmployeeModel->update($id, $data)) {
@@ -262,11 +363,10 @@ class Employee_info extends BaseController
         if ($this->request->is('post')) {
             $validationRules = [
                 'excel_file' => [
-                    'rules' => 'uploaded[excel_file]|mime_in[excel_file,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]|max_size[excel_file,2048]',
+                    'rules' => 'uploaded[excel_file]|mime_in[excel_file,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]',
                     'errors' => [
                         'uploaded' => 'Please select an Excel file to upload.',
                         'mime_in'  => 'Only .xls and .xlsx files are allowed.',
-                        'max_size' => 'The file size exceeds the allowed limit (2MB).'
                     ]
                 ]
             ];
@@ -281,9 +381,9 @@ class Employee_info extends BaseController
 
             if ($file->isValid() && !$file->hasMoved()) {
                 $newName = $file->getRandomName();
-                $file->move(WRITEPATH . 'uploads', $newName);
+                $file->move(FCPATH . 'uploads', $newName);
 
-                $filePath = WRITEPATH . 'uploads/' . $newName;
+                $filePath = FCPATH . 'uploads/' . $newName;
 
                 try {
                     $spreadsheet = IOFactory::load($filePath);
@@ -299,17 +399,19 @@ class Employee_info extends BaseController
                             'emp_id' => $row['A'],
                             'name' => $row['B'],
                             'gender' => $row['C'],
-                            'join_date' => !empty($row['D']) ? date('Y-m-d', strtotime($row['D'])) : null,
-                            'emp_type' => $row['E'],
-                            'organization' => $row['F'],
-                            'department' => $row['G'],
-                            'job_title' => $row['H'],
-                            'manager' => $row['I'],
-                            'hr_partner' => $row['J'],
-                            'location' => $row['K'],
-                            'emp_grade' => $row['L'],
-                            'status' => $row['M'],
-                            'resign_date' => !empty($row['N']) ? date('Y-m-d', strtotime($row['N'])) : null,
+                            'email' => $row['D'],
+                            'no_hp' => $row['E'],
+                            'join_date' => !empty($row['F']) ? date('Y-m-d', strtotime($row['F'])) : null,
+                            'emp_type' => $row['G'],
+                            'organization' => $row['H'],
+                            'department' => $row['I'],
+                            'job_title' => $row['J'],
+                            'manager' => $row['K'],
+                            'hr_partner' => $row['L'],
+                            'location' => $row['M'],
+                            'emp_grade' => $row['N'],
+                            'status' => $row['O'],
+                            'resign_date' => !empty($row['P']) ? date('Y-m-d', strtotime($row['P'])) : null,
                             'created_at' => date('Y-m-d H:i:s'),
                         ];
 
@@ -353,6 +455,59 @@ class Employee_info extends BaseController
         }
         return $this->_json_response(false, 'Invalid request method');
     }
+
+    public function get_department_profile()
+    {
+        $text = trim($this->request->getGet('text'));
+
+        $builder = $this->EmployeeModel
+            ->select('department, COUNT(emp_id) AS employee, "Code" AS code')
+            ->where('status', 'active')
+            ->groupBy('department');
+
+        if (!empty($text)) {
+            $builder->like('department', $text);
+        }
+
+        $data['department'] = $builder->findAll();
+
+        return view('employee_info/partial/department', $data);
+    }
+
+    public function get_employee_profile()
+    {
+        $text = trim($this->request->getGet('text'));
+        $sort_by = $this->request->getGet('sort_by');
+        $type = $this->request->getGet('type');
+
+        $builder = $this->EmployeeModel->where('status', 'Active');
+
+        if ($type == 'profile') {
+            if (!empty($text)) {
+                if ($sort_by == 'name') {
+                    $builder->like('name', $text);
+                } elseif ($sort_by == 'department') {
+                    $builder->like('department', $text);
+                }
+            }
+        }
+        if (!empty($sort_by)) {
+            if ($sort_by == 'name') {
+                $builder->orderBy('name', 'ASC');
+            } elseif ($sort_by == 'department') {
+                $builder->orderBy('department', 'ASC');
+            }
+        }
+
+        $data['employee'] = $builder->findAll();
+        if ($type == 'profile') {
+            return view('employee_info/partial/employee_profile', $data);
+        } else {
+            return view('employee_info/partial/employee_table', $data);
+        }
+    }
+
+
 
 
     public function filterStatus()

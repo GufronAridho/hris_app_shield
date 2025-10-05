@@ -34,3 +34,4 @@ $routes->get('employee_info/(:any)', 'Employee_info::$1');
 $routes->post('employee_info/(:any)', 'Employee_info::$1');
 
 $routes->get('select_form/(:any)', 'Select_form::$1');
+$routes->get('user_info/(:any)', 'UserInfo::$1');

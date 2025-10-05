@@ -24,7 +24,10 @@ class EmployeeModel extends Model
         'status',
         'resign_date',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'email',
+        'photo',
+        'no_hp'
     ];
 
     protected $skipValidation = false;
@@ -43,6 +46,7 @@ class EmployeeModel extends Model
         'location'     => 'required|safe_string',
         'emp_grade'    => 'required|decimal',
         'status'       => 'required|safe_string',
+        'email'        => 'valid_email',
     ];
 
     protected $validationMessages = [
@@ -97,6 +101,9 @@ class EmployeeModel extends Model
         'status' => [
             'required'    => 'Status is required.',
             'safe_string' => 'Status contains invalid characters.',
+        ],
+        'email' => [
+            'valid_email' => 'Please enter a valid email address.'
         ],
     ];
 }

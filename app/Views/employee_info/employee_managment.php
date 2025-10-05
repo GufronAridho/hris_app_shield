@@ -123,23 +123,43 @@
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="form_add">
+            <form id="form_add" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="card">
+                    <div class="row g-2 mb-3">
+
+                        <div class="col-md-3">
+                            <div class="card w-100">
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
-                                    <div class="row g-3">
-                                        <div class="col-6">
+                                    <div id="add_preview" class="mb-2 text-center w-100"></div>
+                                    <label for="add_photo" class="form-label">Profile Picture</label>
+                                    <input type="file" accept="image/*" class="form-control" id="add_photo" name="photo" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="card w-100">
+                                <div class="card-header bg-light"></div>
+                                <div class="card-body">
+                                    <div class="row g-2">
+                                        <div class="col-md-5">
                                             <label for="add_emp_id" class="form-label">Employee ID</label>
                                             <input type="text" class="form-control" id="add_emp_id" name="emp_id" required>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-7">
                                             <label for="add_name" class="form-label">Name</label>
                                             <input type="text" class="form-control" id="add_name" name="name" required>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
+                                            <label for="add_email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="add_email" name="email" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="add_no_hp" class="form-label">No Hp</label>
+                                            <input type="number" class="form-control" id="add_no_hp" name="no_hp" required>
+                                        </div>
+                                        <div class="col-md-6">
                                             <label for="add_gender" class="form-label">Gender</label>
                                             <select class="form-select" id="add_gender" name="gender" required>
                                                 <option value="">Select Gender</option>
@@ -147,7 +167,7 @@
                                                 <option value="Female">Female</option>
                                             </select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="add_join_date" class="form-label">Join Date</label>
                                             <input type="date" class="form-control" id="add_join_date" name="join_date" required>
                                         </div>
@@ -156,28 +176,24 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="card">
+                        <div class="col-md-4">
+                            <div class="card w-100">
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
-                                    <div class="row g-3">
-                                        <div class="col-6">
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
                                             <label for="add_emp_type" class="form-label">Employee Type</label>
-                                            <select class="form-select" id="add_emp_type" name="emp_type" required>
-
-                                            </select>
+                                            <select class="form-select" id="add_emp_type" name="emp_type" required></select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="add_department" class="form-label">Department</label>
                                             <input type="text" class="form-control" id="add_department" name="department" required>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="add_job_title" class="form-label">Job Title</label>
-                                            <select class="form-select" id="add_job_title" name="job_title" required>
-
-                                            </select>
+                                            <select class="form-select" id="add_job_title" name="job_title" required></select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="add_manager" class="form-label">Manager</label>
                                             <input type="text" class="form-control" id="add_manager" name="manager" required>
                                         </div>
@@ -187,12 +203,12 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row g-2">
                         <div class="col-12">
-                            <div class="card">
+                            <div class="card w-100">
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
-                                    <div class="row g-3">
+                                    <div class="row g-2">
                                         <div class="col-md-2">
                                             <label for="add_hr_partner" class="form-label">HR Partner</label>
                                             <input type="text" class="form-control" id="add_hr_partner" name="hr_partner" required>
@@ -211,9 +227,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="add_status" class="form-label">Status</label>
-                                            <select class="form-select" id="add_status" name="status" required>
-
-                                            </select>
+                                            <select class="form-select" id="add_status" name="status" required></select>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="add_resign_date" class="form-label">Resign Date</label>
@@ -224,8 +238,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">
@@ -237,7 +251,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -247,31 +260,51 @@
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="form_edit">
+            <form id="form_edit" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" id="edit_id" name="id">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="card">
+                    <div class="row g-2 mb-3">
+
+                        <div class="col-md-3">
+                            <div class="card w-100">
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
-                                    <div class="row g-3">
-                                        <div class="col-6">
+                                    <div id="edit_preview" class="mb-2 text-center w-100"></div>
+                                    <label for="edit_photo" class="form-label">Profile Picture</label>
+                                    <input type="file" accept="image/*" class="form-control" id="edit_photo" name="photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="card w-100">
+                                <div class="card-header bg-light"></div>
+                                <div class="card-body">
+                                    <div class="row g-2">
+                                        <div class="col-md-5">
                                             <label for="edit_emp_id" class="form-label">Employee ID</label>
                                             <input type="text" class="form-control" id="edit_emp_id" name="emp_id" disabled>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-7">
                                             <label for="edit_name" class="form-label">Name</label>
                                             <input type="text" class="form-control" id="edit_name" name="name" required>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
+                                            <label for="edit_email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="edit_email" name="email" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="edit_no_hp" class="form-label">No Hp</label>
+                                            <input type="number" class="form-control" id="edit_no_hp" name="no_hp" required>
+                                        </div>
+                                        <div class="col-md-6">
                                             <label for="edit_gender" class="form-label">Gender</label>
                                             <select class="form-select" id="edit_gender" name="gender" required>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                             </select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="edit_join_date" class="form-label">Join Date</label>
                                             <input type="date" class="form-control" id="edit_join_date" name="join_date" required>
                                         </div>
@@ -280,28 +313,24 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="card">
+                        <div class="col-md-4">
+                            <div class="card w-100">
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
-                                    <div class="row g-3">
-                                        <div class="col-6">
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
                                             <label for="edit_emp_type" class="form-label">Employee Type</label>
-                                            <select class="form-select" id="edit_emp_type" name="emp_type" required>
-
-                                            </select>
+                                            <select class="form-select" id="edit_emp_type" name="emp_type" required></select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="edit_department" class="form-label">Department</label>
                                             <input type="text" class="form-control" id="edit_department" name="department" required>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="edit_job_title" class="form-label">Job Title</label>
-                                            <select class="form-select" id="edit_job_title" name="job_title" required>
-
-                                            </select>
+                                            <select class="form-select" id="edit_job_title" name="job_title" required></select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <label for="edit_manager" class="form-label">Manager</label>
                                             <input type="text" class="form-control" id="edit_manager" name="manager" required>
                                         </div>
@@ -311,12 +340,12 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row g-2">
                         <div class="col-12">
-                            <div class="card">
+                            <div class="card w-100">
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
-                                    <div class="row g-3">
+                                    <div class="row g-2">
                                         <div class="col-md-2">
                                             <label for="edit_hr_partner" class="form-label">HR Partner</label>
                                             <input type="text" class="form-control" id="edit_hr_partner" name="hr_partner" required>
@@ -335,9 +364,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="edit_status" class="form-label">Status</label>
-                                            <select class="form-select" id="edit_status" name="status" required>
-
-                                            </select>
+                                            <select class="form-select" id="edit_status" name="status" required></select>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="edit_resign_date" class="form-label">Resign Date</label>
@@ -348,8 +375,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">
@@ -444,18 +471,38 @@
 <script>
     let table_detail;
 
+    $('#add_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#add_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#add_modal .modal-body');
+    });
+
+    $('#edit_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#edit_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#edit_modal .modal-body');
+    });
+
     $('#add_modal').on('hidden.bs.modal', function() {
         $(this).find('form')[0].reset();
         $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+        $(this).find('#add_preview').empty();
     });
 
     $('#edit_modal').on('hidden.bs.modal', function() {
         $(this).find('form')[0].reset();
         $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+        $(this).find('#edit_preview').empty();
     });
 
     $('#upload_modal').on('hidden.bs.modal', function() {
         $(this).find('form')[0].reset();
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
     });
 
     function get_table() {
@@ -613,7 +660,7 @@
             placeholder: placeholder,
             allowClear: true,
             width: '100%',
-            dropdownParent: modal,
+            dropdownParent: modal ? $(modal) : null,
             ajax: {
                 url: url,
                 dataType: 'json',
@@ -645,12 +692,6 @@
 
         initSelect2Ajax('#status_filter', 'Select Status', "<?= base_url('employee_info/filterStatus') ?>");
         initSelect2Ajax('#type_filter', 'Select Employee type', "<?= base_url('employee_info/filterEmpType') ?>");
- initSelect2Ajax('#add_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#add_modal');
-        initSelect2Ajax('#add_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal');
-        initSelect2Ajax('#add_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#add_modal');
-   initSelect2Ajax('#edit_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#edit_modal');
-        initSelect2Ajax('#edit_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal');
-        initSelect2Ajax('#edit_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#edit_modal');
 
         $('#download_excel').on('click', function() {
             table_detail.button('.buttons-excel').trigger();
@@ -658,6 +699,44 @@
 
         $('#status_filter, #type_filter, #date_from_filter, #date_to_filter').on('change', function() {
             get_table();
+        });
+
+        $('#add_photo').on('change', function() {
+            const file = this.files[0];
+            if (file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Only image files are allowed!');
+                    $(this).val('');
+                    $('#add_preview').html('');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#add_preview').html('<img src="' + e.target.result + '" alt="Preview" style="max-width:100%; max-height:150px; object-fit:contain;">');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#add_preview').html('');
+            }
+        });
+
+        $('#edit_photo').on('change', function() {
+            const file = this.files[0];
+            if (file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Only image files are allowed!');
+                    $(this).val('');
+                    $('#edit_preview').html('');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#edit_preview').html('<img src="' + e.target.result + '" alt="Preview" style="max-width:100%; max-height:150px; object-fit:contain;">');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#edit_preview').html('');
+            }
         });
 
         $(document).on('click', '.edit-btn', function() {
@@ -684,6 +763,16 @@
             var statusOption = new Option(emp.status, emp.status, true, true);
             $('#edit_status').append(statusOption).trigger('change');
             $('#edit_resign_date').val(emp.resign_date);
+            $('#edit_email').val(emp.email);
+            $('#edit_no_hp').val(emp.no_hp);
+            var preview = $('#edit_preview');
+            if (emp.photo) {
+                var baseUrl = "<?= base_url() ?>";
+                var photoPath = baseUrl + 'assets/profile/' + emp.photo;
+                preview.html('<img src="' + photoPath + '" alt="Preview" style="max-width:100%; max-height:150px; object-fit:contain;">');
+            } else {
+                preview.html('<span class="text-muted">No photo available</span>');
+            }
 
             $('#edit_modal').modal('show');
         });

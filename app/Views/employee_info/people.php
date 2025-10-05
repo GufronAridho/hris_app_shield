@@ -2,23 +2,87 @@
 
 <?= $this->section('content') ?>
 <main class="app-main">
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+
+    </div>
+    <!--end::App Content Header-->
+
     <!--begin::App Content-->
     <div class="app-content">
         <div class="container-fluid">
-            <div class="card shadow-sm rounded-3 card-table">
-                <div class="card-header custom-card-header">
-                    <div class="d-flex align-items-left justify-content-left">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Recruitment</a></li>
-                            <li class="breadcrumb-item active">Interview</li>
-                        </ol>
-                    </div>
+            <div class="rounded-3 card-table shadow-sm p-1">
+                <div class="custom-card-header p-3 rounded-1">
+                    <ol class="breadcrumb mb-0 d-flex align-items-center">
+                        <li class="breadcrumb-item">
+                            <a href="<?= base_url('home/index'); ?>">Employee</a>
+                        </li>
+                        <li class="breadcrumb-item active d-flex align-items-center gap-2">
+                            People
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-user"></i>
+                                <?= $count; ?></span>
+                        </li>
+                    </ol>
                 </div>
-                <div class="card-header">
-                    Featured
-                </div>
-                <div class="card-body p-4">
+                <div class="">
+                    <ul class="nav custom-tabs" id="tab" role="tablist">
+                        <li class="nav-item border" role="presentation">
+                            <button class="nav-link active" id="department-tab" data-bs-toggle="pill" data-bs-target="#department" type="button" role="tab" aria-controls="department" aria-selected="true">
+                                <i class="fas fa-building  me-1"></i> Department
+                            </button>
+                        </li>
+                        <li class="nav-item border" role="presentation">
+                            <button class="nav-link" id="employee-tab" data-bs-toggle="pill" data-bs-target="#employee" type="button" role="tab" aria-controls="employee" aria-selected="false">
+                                <i class="fas fa-user me-1"></i> Employees
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-2" id="tabContent">
+                        <div class="tab-pane fade show active" id="department" role="tabpanel" aria-labelledby="department-tab">
+                            <div class="mb-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search..." id="search_department">
+                                    <span class="input-group-text" style="background-color: #880fb3; color: white;">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="department_profile">
 
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="employee" role="tabpanel" aria-labelledby="employee-tab">
+                            <div class="mb-1">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="flex-grow-1">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search..." id="search_employee">
+                                            <span class="input-group-text" style="background-color: #880fb3; color: white;">
+                                                <i class="fas fa-search"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <select class="form-select" id="sort_employee">
+                                            <option value="">Sort By</option>
+                                            <option value="name" selected>Name</option>
+                                            <option value="department">Department</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-light" onclick="employee_search('profile')">
+                                        <i class="fas fa-id-card fs-4"></i>
+                                    </button>
+                                    <button class="btn btn-light" onclick="employee_search('table')">
+                                        <i class="fas fa-table fs-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="employee_profile">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,17 +91,162 @@
 </main>
 
 <style>
+    .department-badge {
+        background-color: #d8b4f8;
+        color: #4b0082;
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: 0.6em 1.4em;
+        border-radius: 2rem;
+        width: 100px;
+        text-align: center;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .department-header {
+        background: linear-gradient(135deg, #7030a0, #800080);
+    }
+
     .custom-card-header {
         background: #7030a0 !important;
         color: #ffc107 !important;
+
+    }
+
+    .custom-tabs .nav-link {
+        color: #7030a0;
+        font-weight: 500;
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .custom-tabs .nav-link:hover {
+        background-color: #fff;
+        color: #7030a0;
+    }
+
+    .custom-tabs .nav-link.active {
+        color: #7030a0;
+        background-color: #fff;
+        border-bottom: 3px solid #7030a0;
+        font-weight: 600;
+    }
+
+    .card-slide-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        animation: slideInLeft 0.5s ease forwards;
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
 </style>
 <?= $this->endSection() ?>
 
 <?= $this->section('script'); ?>
 <script>
+    let typingTimer;
+    const typingDelay = 500;
+
     $(document).ready(function() {
-        initializeDataTable('table_detail');
+        department_search()
+        employee_search('profile')
+
+        $('#search_department').on('keyup', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(department_search, typingDelay);
+        });
+
+        $('#search_employee').on('keyup', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                employee_search('profile');
+            }, typingDelay);
+        });
+
+        $('#sort_employee').on('change', function() {
+            employee_search('profile')
+        });
     });
+
+    function department_search() {
+        let text = $('#search_department').val().trim() || '';
+        $.ajax({
+            url: "<?= base_url('employee_info/get_department_profile') ?>",
+            type: "GET",
+            data: {
+                text: text
+            },
+            success: function(res) {
+                $('#department_profile').html(res)
+                $('#department_profile .department-card').each(function(index) {
+                    $(this).css('animation-delay', (index * 0.1) + 's');
+                    $(this).addClass('card-slide-left');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                $('#department_profile').html('<div class="text-danger p-3">Failed to load department profile.</div>');
+            }
+        });
+    }
+
+    function employee_search(type) {
+        let text = $('#search_employee').val().trim() || '';
+        let sort_by = $('#sort_employee').val();
+        if (type === 'table') {
+            $('#search_employee').prop('disabled', true);
+            $('#sort_employee').prop('disabled', true);
+        } else {
+            $('#search_employee').prop('disabled', false);
+            $('#sort_employee').prop('disabled', false);
+        }
+
+        $.ajax({
+            url: "<?= base_url('employee_info/get_employee_profile') ?>",
+            type: "GET",
+            data: {
+                text: text,
+                sort_by: sort_by,
+                type: type
+            },
+            success: function(res) {
+                $('#employee_profile').html(res);
+
+                if (type === 'table') {
+                    initializeDataTable('table_detail');
+                } else if (type === 'profile') {
+                    $('#employee_profile .department-card').each(function(index) {
+                        $(this).css('animation-delay', (index * 0.1) + 's');
+                        $(this).addClass('card-slide-left');
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                $('#employee_profile').html('<div class="text-danger p-3">Failed to load employee profile.</div>');
+            }
+        });
+    }
+
+    function initializeDataTable(tableId) {
+        $('#' + tableId).DataTable({
+            pageLength: 10,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            scrollX: true,
+        });
+    }
 </script>
 <?= $this->endSection() ?>
