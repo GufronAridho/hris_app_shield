@@ -7,17 +7,16 @@
         <div class="container-fluid">
             <div class="row align-items-stretch g-2">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Home</a></li>
-                            <li class="breadcrumb-item">Onboarding</li>
+                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Onboarding</a></li>
                             <li class="breadcrumb-item active">Summary</li>
                         </ol>
                     </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="card h-100 custom-card-purple custom-card-slim card-button">
                         <div class="h-100 d-flex justify-content-end align-items-center gap-2 flex-wrap">
 
@@ -104,182 +103,7 @@
 </main>
 
 <style>
-    /* main.app-main {
-        background: url('<?= base_url("assets/img/silhouette-businesspeople-rushing-work.jpg"); ?>') no-repeat center center;
-        background-size: cover;
-        min-height: 100vh;
-    } */
 
-    .custom-card-purple {
-        background: #800080;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        color: #fff;
-    }
-
-    .custom-card-breadcrumb {
-        background: #7030a0;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    /* .custom-card-purple,
-    .custom-card-breadcrumb,
-    .card-button,
-    .card-table {
-        background: rgba(128, 0, 128, 0.8);
-        backdrop-filter: blur(8px);
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        color: #fff;
-    } */
-
-    .custom-card-slim {
-        padding: 0.4rem 0.8rem !important;
-    }
-
-    .breadcrumb {
-        background: transparent;
-        margin-bottom: 0;
-        font-size: 1.4rem;
-        color: #ffc107;
-    }
-
-    .breadcrumb a {
-        color: #ffc107;
-        text-decoration: none;
-    }
-
-    .breadcrumb .active {
-        color: #ffc107;
-        font-weight: 600;
-    }
-
-    .breadcrumb-item+.breadcrumb-item::before {
-        content: "›";
-        color: #ffc107;
-    }
-
-    .btn-split {
-        display: flex;
-        padding: 0;
-        overflow: hidden;
-        border-radius: 8px;
-        border: 2px solid transparent;
-        font-size: 12px;
-    }
-
-    .btn:hover {
-        transform: translateY(-1px) scale(1.00);
-    }
-
-    .btn-split .btn-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 8px;
-        color: #fff;
-    }
-
-    .btn-split .btn-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 8px;
-        background-color: #fff;
-        font-weight: bold;
-    }
-
-    .btn-primary .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #7030a0;
-    }
-
-    .btn-info .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #0dcaf0;
-    }
-
-    .btn-success .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #198754;
-    }
-
-    .btn-warning .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #ffc107;
-    }
-
-    .btn-secondary .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #6c757d;
-    }
-
-    .btn-danger .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #dc3545;
-    }
-
-    .btn-primary .btn-icon {
-        background-color: #880fb3;
-    }
-
-    .btn-info .btn-icon {
-        background-color: #0dcaf0;
-    }
-
-    .btn-success .btn-icon {
-        background-color: #198754;
-    }
-
-    .btn-warning .btn-icon {
-        background-color: #ffc107;
-    }
-
-    .btn-secondary .btn-icon {
-        background-color: #6c757d;
-    }
-
-    .btn-danger .btn-icon {
-        background-color: #dc3545;
-    }
-
-    .table-custom {
-        border: 1px solid #dee2e6;
-        border-collapse: separate;
-        border-spacing: 0;
-        overflow: hidden;
-    }
-
-    .table-custom th {
-        background-color: #ffc107 !important;
-        color: #1e1e1f;
-        text-align: center;
-        border: 1px solid #dee2e6;
-        border-radius: 0;
-    }
-
-    .table-custom td {
-        border: 1px solid #dee2e6;
-        border-radius: 0;
-        vertical-align: middle;
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #f9f5ff;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: #efe6ff;
-        cursor: pointer;
-    }
-
-    .table td,
-    .table th {
-        vertical-align: middle;
-    }
 </style>
 <?= $this->endSection() ?>
 

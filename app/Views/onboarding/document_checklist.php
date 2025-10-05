@@ -80,47 +80,6 @@
     </div>
 </main>
 <style>
-    .custom-card-purple {
-        background: #800080;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        color: #fff;
-    }
-
-    .custom-card-breadcrumb {
-        background: #7030a0;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    .breadcrumb {
-        background: transparent;
-        margin-bottom: 0;
-        font-size: 1.4rem;
-        color: #ffc107;
-    }
-
-    .breadcrumb a {
-        color: #ffc107;
-        text-decoration: none;
-    }
-
-    .breadcrumb .active {
-        color: #ffc107;
-        font-weight: 600;
-    }
-
-
-    .breadcrumb-item+.breadcrumb-item::before {
-        content: "›";
-        color: #ffc107;
-    }
-
-    .custom-card-slim {
-        padding: 0.4rem 0.8rem !important;
-    }
 
     .onboarding-card {
         background: transparent;

@@ -2,38 +2,42 @@
 
 <?= $this->section('content') ?>
 <main class="app-main">
-    <!--begin::App Content Header-->
-    <div class="app-content-header">
+    <!--begin::App Content-->
+    <div class="app-content">
         <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Dashboard v2</h3>
+            <div class="card shadow-sm rounded-3 card-table">
+                <div class="card-header custom-card-header">
+                    <div class="d-flex align-items-left justify-content-left">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Recruitment</a></li>
+                            <li class="breadcrumb-item active">Interview</li>
+                        </ol>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end mb-0">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v2</li>
-                    </ol>
+                <div class="card-header">
+                    Featured
+                </div>
+                <div class="card-body p-4">
+
                 </div>
             </div>
         </div>
     </div>
-    <!--end::App Content Header-->
-
-    <!--begin::App Content-->
-    <div class="app-content">
-        <div class="container-fluid">
-
-
-        </div>
-        <!--end::App Content-->
+    <!--end::App Content-->
 </main>
+
+<style>
+    .custom-card-header {
+        background: #7030a0 !important;
+        color: #ffc107 !important;
+    }
+</style>
 <?= $this->endSection() ?>
 
 <?= $this->section('script'); ?>
 <script>
     $(document).ready(function() {
-
+        initializeDataTable('table_detail');
     });
 </script>
 <?= $this->endSection() ?>

@@ -82,7 +82,7 @@
             <div class="card shadow-sm rounded-3 custom-card-purple card-table">
                 <!-- Card Body with Table -->
                 <div class="card-body p-4">
-                    <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
+                    <table class="table table-bordered table-striped table-hover table-custom-emp" id="table_detail">
                         <thead>
                             <tr>
                                 <th>Emp ID</th>
@@ -400,117 +400,14 @@
 </div>
 
 <style>
-    .custom-card-purple {
-        background: #800080;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        color: #f2f0f8;
-    }
-
-    .custom-card-breadcrumb {
-        background: #7030a0;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    .modal-custom-purple {
-        background: #7030a0;
-        color: #ffc107;
-    }
-
-    .custom-card-slim {
-        padding: 0.4rem 0.8rem !important;
-    }
-
-    .breadcrumb {
-        background: transparent;
-        margin-bottom: 0;
-        font-size: 1.2rem;
-        color: #ffc107;
-    }
-
-    .breadcrumb a {
-        color: #ffc107;
-        text-decoration: none;
-    }
-
-    .breadcrumb .active {
-        color: #ffc107;
-        font-weight: 600;
-    }
-
-    .breadcrumb-item+.breadcrumb-item::before {
-        content: "›";
-        color: #ffc107;
-    }
-
-    .btn-split {
-        display: flex;
-        padding: 0;
-        overflow: hidden;
-        border-radius: 8px;
-        border: 2px solid transparent;
-        font-size: 14px;
-    }
-
-    .btn-split .btn-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 8px;
-        color: #f2f0f8;
-    }
-
-    .btn-split .btn-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 8px;
-        background-color: #f2f0f8;
-        /* font-weight: bold; */
-    }
-
-    .btn:hover {
-        transform: translateY(-1px) scale(1.00);
-    }
-
-    .btn-primary .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #7030a0;
-    }
-
-    .btn-info .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #0dcaf0;
-    }
-
-    .btn-success .btn-text {
-        color: #7030a0;
-        border-left: 1px solid #198754;
-    }
-
-    .btn-primary .btn-icon {
-        background-color: #880fb3;
-    }
-
-    .btn-info .btn-icon {
-        background-color: #0dcaf0;
-    }
-
-    .btn-success .btn-icon {
-        background-color: #198754;
-    }
-
-    .table-custom {
+    .table-custom-emp {
         border: 1px solid #dee2e6;
         border-collapse: separate;
         border-spacing: 0;
         overflow: hidden;
     }
 
-    .table-custom th {
+    .table-custom-emp th {
         background-color: #7030a0 !important;
         color: #dee2e6;
         text-align: center;
@@ -520,23 +417,9 @@
 
     }
 
-    .table-custom td {
+    .table-custom-emp td {
         border: 1px solid #dee2e6;
         border-radius: 0;
-        vertical-align: middle;
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #f9f5ff;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: #efe6ff;
-        cursor: pointer;
-    }
-
-    .table td,
-    .table th {
         vertical-align: middle;
     }
 
@@ -561,26 +444,14 @@
 <script>
     let table_detail;
 
-    $('#add_modal').on('shown.bs.modal', function() {
-        initSelect2Ajax('#add_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#add_modal');
-        initSelect2Ajax('#add_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal');
-        initSelect2Ajax('#add_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#add_modal');
-    });
-
-    $('#edit_modal').on('shown.bs.modal', function() {
-        initSelect2Ajax('#edit_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#edit_modal');
-        initSelect2Ajax('#edit_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal');
-        initSelect2Ajax('#edit_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#edit_modal');
-    });
-
     $('#add_modal').on('hidden.bs.modal', function() {
         $(this).find('form')[0].reset();
-        $(this).find('select.select2-hidden-accessible').val(null).trigger('change');
+        $(this).find('select').val(null).trigger('change');
     });
 
     $('#edit_modal').on('hidden.bs.modal', function() {
         $(this).find('form')[0].reset();
-        $(this).find('select.select2-hidden-accessible').val(null).trigger('change');
+        $(this).find('select').val(null).trigger('change');
     });
 
     $('#upload_modal').on('hidden.bs.modal', function() {
@@ -738,10 +609,6 @@
     }
 
     function initSelect2Ajax(selector, placeholder, url, modal = null) {
-        if ($(selector).hasClass('select2-hidden-accessible')) {
-            $(selector).select2('destroy');
-        }
-
         $(selector).select2({
             placeholder: placeholder,
             allowClear: true,
@@ -778,6 +645,12 @@
 
         initSelect2Ajax('#status_filter', 'Select Status', "<?= base_url('employee_info/filterStatus') ?>");
         initSelect2Ajax('#type_filter', 'Select Employee type', "<?= base_url('employee_info/filterEmpType') ?>");
+ initSelect2Ajax('#add_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#add_modal');
+        initSelect2Ajax('#add_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal');
+        initSelect2Ajax('#add_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#add_modal');
+   initSelect2Ajax('#edit_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#edit_modal');
+        initSelect2Ajax('#edit_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal');
+        initSelect2Ajax('#edit_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#edit_modal');
 
         $('#download_excel').on('click', function() {
             table_detail.button('.buttons-excel').trigger();
