@@ -187,7 +187,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="add_department" class="form-label">Department</label>
-                                            <input type="text" class="form-control" id="add_department" name="department" required>
+                                            <select class="form-select" id="add_department" name="department" required></select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="add_job_title" class="form-label">Job Title</label>
@@ -324,7 +324,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="edit_department" class="form-label">Department</label>
-                                            <input type="text" class="form-control" id="edit_department" name="department" required>
+                                            <select class="form-select" id="edit_department" name="department" required></select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="edit_job_title" class="form-label">Job Title</label>
@@ -475,12 +475,14 @@
         initSelect2Ajax('#add_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#add_modal .modal-body');
         initSelect2Ajax('#add_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal .modal-body');
         initSelect2Ajax('#add_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#add_modal .modal-body');
     });
 
     $('#edit_modal').on('shown.bs.modal', function() {
         initSelect2Ajax('#edit_status', 'Select Status', "<?= base_url('select_form/statusSelect') ?>", '#edit_modal .modal-body');
         initSelect2Ajax('#edit_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal .modal-body');
         initSelect2Ajax('#edit_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#edit_modal .modal-body');
     });
 
     $('#add_modal').on('hidden.bs.modal', function() {
@@ -751,7 +753,9 @@
             var emp_typeOption = new Option(emp.emp_type, emp.emp_type, true, true);
             $('#edit_emp_type').append(emp_typeOption).trigger('change');
             $('#edit_organization').val(emp.organization);
-            $('#edit_department').val(emp.department);
+            // $('#edit_department').val(emp.department);
+            var departmentOption = new Option(emp.department, emp.department, true, true);
+            $('#edit_department').append(departmentOption).trigger('change');
             // $('#edit_job_title').val(emp.job_title);
             var job_titleOption = new Option(emp.job_title, emp.job_title, true, true);
             $('#edit_job_title').append(job_titleOption).trigger('change');

@@ -23,10 +23,10 @@ class Employee_info extends BaseController
 
     public function people()
     {
-        $count = $this->EmployeeModel->where('status', 'active')->countAllResults();
+        // $count = $this->EmployeeModel->where('status', 'active')->countAllResults();
         $data = [
             'title' => 'People',
-            'count' => $count,
+            // 'count' => $count,
         ];
         return view('employee_info/people', $data);
     }
@@ -461,12 +461,16 @@ class Employee_info extends BaseController
         $text = trim($this->request->getGet('text'));
 
         $builder = $this->EmployeeModel
-            ->select('department, COUNT(emp_id) AS employee, "Code" AS code')
+            ->select('mst_employee.department, COUNT(emp_id) AS employee, b.dept_code AS code')
+            ->join('mst_dept b', 'mst_employee.department = b.department')
             ->where('status', 'active')
-            ->groupBy('department');
+            ->groupBy('mst_employee.department, b.dept_code');
 
         if (!empty($text)) {
-            $builder->like('department', $text);
+            $builder->groupStart()
+                ->like('mst_employee.department', $text)
+                ->orWhere('b.dept_code', $text)
+                ->groupEnd();
         }
         $result = $builder->findAll();
         $data = [
@@ -475,43 +479,75 @@ class Employee_info extends BaseController
         return view('employee_info/partial/department', $data);
     }
 
-    public function get_employee_profile()
+    public function count_employee_dept()
+    {
+        $text = trim($this->request->getGet('text'));
+        $builder = $this->EmployeeModel->where('status', 'Active')
+            ->join('mst_dept b', 'mst_employee.department = b.department');
+
+        if (!empty($text)) {
+            $builder->groupStart()
+                ->like('mst_employee.department', $text)
+                ->orWhere('b.dept_code', $text)
+                ->groupEnd();
+        }
+
+        $count = $builder->countAllResults();
+
+        return $this->response->setJSON(['count' => $count]);
+    }
+
+
+    public function get_employee_card()
     {
         $text = trim($this->request->getGet('text'));
         $sort_by = $this->request->getGet('sort_by');
         $type = $this->request->getGet('type');
+        $dept = $this->request->getGet('dept') ?: null;
 
         $builder = $this->EmployeeModel->where('status', 'Active');
 
-        if ($type == 'profile') {
-            if (!empty($text)) {
-                if ($sort_by == 'name') {
-                    $builder->like('name', $text);
-                } elseif ($sort_by == 'department') {
-                    $builder->like('department', $text);
-                }
-            }
-            if (!empty($sort_by)) {
-                if ($sort_by == 'name') {
-                    $builder->orderBy('name', 'ASC');
-                } elseif ($sort_by == 'department') {
-                    $builder->orderBy('department', 'ASC');
-                }
+        if (!empty($dept)) {
+            $builder->where('department', $dept);
+        }
+        if (!empty($text)) {
+            $builder->like('name', $text);
+        }
+        if (!empty($sort_by)) {
+            if ($sort_by == 'name') {
+                $builder->orderBy('name', 'ASC');
+            } elseif ($sort_by == 'department') {
+                $builder->orderBy('department', 'ASC');
             }
         }
         $result = $builder->findAll();
         $data = [
-            'employee' => $result
+            'employee' => $result,
         ];
         if ($type == 'profile') {
-            return view('employee_info/partial/employee_profile', $data);
+            return view('employee_info/partial/employee_card', $data);
         } else {
             return view('employee_info/partial/employee_table', $data);
         }
     }
 
+    public function count_employee()
+    {
+        $text = trim($this->request->getGet('text'));
+        $dept = $this->request->getGet('dept') ?: null;
 
+        $builder = $this->EmployeeModel->where('status', 'Active');
 
+        if (!empty($dept)) {
+            $builder->where('department', $dept);
+        }
+        if (!empty($text)) {
+            $builder->like('name', $text);
+        }
+        $count = $builder->countAllResults();
+
+        return $this->response->setJSON(['count' => $count]);
+    }
 
     public function filterStatus()
     {

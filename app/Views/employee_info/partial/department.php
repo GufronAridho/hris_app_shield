@@ -3,7 +3,8 @@
         <?php if (!empty($department) && count($department) > 0): ?>
             <?php foreach ($department as $dept): ?>
                 <div class="col-md-3">
-                    <div class="card border-light shadow-sm h-100 department-card">
+                    <div class="card border-light shadow-sm h-100 department-card"
+                        onclick="openEmployee('<?= $dept['department']; ?>')" style="cursor:pointer">
                         <div class="card-header text-center bg-light border 0 department-header">
                             <span class="badge department-badge">
                                 <?= $dept['code']; ?>
