@@ -28,36 +28,14 @@
                 <div class="card-body p-3">
                     <div class="row align-items-stretch g-2">
                         <div class="col-md-9">
-                            <table class="table custom-table">
-                                <tbody>
-                                    <tr>
-                                        <td class="label-cell">
-                                            <span class="fw-bold">Label 1</span>
-                                        </td>
-
-                                        <td class="input-cell">
-                                            <div class="d-flex">
-                                                <input type="checkbox" class="form-check-input custom-checkbox" title="Checklist">
-                                                <input type="file" class="form-control form-control-sm" title="Upload File">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-cell">
-                                            <span class="fw-bold">Label 2</span>
-                                        </td>
-
-                                        <td class="input-cell">
-                                            <div class="d-flex">
-                                                <input type="checkbox" class="form-check-input custom-checkbox" title="Checklist">
-                                                <input type="file" class="form-control form-control-sm" title="Upload File">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div id="checklist_item">
+                                <div class="d-flex justify-content-center align-items-center" style="min-height: 15rem;">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                         <div class="col-md-3 d-flex justify-content-center">
                             <div class="card shadow-sm onboarding-card">
                                 <div class="section-header">Employee</div>
@@ -80,7 +58,6 @@
     </div>
 </main>
 <style>
-
     .onboarding-card {
         background: transparent;
         border: none;
@@ -107,42 +84,30 @@
     .onboarding-card .section-divider {
         margin: 0.25rem 0;
     }
-
-    .custom-table {
-        border-spacing: 0.5rem 0.5rem;
-        border-collapse: separate;
-    }
-
-    .label-cell {
-        background-color: #f2f0f8 !important;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        width: 70%;
-    }
-
-    .input-cell {
-        background-color: #f2f0f8 !important;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-    }
-
-    .input-cell .d-flex {
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .custom-checkbox {
-        transform: scale(1.7);
-        margin-left: 0.5rem;
-        margin-right: 0.3rem;
-    }
 </style>
 <?= $this->endSection() ?>
 
 <?= $this->section('script'); ?>
 <script>
     $(document).ready(function() {
-
+        get_checklist_item()
     });
+
+    function get_checklist_item() {
+        $.ajax({
+            url: "<?= base_url('onboarding/get_checklist_item'); ?>",
+            type: "GET",
+            data: {
+                check_cat: "Document"
+            },
+            success: function(res) {
+                $('#checklist_item').html(res)
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error)
+                $('#checklist_item').html('<div class="text-white p-3">Failed to load checklist item.</div>');
+            }
+        })
+    }
 </script>
 <?= $this->endSection() ?>

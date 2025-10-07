@@ -49,7 +49,7 @@ class Employee_info extends BaseController
     {
         echo json_encode([
             'status' => $status,
-            'message'   => $message,
+            'message' => $message,
             'csrfHash' => csrf_hash()
         ]);
         exit;
@@ -420,7 +420,7 @@ class Employee_info extends BaseController
                         } else {
                             $rowErrors = $this->EmployeeModel->errors();
                             $errors[] = [
-                                'row'    => $i,
+                                'row' => $i,
                                 'emp_id' => $data['emp_id'],
                                 'errors' => $rowErrors,
                             ];
@@ -431,8 +431,8 @@ class Employee_info extends BaseController
                         $errorMessages = [];
                         foreach ($errors as $err) {
                             $rowNum = $err['row'];
-                            $empId  = $err['emp_id'] ?? '-';
-                            $msg    = implode(', ', $err['errors']);
+                            $empId = $err['emp_id'] ?? '-';
+                            $msg = implode(', ', $err['errors']);
                             $errorMessages[] = "Row {$rowNum} (EmpID: {$empId}) → {$msg}";
                         }
 
@@ -468,9 +468,10 @@ class Employee_info extends BaseController
         if (!empty($text)) {
             $builder->like('department', $text);
         }
-
-        $data['department'] = $builder->findAll();
-
+        $result = $builder->findAll();
+        $data = [
+            'department' => $result
+        ];
         return view('employee_info/partial/department', $data);
     }
 
@@ -490,16 +491,18 @@ class Employee_info extends BaseController
                     $builder->like('department', $text);
                 }
             }
-        }
-        if (!empty($sort_by)) {
-            if ($sort_by == 'name') {
-                $builder->orderBy('name', 'ASC');
-            } elseif ($sort_by == 'department') {
-                $builder->orderBy('department', 'ASC');
+            if (!empty($sort_by)) {
+                if ($sort_by == 'name') {
+                    $builder->orderBy('name', 'ASC');
+                } elseif ($sort_by == 'department') {
+                    $builder->orderBy('department', 'ASC');
+                }
             }
         }
-
-        $data['employee'] = $builder->findAll();
+        $result = $builder->findAll();
+        $data = [
+            'employee' => $result
+        ];
         if ($type == 'profile') {
             return view('employee_info/partial/employee_profile', $data);
         } else {

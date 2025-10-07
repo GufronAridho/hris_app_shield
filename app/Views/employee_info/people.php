@@ -49,7 +49,11 @@
                                 </div>
                             </div>
                             <div id="department_profile">
-
+                                <div class="d-flex justify-content-center align-items-center" style="min-height: 15rem;">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="employee" role="tabpanel" aria-labelledby="employee-tab">
@@ -79,7 +83,11 @@
                                 </div>
                             </div>
                             <div id="employee_profile">
-
+                                <div class="d-flex justify-content-center align-items-center" style="min-height: 15rem;">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
