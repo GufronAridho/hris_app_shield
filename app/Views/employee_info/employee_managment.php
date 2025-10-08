@@ -950,7 +950,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: res.message
+                            html: res.message
                         });
                     }
                 },
@@ -1001,6 +1001,13 @@
                         }).then(() => {
                             $('#upload_modal').modal('hide');
                             get_table();
+                        });
+                    } else if (res.is_validation) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            html: res.message,
+                            width: '700px'
                         });
                     } else {
                         Swal.fire({

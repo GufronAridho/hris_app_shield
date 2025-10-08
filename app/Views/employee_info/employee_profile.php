@@ -13,24 +13,24 @@
                     <div class="position-relative h-100">
                         <div class="row h-100 align-items-center">
                             <div class="col-md-3 d-flex justify-content-center align-items-center">
-                                <img src="<?= base_url('assets/profile/avatar5.png'); ?>"
-                                    alt="Image"
+                                <img src="<?= base_url('assets/profile/' . ($emp['photo'] ?? 'avatar5.png')); ?>"
+                                    alt="Employee"
                                     class="img-fluid rounded-circle"
                                     style="width: 200px; height:200px; object-fit:cover; border:4px solid #fff;">
                             </div>
 
                             <div class="col-md-9 d-flex flex-column justify-content-between h-100">
                                 <div class="d-flex flex-column justify-content-center text-white" style="flex: 1;">
-                                    <h2 class="mb-1 fw-bold gold">Name</h2>
-                                    <h3 class="mb-1 fw-bold gold">No</h3>
-                                    <h4 class="mb-1 fw-bold gold">Email</h4>
+                                    <h2 class="mb-1 fw-bold gold"><?= $emp['name'] ?? 'Name'; ?></h2>
+                                    <h3 class="mb-1 fw-bold gold"><?= $emp['no_hp'] ?? 'No HP'; ?></h3>
+                                    <h4 class="mb-1 fw-bold gold"><?= $emp['email'] ?? 'Email'; ?></h4>
                                 </div>
 
                                 <div class="d-flex flex-column justify-content-center text-dark" style="flex: 1;">
-                                    <div><strong class="label-fixed">Job Title</strong> Developer</div>
-                                    <div><strong class="label-fixed">Department</strong> Developer</div>
-                                    <div><strong class="label-fixed">Manager</strong> Developer</div>
-                                    <div><strong class="label-fixed">Location</strong> Developer</div>
+                                    <div><strong class="label-fixed">Job Title</strong> <?= $emp['job_title'] ?? '-'; ?></div>
+                                    <div><strong class="label-fixed">Department</strong> <?= $emp['department'] ?? '-'; ?></div>
+                                    <div><strong class="label-fixed">Manager</strong> <?= $emp['manager'] ?? '-'; ?></div>
+                                    <div><strong class="label-fixed">Location</strong> <?= $emp['location'] ?? '-'; ?></div>
                                 </div>
                             </div>
                         </div>

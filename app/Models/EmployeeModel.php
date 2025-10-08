@@ -51,59 +51,59 @@ class EmployeeModel extends Model
 
     protected $validationMessages = [
         'emp_id' => [
-            'required'    => 'Employee ID is required.',
-            'safe_string' => 'Employee ID contains invalid characters.',
-            'is_unique'   => 'Employee ID must be unique.',
+            'required'    => 'Employee ID is required',
+            'safe_string' => 'Employee ID contains invalid characters',
+            'is_unique'   => 'Employee ID must be unique',
         ],
         'name' => [
-            'required'    => 'Name is required.',
-            'safe_string' => 'Name contains invalid characters.',
+            'required'    => 'Name is required',
+            'safe_string' => 'Name contains invalid characters',
         ],
         'gender' => [
-            'required'    => 'Gender is required.',
-            'safe_string' => 'Gender contains invalid characters.',
+            'required'    => 'Gender is required',
+            'safe_string' => 'Gender contains invalid characters',
         ],
         'join_date' => [
-            'required'    => 'Join date is required.',
+            'required'    => 'Join date is required',
         ],
         'emp_type' => [
-            'required'    => 'Employee type is required.',
-            'safe_string' => 'Employee type contains invalid characters.',
+            'required'    => 'Employee type is required',
+            'safe_string' => 'Employee type contains invalid characters',
         ],
         'organization' => [
-            'required'    => 'Organization is required.',
-            'safe_string' => 'Organization contains invalid characters.',
+            'required'    => 'Organization is required',
+            'safe_string' => 'Organization contains invalid characters',
         ],
         'department' => [
-            'required'    => 'Department is required.',
-            'safe_string' => 'Department contains invalid characters.',
+            'required'    => 'Department is required',
+            'safe_string' => 'Department contains invalid characters',
         ],
         'job_title' => [
-            'required'    => 'Job title is required.',
-            'safe_string' => 'Job title contains invalid characters.',
+            'required'    => 'Job title is required',
+            'safe_string' => 'Job title contains invalid characters',
         ],
         'manager' => [
-            'required'    => 'Manager is required.',
-            'safe_string' => 'Manager contains invalid characters.',
+            'required'    => 'Manager is required',
+            'safe_string' => 'Manager contains invalid characters',
         ],
         'hr_partner' => [
-            'required'    => 'HR Partner is required.',
-            'safe_string' => 'HR Partner contains invalid characters.',
+            'required'    => 'HR Partner is required',
+            'safe_string' => 'HR Partner contains invalid characters',
         ],
         'location' => [
-            'required'    => 'Location is required.',
-            'safe_string' => 'Location contains invalid characters.',
+            'required'    => 'Location is required',
+            'safe_string' => 'Location contains invalid characters',
         ],
         'emp_grade' => [
-            'required'    => 'Employee grade is required.',
-            'decimal' => 'Employee grade contain only numbers (you can include decimals).',
+            'required'    => 'Employee grade is required',
+            'decimal' => 'Employee grade contain only numbers (you can include decimals)',
         ],
         'status' => [
-            'required'    => 'Status is required.',
-            'safe_string' => 'Status contains invalid characters.',
+            'required'    => 'Status is required',
+            'safe_string' => 'Status contains invalid characters',
         ],
         'email' => [
-            'valid_email' => 'Please enter a valid email address.'
+            'valid_email' => 'Please enter a valid email address'
         ],
     ];
 }

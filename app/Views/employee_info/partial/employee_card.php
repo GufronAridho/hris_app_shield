@@ -3,7 +3,8 @@
         <?php if (!empty($employee) && count($employee) > 0): ?>
             <?php foreach ($employee as $emp): ?>
                 <div class="col-md-3">
-                    <div class="card border-light shadow-sm h-100 department-card">
+                    <div class="card border-light shadow-sm h-100 department-card"
+                        onclick="goToProfile('<?= $emp['emp_id']; ?>')" style="cursor:pointer">
                         <div class="card-header text-center bg-light border department-header">
                             <img src="<?= base_url('assets/profile/' . $emp['photo']); ?>" alt="Employee"
                                 class="rounded-circle"

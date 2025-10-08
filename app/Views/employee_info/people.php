@@ -337,5 +337,9 @@
             scrollX: true,
         });
     }
+
+    function goToProfile(emp_id) {
+        window.location.href = "<?= base_url('employee_info/employee_profile') ?>/" + emp_id;
+    }
 </script>
 <?= $this->endSection() ?>

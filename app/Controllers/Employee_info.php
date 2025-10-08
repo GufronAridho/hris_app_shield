@@ -38,21 +38,24 @@ class Employee_info extends BaseController
         ]);
     }
 
-    public function employee_profile()
+    public function employee_profile($emp_id = null)
     {
-        return view('employee_info/employee_profile', [
+        $employee = $this->EmployeeModel->where('emp_id', $emp_id)->first();
+        $data = [
             'title' => 'Employee Profile',
-        ]);
+            'emp' => $employee
+        ];
+        return view('employee_info/employee_profile', $data);
     }
 
-    private function _json_response($status, $message)
+    private function _json_response($status, $message, $is_validation = false)
     {
-        echo json_encode([
+        return $this->response->setJSON([
             'status' => $status,
             'message' => $message,
+            'is_validation' => $is_validation,
             'csrfHash' => csrf_hash()
         ]);
-        exit;
     }
 
     public function employeeList()
@@ -157,11 +160,11 @@ class Employee_info extends BaseController
 
         // --- return response JSON ---
         return $this->response->setJSON([
-            'draw'            => $draw,
-            'recordsTotal'    => $recordsTotal,
+            'draw' => $draw,
+            'recordsTotal' => $recordsTotal,
             'recordsFiltered' => $recordsFiltered,
-            'data'            => $data,
-            'csrfHash'        => csrf_hash()
+            'data' => $data,
+            'csrfHash' => csrf_hash()
         ]);
     }
 
@@ -394,25 +397,26 @@ class Employee_info extends BaseController
 
                     foreach ($sheetData as $i => $row) {
                         if ($i == 1) continue;
-
+                        $emp_id = trim($row['A']);
                         $data = [
-                            'emp_id' => $row['A'],
-                            'name' => $row['B'],
-                            'gender' => $row['C'],
-                            'email' => $row['D'],
-                            'no_hp' => $row['E'],
+                            'emp_id' => $emp_id,
+                            'name' => trim($row['B']),
+                            'gender' => trim($row['C']),
+                            'email' => trim($row['D']),
+                            'no_hp' => trim($row['E']),
                             'join_date' => !empty($row['F']) ? date('Y-m-d', strtotime($row['F'])) : null,
-                            'emp_type' => $row['G'],
-                            'organization' => $row['H'],
-                            'department' => $row['I'],
-                            'job_title' => $row['J'],
-                            'manager' => $row['K'],
-                            'hr_partner' => $row['L'],
-                            'location' => $row['M'],
-                            'emp_grade' => $row['N'],
-                            'status' => $row['O'],
+                            'emp_type' => trim($row['G']),
+                            'organization' => trim($row['H']),
+                            'department' => trim($row['I']),
+                            'job_title' => trim($row['J']),
+                            'manager' => trim($row['K']),
+                            'hr_partner' => trim($row['L']),
+                            'location' => trim($row['M']),
+                            'emp_grade' => trim($row['N']),
+                            'status' => trim($row['O']),
                             'resign_date' => !empty($row['P']) ? date('Y-m-d', strtotime($row['P'])) : null,
                             'created_at' => date('Y-m-d H:i:s'),
+                            'photo' => $emp_id . '.jpg'
                         ];
 
                         if ($this->EmployeeModel->validate($data)) {
@@ -422,23 +426,19 @@ class Employee_info extends BaseController
                             $errors[] = [
                                 'row' => $i,
                                 'emp_id' => $data['emp_id'],
+                                'data' => $data,
                                 'errors' => $rowErrors,
                             ];
                         }
                     }
 
                     if (!empty($errors)) {
-                        $errorMessages = [];
-                        foreach ($errors as $err) {
-                            $rowNum = $err['row'];
-                            $empId = $err['emp_id'] ?? '-';
-                            $msg = implode(', ', $err['errors']);
-                            $errorMessages[] = "Row {$rowNum} (EmpID: {$empId}) → {$msg}";
-                        }
+                        $data = [
+                            'errors' => $errors
+                        ];
+                        $message = view('employee_info/partial/upload_validation', $data);
 
-                        $errorText = implode("<br>", $errorMessages);
-
-                        return $this->_json_response(false, "Validation Error:<br>" . $errorText);
+                        return $this->_json_response(false, $message, true);
                     }
 
                     if (!empty($validData)) {
@@ -450,7 +450,7 @@ class Employee_info extends BaseController
                     return $this->_json_response(false, $e->getMessage());
                 }
             } else {
-                return $this->_json_response(true, 'File upload failed.');
+                return $this->_json_response(false, 'File upload failed.');
             }
         }
         return $this->_json_response(false, 'Invalid request method');
