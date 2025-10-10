@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class home extends BaseController
 {
     // public function index(): string
     // {
@@ -11,35 +11,35 @@ class Home extends BaseController
 
     public function trial()
     {
-        return view('Home/trial', [
+        return view('home/trial', [
             'title' => 'Trial',
         ]);
     }
 
     public function index()
     {
-        return view('Home/index', [
-            'title' => 'Home',
+        return view('home/index', [
+            'title' => 'home',
         ]);
     }
 
     public function dashboard()
     {
-        return view('Home/dashboard', [
+        return view('home/dashboard', [
             'title' => 'Dashboard',
         ]);
     }
 
     public function privacy_policy()
     {
-        return view('Home/privacy_policy', [
+        return view('home/privacy_policy', [
             'title' => 'Privacy Policy',
         ]);
     }
 
     public function report()
     {
-        return view('Home/report', [
+        return view('home/report', [
             'title' => 'Report',
         ]);
     }
