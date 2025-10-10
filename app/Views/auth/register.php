@@ -121,8 +121,8 @@
         }
 
         .btn-primary {
-            background-color: #7030a0;
-            border-color: #7030a0;
+            background-color: #5f0188;
+            border-color: #5f0188;
             padding: 0.75rem;
             font-size: 1rem;
             font-weight: 600;
@@ -130,8 +130,8 @@
         }
 
         .btn-primary:hover {
-            background-color: #800080;
-            border-color: #800080;
+            background-color: #3d005b;
+            border-color: #3d005b;
         }
 
         .form-control,

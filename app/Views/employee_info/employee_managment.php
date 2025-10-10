@@ -435,7 +435,7 @@
     }
 
     .table-custom-emp th {
-        background-color: #7030a0 !important;
+        background-color: #6f1a94 !important;
         color: #dee2e6;
         text-align: center;
         border: 1px solid #dee2e6;

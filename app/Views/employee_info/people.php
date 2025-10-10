@@ -45,7 +45,7 @@
                             <div class="mb-1">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search..." id="search_department">
-                                    <span class="input-group-text" style="background-color: #880fb3; color: white;">
+                                    <span class="input-group-text" style="background-color: #6f1a94; color: white;">
                                         <i class="fas fa-search"></i>
                                     </span>
                                 </div>
@@ -64,7 +64,7 @@
                                     <div class="flex-grow-1">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search..." id="search_employee">
-                                            <span class="input-group-text" style="background-color: #880fb3; color: white;">
+                                            <span class="input-group-text" style="background-color: #6f1a94; color: white;">
                                                 <i class="fas fa-search"></i>
                                             </span>
                                         </div>
@@ -115,17 +115,17 @@
     }
 
     .department-header {
-        background: linear-gradient(135deg, #7030a0, #800080);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .custom-card-header {
-        background: #7030a0 !important;
+        background: #5f0188 !important;
         color: #ffc107 !important;
 
     }
 
     .custom-tabs .nav-link {
-        color: #7030a0;
+        color: #5f0188;
         font-weight: 500;
         text-align: center;
         transition: all 0.2s ease-in-out;
@@ -133,13 +133,13 @@
 
     .custom-tabs .nav-link:hover {
         background-color: #fff;
-        color: #7030a0;
+        color: #5f0188;
     }
 
     .custom-tabs .nav-link.active {
-        color: #7030a0;
+        color: #5f0188;
         background-color: #fff;
-        border-bottom: 3px solid #7030a0;
+        border-bottom: 3px solid #5f0188;
         font-weight: 600;
     }
 

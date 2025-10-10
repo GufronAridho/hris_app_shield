@@ -121,27 +121,27 @@
     }
 
     .card-recruitment {
-        background: linear-gradient(135deg, #800080, #7030a0);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .card-onboarding {
-        background: linear-gradient(135deg, #45083a, #880fb3);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .card-employee {
-        background: linear-gradient(135deg, #7030a0, #800080);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .card-payroll {
-        background: linear-gradient(135deg, #880fb3, #7030a0);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .card-timesheet {
-        background: linear-gradient(135deg, #7030a0, #45083a);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .card-performance {
-        background: linear-gradient(135deg, #45083a, #880fb3);
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
     }
 
     .card-link {

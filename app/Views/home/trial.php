@@ -126,6 +126,30 @@
             </div>
         </div>
     </div>
+    <div>
+        <div class="row">
+            <div class="col-md-3">
+                <div style="background-color: #3d005b; height: 100px;"></div>
+            </div>
+            <div class="col-md-3">
+                <div style="background-color: #5f0188; height: 100px;"></div>
+            </div>
+            <div class="col-md-3">
+                <div style="background-color: #444444; height: 100px;"></div>
+            </div>
+            <div class="col-md-3">
+                <div style="background-color: #ffffff; height: 100px;"></div>
+            </div>
+            <div class="col-md-3">
+                <div style="background-color: #e16f26; height: 100px;"></div>
+            </div>
+            <div class="col-md-3">
+                <div style="background-color: #5f0188eb; height: 100px;"></div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
 </main>
 
 <!-- Modal -->
@@ -144,6 +168,7 @@
         </div>
     </div>
 </div>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('script') ?>

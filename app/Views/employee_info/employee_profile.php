@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="rounded-3 card-table shadow-sm p-1">
                 <div class="p-3 rounded-1 position-relative overflow-hidden" style="height: 250px;">
-                    <div style="position:absolute; top:0; left:0; width:100%; height:50%; background-color:#7030a0;"></div>
+                    <div style="position:absolute; top:0; left:0; width:100%; height:50%; background-color:#5f0188;"></div>
                     <div style="position:absolute; bottom:0; left:0; width:100%; height:50%; background-color:#fff;"></div>
 
                     <div class="position-relative h-100">
@@ -211,32 +211,8 @@
     <!--end::App Content-->
 </main>
 <style>
-    .department-badge {
-        background-color: #d8b4f8;
-        color: #4b0082;
-        font-size: 1.05rem;
-        font-weight: 600;
-        padding: 0.6em 1.4em;
-        border-radius: 2rem;
-        width: 100px;
-        text-align: center;
-        display: inline-block;
-        transition: all 0.3s ease;
-    }
-
-    .department-header {
-        background: linear-gradient(135deg, #7030a0, #800080);
-    }
-
-
-    .custom-card-header {
-        background: #7030a0 !important;
-        color: #ffc107 !important;
-
-    }
-
     .custom-tabs .nav-link {
-        color: #7030a0;
+        color: #5f0188;
         font-weight: 500;
         text-align: center;
         transition: all 0.2s ease-in-out;
@@ -245,13 +221,13 @@
 
     .custom-tabs .nav-link:hover {
         background-color: #fff;
-        color: #7030a0;
+        color: #5f0188;
     }
 
     .custom-tabs .nav-link.active {
-        color: #7030a0;
+        color: #5f0188;
         background-color: #fff;
-        border-bottom: 3px solid #7030a0;
+        border-bottom: 3px solid #5f0188;
         font-weight: 600;
     }
 
