@@ -106,7 +106,7 @@ $menu_items = Menu::$menus[$module] ?? [];
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end layout-dropdown">
                                 <li><a class="dropdown-item layout-dropdown-item" href="#"><i class="fas fa-key me-2"></i>Change Password</a></li>
-                                <li><a class="dropdown-item layout-dropdown-item" href="#"><i class="fas fa-user-cog me-2"></i>Profile Settings</a></li>
+                                <li><a class="dropdown-item layout-dropdown-item" href="<?= base_url('master_data/mst_user') ?>"><i class="fas fa-user-cog me-2"></i>Master Data</a></li>
                             </ul>
                         </div>
 
@@ -400,7 +400,6 @@ $menu_items = Menu::$menus[$module] ?? [];
         .table-custom td {
             border: 1px solid #dee2e6;
             border-radius: 0;
-            vertical-align: middle;
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
@@ -412,9 +411,19 @@ $menu_items = Menu::$menus[$module] ?? [];
             cursor: pointer;
         }
 
-        .table td,
-        .table th {
-            vertical-align: middle;
+        #add_modal .select2-container--default .select2-selection--single,
+        #edit_modal .select2-container--default .select2-selection--single {
+            height: calc(1.5em + 0.75rem + 2px);
+        }
+
+        #add_modal .select2-container--default .select2-selection--single .select2-selection__rendered,
+        #edit_modal .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: calc(1.5em + 0.75rem);
+        }
+
+        #add_modal .select2-container--default .select2-selection--single .select2-selection__arrow,
+        #edit_modal .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: calc(1.5em + 0.75rem + 2px);
         }
     </style>
     <!--begin::Script-->

@@ -11,7 +11,7 @@
                     <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Employee</a></li>
-                            <li class="breadcrumb-item active">Employee Manegment</li>
+                            <li class="breadcrumb-item active"><?= $title; ?></li>
                         </ol>
                     </div>
                 </div>
@@ -449,21 +449,6 @@
         border-radius: 0;
         vertical-align: middle;
     }
-
-    #add_modal .select2-container--default .select2-selection--single,
-    #edit_modal .select2-container--default .select2-selection--single {
-        height: calc(1.5em + 0.75rem + 2px);
-    }
-
-    #add_modal .select2-container--default .select2-selection--single .select2-selection__rendered,
-    #edit_modal .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: calc(1.5em + 0.75rem);
-    }
-
-    #add_modal .select2-container--default .select2-selection--single .select2-selection__arrow,
-    #edit_modal .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: calc(1.5em + 0.75rem + 2px);
-    }
 </style>
 <?= $this->endSection() ?>
 
@@ -537,6 +522,7 @@
             searching: true,
             ordering: true,
             orderCellsTop: true,
+            fixedHeader: true,
             scrollX: true,
             searchDelay: 500,
             buttons: [{
@@ -549,7 +535,7 @@
                 }
             }],
             ajax: {
-                url: "<?= base_url('employee_info/employeeList') ?>",
+                url: "<?= base_url('employee_info/employee_list') ?>",
                 type: "POST",
                 data: function(d) {
                     d.status = status;

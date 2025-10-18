@@ -32,6 +32,14 @@ class Menu
             ['label' => 'Department', 'url' => 'employee_info/department', 'icon' => 'fas fa-building'],
             ['label' => 'Employee Profile', 'url' => 'employee_info/employee_profile', 'icon' => 'fas fa-id-card'],
         ],
-
+        'master_data' => [
+            ['label' => 'Home', 'url' => 'home/index', 'icon' => 'fas fa-home'],
+            ['label' => 'Checklist', 'url' => 'master_data/mst_checklist', 'icon' => 'fas fa-clipboard-check'],
+            ['label' => 'Department', 'url' => 'master_data/mst_dept', 'icon' => 'fas fa-building'],
+            ['label' => 'Employee Type', 'url' => 'master_data/mst_emp_type', 'icon' => 'fas fa-user-tag'],
+            ['label' => 'Job', 'url' => 'master_data/mst_job', 'icon' => 'fas fa-briefcase'],
+            ['label' => 'Status', 'url' => 'master_data/mst_status', 'icon' => 'fas fa-toggle-on'],
+            ['label' => 'User', 'url' => 'master_data/mst_user', 'icon' => 'fas fa-user-cog'],
+        ],
     ];
 }

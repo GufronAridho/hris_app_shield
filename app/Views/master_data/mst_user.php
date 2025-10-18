@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                     <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Onboarding</a></li>
+                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Master Data</a></li>
                             <li class="breadcrumb-item active"><?= $title; ?></li>
                         </ol>
                     </div>
@@ -68,31 +68,13 @@
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center">No</th>
-                                <th>Colomn1</th>
-                                <th>Colomn2</th>
-                                <th>Colomn3</th>
-                                <th>Colomn4</th>
-                                <th>Colomn5</th>
+                                <th style="width:40%;">Check Category</th>
+                                <th style="width:40%;">Question</th>
+                                <th style="width:20%; text-align:center;">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td>Colomn1</td>
-                                <td>Colomn2</td>
-                                <td>Colomn3</td>
-                                <td>Colomn4</td>
-                                <td>Colomn5</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td>Colomn1</td>
-                                <td>Colomn2</td>
-                                <td>Colomn3</td>
-                                <td>Colomn4</td>
-                                <td>Colomn5</td>
-                            </tr>
+                        <tbody id="table_body">
+
                         </tbody>
                     </table>
                 </div>
@@ -110,16 +92,69 @@
 <?= $this->section('script'); ?>
 <script>
     $(document).ready(function() {
-        initializeDataTable('table_detail');
+        get_table();
     });
 
+    function get_table() {
+        if ($.fn.DataTable.isDataTable('#table_detail')) {
+            $('#table_detail').DataTable().destroy();
+            $('#table_detail tbody').empty();
+        }
+        $.ajax({
+            url: "<?= base_url('master_data/checklist_table'); ?>",
+            type: "GET",
+            dataType: "html",
+            success: function(res) {
+                $('#table_body').html(res);
+                initializeDataTable('table_detail');
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                $('#table_body').html(`
+                <tr>
+                    <td colspan="3" class="text-center text-black p-3">
+                        Failed to load data. Please try again.
+                    </td>
+                </tr>
+            `);
+            }
+        });
+    }
+
+
     function initializeDataTable(tableId) {
-        $('#' + tableId).DataTable({
+        let table = $('#' + tableId);
+        $('#' + tableId + ' thead tr.search-row').remove();
+
+        $('#' + tableId + ' thead tr')
+            .clone(true)
+            .addClass('search-row')
+            .appendTo('#' + tableId + ' thead');
+
+        $('#' + tableId + ' thead tr.search-row th').each(function(index) {
+            if (index === 2) {
+                $(this).html('');
+            } else {
+                $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
+            }
+        });
+
+        let datatable = table.DataTable({
             pageLength: 10,
             lengthChange: true,
             searching: true,
             ordering: true,
             scrollX: true,
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function() {
+                var api = this.api();
+                api.columns().every(function(colIdx) {
+                    $('input', $('.search-row th').eq(colIdx)).on('keyup change clear', function() {
+                        api.column(colIdx).search(this.value).draw();
+                    });
+                });
+            }
         });
     }
 </script>

@@ -14,11 +14,11 @@ class MstEmpTypeModel extends Model
     protected $updatedField  = 'updated_at';
     protected $skipValidation = false;
     protected $validationRules = [
-        'job_title' => 'required|safe_string|is_unique[mst_type.Type]',
+        'type' => 'required|safe_string|is_unique[mst_type.Type]',
         'updated_by' => 'safe_string',
     ];
     protected $validationMessages = [
-        'job_title' => [
+        'type' => [
             'required'    => 'Type is required.',
             'safe_string' => 'Type contains invalid characters.',
             'is_unique'   => 'Type must be unique.',

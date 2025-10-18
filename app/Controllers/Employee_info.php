@@ -58,7 +58,7 @@ class Employee_info extends BaseController
         ]);
     }
 
-    public function employeeList()
+    public function employee_list()
     {
         $request = $this->request;
 
@@ -158,7 +158,6 @@ class Employee_info extends BaseController
             $data[] = $emp;
         }
 
-        // --- return response JSON ---
         return $this->response->setJSON([
             'draw' => $draw,
             'recordsTotal' => $recordsTotal,
@@ -167,45 +166,6 @@ class Employee_info extends BaseController
             'csrfHash' => csrf_hash()
         ]);
     }
-
-    function compressImage($file, $destinationFolder, $maxSizeMB = 1, $startQuality = 90, $minQuality = 10, $step = 5)
-    {
-        if (!$file->isValid() || $file->hasMoved()) {
-            throw new \RuntimeException('Invalid file upload.');
-        }
-
-        // Ensure folder exists
-        if (!is_dir($destinationFolder)) {
-            mkdir($destinationFolder, 0755, true);
-        }
-
-        $fileName = $file->getRandomName();
-        $fileSizeMB = $file->getSize() / 1024 / 1024;
-
-        // If file is already small enough, just move it
-        if ($fileSizeMB <= $maxSizeMB) {
-            $file->move($destinationFolder, $fileName);
-            return $fileName;
-        }
-
-        // Temp path inside destination folder
-        $tempPath = $destinationFolder . '/temp_' . $fileName;
-        $image = \Config\Services::image()->withFile($file->getRealPath());
-        $quality = $startQuality;
-
-        do {
-            $image->save($tempPath, $quality);
-            $fileSizeMB = filesize($tempPath) / 1024 / 1024;
-            $quality -= $step;
-            if ($quality < $minQuality) break;
-        } while ($fileSizeMB > $maxSizeMB);
-
-        // Move final image to destination folder
-        rename($tempPath, $destinationFolder . '/' . $fileName);
-
-        return $fileName;
-    }
-
 
     public function create_employee()
     {
@@ -231,7 +191,7 @@ class Employee_info extends BaseController
             $destinationFolder = FCPATH . 'assets/profile';
 
             if ($photoFile && $photoFile->isValid()) {
-                $photoName = $this->compressImage($photoFile, $destinationFolder);
+                $photoName = compress_image($photoFile, $destinationFolder);
             } else {
                 $photoName = null;
             }
@@ -302,7 +262,7 @@ class Employee_info extends BaseController
                 }
 
                 $destinationFolder = FCPATH . 'assets/profile';
-                $photoName = $this->compressImage($photoFile, $destinationFolder);
+                $photoName = compress_image($photoFile, $destinationFolder);
             }
 
             $data = [

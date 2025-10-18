@@ -11,7 +11,7 @@
                     <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Recruitment</a></li>
-                            <li class="breadcrumb-item active">Candidate</li>
+                            <li class="breadcrumb-item active"><?= $title; ?></li>
                         </ol>
                     </div>
                 </div>
