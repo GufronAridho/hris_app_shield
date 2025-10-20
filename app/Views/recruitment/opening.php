@@ -29,15 +29,6 @@
                                 </span>
                             </button>
 
-                            <button class="btn btn-split btn-info btn-sm" id="download_excel">
-                                <span class="btn-icon"><i class="fa fa-file-excel"></i></span>
-                                <span class="btn-text">
-                                    <strong>
-                                        Download
-                                    </strong>
-                                </span>
-                            </button>
-
                         </div>
                     </div>
                 </div>
@@ -57,11 +48,12 @@
                         <thead>
                             <tr>
                                 <th class="text-center">Job ID</th>
-                                <th class="text-center">Candidate Name</th>
-                                <th class="text-center">Schedule</th>
-                                <th class="text-center">Interviewer</th>
+                                <th class="text-center">Position</th>
+                                <th class="text-center">Department</th>
+                                <th class="text-center">Location</th>
                                 <th class="text-center">Status</th>
-                                <th class="text-center">Remark</th>
+                                <th class="text-center">Posted Date</th>
+                                <th class="text-center">Closed Date</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -82,70 +74,75 @@
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
                 <h5 class="modal-title" id="add_modalLabel">
-                    <i class="fas fa-calendar-plus me-2"></i> Add Interview
+                    <i class="fas fa-square-plus me-2"></i> Create Job Opening
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="form_add">
                 <div class="modal-body">
                     <div class="row g-2">
-                        <div class="col-md-12">
+                        <div class="col-md-7">
                             <div class="card w-100">
                                 <div class="card-body">
                                     <div class="row g-2">
-                                        <div class="col-md-6">
-                                            <label for="add_candidate_id" class="form-label">Candidate</label>
-                                            <select id="add_candidate_id" name="candidate_id" class="form-select" required>
+                                        <div class="col-md-12">
+                                            <label for="add_job_id" class="form-label">Job ID</label>
+                                            <input type="text" class="form-control" id="add_job_id" name="job_id" placeholder="Enter Job ID" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="add_position" class="form-label">Position</label>
+                                            <input type="text" class="form-control" id="add_position" name="position" placeholder="Enter job position title" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="add_description" class="form-label">Description</label>
+                                            <textarea class="form-control" id="add_description" name="description" rows="2"></textarea>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="add_department" class="form-label">Department</label>
+                                            <select class="form-select" id="add_department" name="department" required>
 
                                             </select>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_interviewer" class="form-label">Interviewer</label>
-                                            <input type="text" class="form-control" id="add_interviewer" name="interviewer" placeholder="Enter interviewer's name" required>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_interview_date" class="form-label">Interview Date & Time</label>
-                                            <input type="datetime-local" class="form-control" id="add_interview_date" name="interview_date" required>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_rating" class="form-label">Rating (0–10)</label>
-                                            <input type="number" class="form-control" id="add_rating" name="rating" placeholder="Enter rating score" min="0" max="10" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+
+                        <div class="col-md-5">
                             <div class="card w-100">
                                 <div class="card-body">
                                     <div class="row g-2">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
+                                            <label for="add_location" class="form-label">Location</label>
+                                            <input type="text" class="form-control" id="add_location" name="location" placeholder="Enter job location" required>
+                                        </div>
+                                        <div class="col-md-12">
                                             <label for="add_status" class="form-label">Status</label>
-                                            <select id="add_status" name="status" class="form-select" required>
-                                                <option value="">Select Status</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Passed">Passed</option>
-                                                <option value="Failed">Failed</option>
+                                            <select class="form-select" id="add_status" name="status" required>
+                                                <option value="">Select status</option>
+                                                <option value="Open">Open</option>
+                                                <option value="Closed">Closed</option>
                                             </select>
                                         </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_remarks" class="form-label">Remarks</label>
-                                            <textarea id="add_remarks" name="remarks" class="form-control" placeholder="Enter remarks or feedback"></textarea>
+                                        <div class="col-md-12">
+                                            <label for="add_posted_date" class="form-label">Posted Date</label>
+                                            <input type="date" class="form-control" id="add_posted_date" name="posted_date" placeholder="Select posted date" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="add_closing_date" class="form-label">Closed Date</label>
+                                            <input type="date" class="form-control" id="add_closing_date" name="closing_date" placeholder="Select closing date" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-plus me-1"></i> Add Interview
-                        </button>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus me-1"></i> Add Master Data
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -153,73 +150,81 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
                 <h5 class="modal-title" id="edit_modalLabel">
-                    <i class="fas fa-pen-to-square me-2"></i> Edit Interview
+                    <i class="fas fa-pen-to-square me-2"></i> Edit Job Opening
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="form_edit">
                 <div class="modal-body">
-                    <input type="hidden" id="edit_interview_id" name="id">
                     <div class="row g-2">
-                        <div class="col-md-12">
+                        <div class="col-md-7">
                             <div class="card w-100">
                                 <div class="card-body">
                                     <div class="row g-2">
-                                        <div class="col-md-6">
-                                            <label for="edit_candidate_id" class="form-label">Candidate</label>
-                                            <select id="edit_candidate_id" name="candidate_id" class="form-select" required>
+                                        <input type="hidden" id="edit_id" name="id">
+                                        <div class="col-md-12">
+                                            <label for="edit_job_id" class="form-label">Job ID</label>
+                                            <input type="text" class="form-control" id="edit_job_id" name="job_id" placeholder="Enter Job ID" readonly>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="edit_position" class="form-label">Position</label>
+                                            <input type="text" class="form-control" id="edit_position" name="position" placeholder="Enter position title" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="edit_description" class="form-label">Description</label>
+                                            <textarea class="form-control" id="edit_description" name="description" rows="2"></textarea>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="edit_department" class="form-label">Department</label>
+                                            <select class="form-select" id="edit_department" name="department" required>
 
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="edit_interviewer" class="form-label">Interviewer</label>
-                                            <input type="text" class="form-control" id="edit_interviewer" name="interviewer" placeholder="Enter interviewer's name" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="edit_interview_date" class="form-label">Interview Date & Time</label>
-                                            <input type="datetime-local" class="form-control" id="edit_interview_date" name="interview_date" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="edit_rating" class="form-label">Rating (0–10)</label>
-                                            <input type="number" class="form-control" id="edit_rating" name="rating" placeholder="Enter rating score" min="0" max="10" required>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+
+                        <div class="col-md-5">
                             <div class="card w-100">
                                 <div class="card-body">
                                     <div class="row g-2">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
+                                            <label for="edit_location" class="form-label">Location</label>
+                                            <input type="text" class="form-control" id="edit_location" name="location" placeholder="Enter job location" required>
+                                        </div>
+                                        <div class="col-md-12">
                                             <label for="edit_status" class="form-label">Status</label>
-                                            <select id="edit_status" name="status" class="form-select" required>
-                                                <option value="">Select Status</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Passed">Passed</option>
-                                                <option value="Failed">Failed</option>
+                                            <select class="form-select" id="edit_status" name="status" required>
+                                                <option value="">Select status</option>
+                                                <option value="Open">Open</option>
+                                                <option value="Closed">Closed</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="edit_remarks" class="form-label">Remarks</label>
-                                            <textarea id="edit_remarks" name="remarks" class="form-control" placeholder="Enter remarks or feedback"></textarea>
+                                        <div class="col-md-12">
+                                            <label for="edit_posted_date" class="form-label">Posted Date</label>
+                                            <input type="date" class="form-control" id="edit_posted_date" name="posted_date" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="edit_closing_date" class="form-label">Closed Date</label>
+                                            <input type="date" class="form-control" id="edit_closing_date" name="closing_date" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save me-1"></i> Save Changes
-                        </button>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-1"></i> Save Changes
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -236,11 +241,11 @@
 <?= $this->section('script'); ?>
 <script>
     $('#add_modal').on('shown.bs.modal', function() {
-        initSelect2Ajax('#add_candidate_id', 'Select Candidate', "<?= base_url('select_form/candidateSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#add_modal .modal-body');
     });
 
     $('#edit_modal').on('shown.bs.modal', function() {
-        initSelect2Ajax('#edit_candidate_id', 'Select Candidate', "<?= base_url('select_form/candidateSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#edit_modal .modal-body');
     });
 
     $('#add_modal').on('hidden.bs.modal', function() {
@@ -293,30 +298,28 @@
         get_table();
 
         $(document).on('click', '.edit-btn', function() {
-            $('#edit_interview_id').val($(this).data('id'));
 
-            var candidate_id = $(this).data('candidate_id');
-            var candidate_name = $(this).data('candidate_name');
-            var jobOption = new Option(candidate_name, candidate_id, true, true);
-            $('#edit_candidate_id').append(jobOption).trigger('change');
-
-            $('#edit_interviewer').val($(this).data('interviewer'));
-            $('#edit_interviewer').val($(this).data('interviewer'));
-            $('#edit_interview_date').val($(this).data('interview_date'));
-            $('#edit_rating').val($(this).data('rating'));
+            $('#edit_id').val($(this).data('id'));
+            $('#edit_job_id').val($(this).data('job_id'));
+            $('#edit_position').val($(this).data('position'));
+            var department = $(this).data('department')
+            var departmentOption = new Option(department, department, true, true);
+            $('#edit_department').append(departmentOption).trigger('change');
+            $('#edit_location').val($(this).data('location'));
             $('#edit_status').val($(this).data('status'));
-            $('#edit_remarks').val($(this).data('remarks'));
+            $('#edit_posted_date').val($(this).data('posted_date'));
+            $('#edit_closing_date').val($(this).data('closing_date'));
+            $('#edit_description').val($(this).data('description'));
 
             $('#edit_modal').modal('show');
         });
-
 
         $(document).on('click', '.delete-btn', function() {
             var id = $(this).data('id');
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "Delete this Interview!",
+                text: "Delete this Job Opening!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -326,7 +329,7 @@
                 allowOutsideClick: () => !Swal.isLoading(),
                 preConfirm: () => {
                     return $.ajax({
-                        url: "<?= base_url('recruitment/delete_interview') ?>",
+                        url: "<?= base_url('recruitment/delete_job_opening') ?>",
                         type: "POST",
                         data: {
                             id: id
@@ -366,7 +369,7 @@
         }
 
         $.ajax({
-            url: "<?= base_url('recruitment/interview_table'); ?>",
+            url: "<?= base_url('recruitment/opening_table'); ?>",
             type: "GET",
             dataType: "html",
             success: function(res) {
@@ -377,7 +380,7 @@
                 console.error("AJAX Error:", error);
                 $('#table_detail_body').html(`
                 <tr>
-                    <td colspan="7" class="text-center text-black p-3">
+                    <td colspan="8" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -396,7 +399,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 6) {
+            if (index === 7) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
@@ -411,15 +414,6 @@
             scrollX: true,
             orderCellsTop: true,
             fixedHeader: true,
-            buttons: [{
-                extend: 'excelHtml5',
-                text: '',
-                title: 'Export to Excel',
-                filename: 'Interview' + new Date().toISOString().slice(0, 10),
-                exportOptions: {
-                    columns: ':visible:not(:last-child)'
-                }
-            }],
             initComplete: function() {
                 var api = this.api();
                 api.columns().every(function(colIdx) {
@@ -428,10 +422,6 @@
                     });
                 });
             }
-        });
-
-        $('#download_excel').off('click').on('click', function() {
-            datatable.button('.buttons-excel').trigger();
         });
     }
 
@@ -442,7 +432,7 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Add this Interview!",
+            text: "Add this Job Opening!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -452,7 +442,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('recruitment/create_interview') ?>",
+                    url: "<?= base_url('recruitment/create_job_opening') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,
@@ -492,7 +482,7 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Edit this Interview!",
+            text: "Edit this Job Opening!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -502,7 +492,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('recruitment/update_interview') ?>",
+                    url: "<?= base_url('recruitment/update_job_opening') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,

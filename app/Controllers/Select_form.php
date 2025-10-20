@@ -6,6 +6,8 @@ use App\Models\MstStatusModel;
 use App\Models\MstJobModel;
 use App\Models\MstEmpTypeModel;
 use App\Models\MstDeptModel;
+use App\Models\OpeningModel;
+use App\Models\CandidateModel;
 
 class Select_form extends BaseController
 {
@@ -13,6 +15,8 @@ class Select_form extends BaseController
     protected $MstJobModel;
     protected $MstEmpTypeModel;
     protected $MstDeptModel;
+    protected $OpeningModel;
+    protected $CandidateModel;
 
     public function __construct()
     {
@@ -20,6 +24,8 @@ class Select_form extends BaseController
         $this->MstJobModel = new MstJobModel();
         $this->MstEmpTypeModel = new MstEmpTypeModel();
         $this->MstDeptModel = new MstDeptModel();
+        $this->OpeningModel = new OpeningModel();
+        $this->CandidateModel = new CandidateModel();
     }
 
     public function statusSelect()
@@ -116,6 +122,61 @@ class Select_form extends BaseController
             $items[] = [
                 'id' => $row->department,
                 'name' => $row->department
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function jobOpeningSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->OpeningModel->builder();
+        $builder->distinct();
+        $builder->select('job_id, position');
+
+        if (!empty($q)) {
+            $builder->groupStart()
+                ->like('job_id', $q)
+                ->orLike('position', $q)
+                ->groupEnd();
+        }
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->job_id,
+                'name' => $row->job_id . ' - ' . $row->position
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function candidateSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->CandidateModel->builder();
+        $builder->distinct();
+        $builder->select('id, candidate_name');
+
+        if (!empty($q)) {
+            $builder->like('candidate_name', $q);
+        }
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->id,
+                'name' => $row->candidate_name
             ];
         }
 

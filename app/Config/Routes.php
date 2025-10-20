@@ -33,13 +33,13 @@ $routes->group('home', function ($routes) {
     $routes->get('test_csrf', 'Home::test_csrf');
 });
 
-// $routes->get('recruitment/(:any)', 'Recruitment::$1');
-// $routes->post('recruitment/(:any)', 'Recruitment::$1');
-$routes->group('recruitment',  function ($routes) {
-    $routes->get('summary', 'Recruitment::summary');
-    $routes->get('candidate', 'Recruitment::candidate');
-    $routes->get('interview', 'Recruitment::interview');
-});
+$routes->get('recruitment/(:any)', 'Recruitment::$1');
+$routes->post('recruitment/(:any)', 'Recruitment::$1');
+// $routes->group('recruitment',  function ($routes) {
+//     $routes->get('summary', 'Recruitment::summary');
+//     $routes->get('candidate', 'Recruitment::candidate');
+//     $routes->get('interview', 'Recruitment::interview');
+// });
 
 // $routes->get('onboarding/(:any)', 'Onboarding::$1');
 // $routes->post('onboarding/(:any)', 'Onboarding::$1');
@@ -84,6 +84,8 @@ $routes->group('select_form',  function ($routes) {
     $routes->get('jobTitleSelect', 'Select_form::jobTitleSelect');
     $routes->get('empTypeSelect', 'Select_form::empTypeSelect');
     $routes->get('deptSelect', 'Select_form::deptSelect');
+    $routes->get('jobOpeningSelect', 'Select_form::jobOpeningSelect');
+    $routes->get('candidateSelect', 'Select_form::candidateSelect');
 });
 
 // $routes->group('master_data', function ($routes) {

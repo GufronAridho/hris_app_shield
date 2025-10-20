@@ -13,6 +13,7 @@ class Menu
         ],
         'recruitment' => [
             ['label' => 'Home', 'url' => 'home/index', 'icon' => 'fas fa-home'],
+            ['label' => 'Opening', 'url' => 'recruitment/opening', 'icon' => 'fas fa-briefcase'],
             ['label' => 'Summary', 'url' => 'recruitment/summary', 'icon' => 'fas fa-chart-pie'],
             ['label' => 'Candidate', 'url' => 'recruitment/candidate', 'icon' => 'fas fa-user-friends'],
             ['label' => 'Interview', 'url' => 'recruitment/interview', 'icon' => 'fas fa-comments'],
