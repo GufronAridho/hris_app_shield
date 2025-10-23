@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <a href="<?= base_url("recruitment/summary"); ?>" class="card-link">
+                    <a href="<?= base_url("attendance/attendance"); ?>" class="card-link">
                         <div class="card gradient-card card-timesheet">
                             <div class="card-body icon-container">
                                 <i class="fas fa-clock icon-large"></i>
@@ -146,6 +146,10 @@
 
     .card-link {
         text-decoration: none;
+    }
+
+    .app-main {
+        justify-content: center;
     }
 </style>
 

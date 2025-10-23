@@ -30,6 +30,21 @@ class EmployeeModel extends Model
         'no_hp'
     ];
 
+    public function generateEmpId()
+    {
+        $lastEmp = $this->select('emp_id')
+            ->orderBy('emp_id', 'DESC')
+            ->first();
+
+        if ($lastEmp && preg_match('/EMP(\d+)/', $lastEmp['emp_id'], $matches)) {
+            $nextNumber = intval($matches[1]) + 1;
+        } else {
+            $nextNumber = 1;
+        }
+
+        return 'EMP' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+    }
+
     protected $skipValidation = false;
 
     protected $validationRules = [
@@ -38,15 +53,15 @@ class EmployeeModel extends Model
         'gender'       => 'required|safe_string',
         'join_date'    => 'required',
         'emp_type'     => 'required|safe_string',
-        'organization' => 'required|safe_string',
+        'organization' => 'permit_empty|safe_string',
         'department'   => 'required|safe_string',
         'job_title'    => 'required|safe_string',
-        'manager'      => 'required|safe_string',
-        'hr_partner'   => 'required|safe_string',
-        'location'     => 'required|safe_string',
-        'emp_grade'    => 'required|decimal',
+        'manager'      => 'permit_empty|safe_string',
+        'hr_partner'   => 'permit_empty|safe_string',
+        'location'     => 'permit_empty|safe_string',
+        'emp_grade'    => 'permit_empty|decimal',
         'status'       => 'required|safe_string',
-        'email'        => 'valid_email',
+        'email'        => 'permit_empty|valid_email',
     ];
 
     protected $validationMessages = [
@@ -71,7 +86,6 @@ class EmployeeModel extends Model
             'safe_string' => 'Employee type contains invalid characters',
         ],
         'organization' => [
-            'required'    => 'Organization is required',
             'safe_string' => 'Organization contains invalid characters',
         ],
         'department' => [
@@ -83,11 +97,9 @@ class EmployeeModel extends Model
             'safe_string' => 'Job title contains invalid characters',
         ],
         'manager' => [
-            'required'    => 'Manager is required',
             'safe_string' => 'Manager contains invalid characters',
         ],
         'hr_partner' => [
-            'required'    => 'HR Partner is required',
             'safe_string' => 'HR Partner contains invalid characters',
         ],
         'location' => [
@@ -95,7 +107,6 @@ class EmployeeModel extends Model
             'safe_string' => 'Location contains invalid characters',
         ],
         'emp_grade' => [
-            'required'    => 'Employee grade is required',
             'decimal' => 'Employee grade contain only numbers (you can include decimals)',
         ],
         'status' => [

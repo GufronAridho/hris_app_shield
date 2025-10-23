@@ -143,11 +143,11 @@
                                 <div class="card-header bg-light"></div>
                                 <div class="card-body">
                                     <div class="row g-2">
-                                        <div class="col-md-5">
+                                        <!-- <div class="col-md-5">
                                             <label for="add_emp_id" class="form-label">Employee ID</label>
                                             <input type="text" class="form-control" id="add_emp_id" name="emp_id" required>
-                                        </div>
-                                        <div class="col-md-7">
+                                        </div> -->
+                                        <div class="col-md-12">
                                             <label for="add_name" class="form-label">Name</label>
                                             <input type="text" class="form-control" id="add_name" name="name" required>
                                         </div>
@@ -189,13 +189,13 @@
                                             <label for="add_department" class="form-label">Department</label>
                                             <select class="form-select" id="add_department" name="department" required></select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="add_job_title" class="form-label">Job Title</label>
                                             <select class="form-select" id="add_job_title" name="job_title" required></select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="add_manager" class="form-label">Manager</label>
-                                            <input type="text" class="form-control" id="add_manager" name="manager" required>
+                                            <select class="form-select" id="add_manager" name="manager"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -211,11 +211,11 @@
                                     <div class="row g-2">
                                         <div class="col-md-2">
                                             <label for="add_hr_partner" class="form-label">HR Partner</label>
-                                            <input type="text" class="form-control" id="add_hr_partner" name="hr_partner" required>
+                                            <select class="form-select" id="add_hr_partner" name="hr_partner"></select>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="add_organization" class="form-label">Organization</label>
-                                            <input type="text" class="form-control" id="add_organization" name="organization" required>
+                                            <input type="text" class="form-control" id="add_organization" name="organization">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="add_location" class="form-label">Location</label>
@@ -223,7 +223,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="add_emp_grade" class="form-label">Employee Grade</label>
-                                            <input type="number" class="form-control" id="add_emp_grade" name="emp_grade" step="0.01" min="0" required>
+                                            <input type="number" class="form-control" id="add_emp_grade" name="emp_grade" step="0.01" min="0">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="add_status" class="form-label">Status</label>
@@ -326,13 +326,13 @@
                                             <label for="edit_department" class="form-label">Department</label>
                                             <select class="form-select" id="edit_department" name="department" required></select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="edit_job_title" class="form-label">Job Title</label>
                                             <select class="form-select" id="edit_job_title" name="job_title" required></select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="edit_manager" class="form-label">Manager</label>
-                                            <input type="text" class="form-control" id="edit_manager" name="manager" required>
+                                            <select class="form-select" id="edit_manager" name="manager"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -348,11 +348,11 @@
                                     <div class="row g-2">
                                         <div class="col-md-2">
                                             <label for="edit_hr_partner" class="form-label">HR Partner</label>
-                                            <input type="text" class="form-control" id="edit_hr_partner" name="hr_partner" required>
+                                            <select class="form-select" id="edit_hr_partner" name="hr_partner"></select>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="edit_organization" class="form-label">Organization</label>
-                                            <input type="text" class="form-control" id="edit_organization" name="organization" required>
+                                            <input type="text" class="form-control" id="edit_organization" name="organization">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="edit_location" class="form-label">Location</label>
@@ -360,7 +360,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="edit_emp_grade" class="form-label">Employee Grade</label>
-                                            <input type="number" class="form-control" id="edit_emp_grade" name="emp_grade" step="0.01" min="0" required>
+                                            <input type="number" class="form-control" id="edit_emp_grade" name="emp_grade" step="0.01" min="0">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="edit_status" class="form-label">Status</label>
@@ -461,6 +461,8 @@
         initSelect2Ajax('#add_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal .modal-body');
         initSelect2Ajax('#add_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#add_modal .modal-body');
         initSelect2Ajax('#add_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_manager', 'Select Manager', "<?= base_url('select_form/managerSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_hr_partner', 'Select HR Partner', "<?= base_url('select_form/hrSelect') ?>", '#add_modal .modal-body');
     });
 
     $('#edit_modal').on('shown.bs.modal', function() {
@@ -468,6 +470,8 @@
         initSelect2Ajax('#edit_job_title', 'Select Job title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal .modal-body');
         initSelect2Ajax('#edit_emp_type', 'Select Employee type', "<?= base_url('select_form/empTypeSelect') ?>", '#edit_modal .modal-body');
         initSelect2Ajax('#edit_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_manager', 'Select Manager', "<?= base_url('select_form/managerSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_hr_partner', 'Select HR Partner', "<?= base_url('select_form/hrSelect') ?>", '#edit_modal .modal-body');
     });
 
     $('#add_modal').on('hidden.bs.modal', function() {
@@ -727,6 +731,15 @@
             }
         });
 
+        function setSelect2Value(selector, value) {
+            if (value && value !== 'null' && value.trim() !== '') {
+                var opt = new Option(value, value, true, true);
+                $(selector).empty().append(opt).trigger('change');
+            } else {
+                $(selector).val(null).trigger('change');
+            }
+        }
+
         $(document).on('click', '.edit-btn', function() {
             var emp = $(this).data('emp');
 
@@ -735,23 +748,15 @@
             $('#edit_name').val(emp.name);
             $('#edit_gender').val(emp.gender);
             $('#edit_join_date').val(emp.join_date);
-            // $('#edit_emp_type').val(emp.emp_type);
-            var emp_typeOption = new Option(emp.emp_type, emp.emp_type, true, true);
-            $('#edit_emp_type').append(emp_typeOption).trigger('change');
+            setSelect2Value('#edit_emp_type', emp.emp_type);
             $('#edit_organization').val(emp.organization);
-            // $('#edit_department').val(emp.department);
-            var departmentOption = new Option(emp.department, emp.department, true, true);
-            $('#edit_department').append(departmentOption).trigger('change');
-            // $('#edit_job_title').val(emp.job_title);
-            var job_titleOption = new Option(emp.job_title, emp.job_title, true, true);
-            $('#edit_job_title').append(job_titleOption).trigger('change');
-            $('#edit_manager').val(emp.manager);
-            $('#edit_hr_partner').val(emp.hr_partner);
+            setSelect2Value('#edit_department', emp.department);
+            setSelect2Value('#edit_job_title', emp.job_title);
+            setSelect2Value('#edit_manager', emp.manager);
+            setSelect2Value('#edit_hr_partner', emp.hr_partner);
             $('#edit_location').val(emp.location);
             $('#edit_emp_grade').val(emp.emp_grade);
-            // $('#edit_status').val(emp.status);
-            var statusOption = new Option(emp.status, emp.status, true, true);
-            $('#edit_status').append(statusOption).trigger('change');
+            setSelect2Value('#edit_status', emp.status);
             $('#edit_resign_date').val(emp.resign_date);
             $('#edit_email').val(emp.email);
             $('#edit_no_hp').val(emp.no_hp);

@@ -2,9 +2,10 @@
     <tr>
         <td class="text-center">
             <span class="badge bg-secondary" style="font-size: 1rem;">
-                <?= $i['check_cat']; ?>
+                <?= $i['check_id']; ?>
             </span>
         </td>
+        <td class=""><?= $i['check_cat']; ?> </td>
         <td class=""><?= $i['check_quest']; ?> </td>
         <td class="text-center">
             <button class="btn btn-sm btn-info edit-btn me-1"

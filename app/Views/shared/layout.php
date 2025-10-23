@@ -408,7 +408,6 @@ $menu_items = Menu::$menus[$module] ?? [];
 
         .table-hover tbody tr:hover {
             background-color: #efe6ff;
-            cursor: pointer;
         }
 
         #add_modal .select2-container--default .select2-selection--single,

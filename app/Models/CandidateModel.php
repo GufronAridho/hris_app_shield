@@ -17,6 +17,7 @@ class CandidateModel extends Model
         'address',
         'phone',
         'email',
+        'status',
         'timestamp'
     ];
     protected $skipValidation = false;

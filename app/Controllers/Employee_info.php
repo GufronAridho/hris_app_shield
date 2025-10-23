@@ -196,17 +196,19 @@ class Employee_info extends BaseController
                 $photoName = null;
             }
 
+            $emp_id = $this->EmployeeModel->generateEmpId();
+
             $data = [
-                'emp_id' => $this->request->getPost('emp_id'),
+                'emp_id' => $emp_id,
                 'name' => $this->request->getPost('name'),
                 'gender' => $this->request->getPost('gender'),
                 'join_date' => $this->request->getPost('join_date'),
                 'emp_type' => $this->request->getPost('emp_type'),
                 'department' => $this->request->getPost('department'),
                 'job_title' => $this->request->getPost('job_title'),
-                'manager' => $this->request->getPost('manager'),
-                'hr_partner'  => $this->request->getPost('hr_partner'),
-                'organization' => $this->request->getPost('organization'),
+                'manager' => $this->request->getPost('manager') ?: null,
+                'hr_partner'  => $this->request->getPost('hr_partner') ?: null,
+                'organization' => $this->request->getPost('organization') ?: null,
                 'location' => $this->request->getPost('location'),
                 'emp_grade' => $this->request->getPost('emp_grade'),
                 'status' => $this->request->getPost('status'),
@@ -272,9 +274,9 @@ class Employee_info extends BaseController
                 'emp_type' => $this->request->getPost('emp_type'),
                 'department' => $this->request->getPost('department'),
                 'job_title' => $this->request->getPost('job_title'),
-                'manager' => $this->request->getPost('manager'),
-                'hr_partner'  => $this->request->getPost('hr_partner'),
-                'organization' => $this->request->getPost('organization'),
+                'manager' => $this->request->getPost('manager') ?: null,
+                'hr_partner'  => $this->request->getPost('hr_partner') ?: null,
+                'organization' => $this->request->getPost('organization') ?: null,
                 'location' => $this->request->getPost('location'),
                 'emp_grade' => $this->request->getPost('emp_grade'),
                 'status' => $this->request->getPost('status'),
@@ -354,27 +356,32 @@ class Employee_info extends BaseController
                     $rowCount = 0;
                     $validData = [];
                     $errors = [];
+                    $firstId = $this->EmployeeModel->generateEmpId();
+                    preg_match('/EMP(\d+)/', $firstId, $matches);
+                    $nextNumber = intval($matches[1]);
 
                     foreach ($sheetData as $i => $row) {
                         if ($i == 1) continue;
-                        $emp_id = trim($row['A']);
+
+                        $emp_id = 'EMP' . str_pad($nextNumber++, 3, '0', STR_PAD_LEFT);
+
                         $data = [
                             'emp_id' => $emp_id,
-                            'name' => trim($row['B']),
-                            'gender' => trim($row['C']),
-                            'email' => trim($row['D']),
-                            'no_hp' => trim($row['E']),
-                            'join_date' => !empty($row['F']) ? date('Y-m-d', strtotime($row['F'])) : null,
-                            'emp_type' => trim($row['G']),
-                            'organization' => trim($row['H']),
-                            'department' => trim($row['I']),
-                            'job_title' => trim($row['J']),
-                            'manager' => trim($row['K']),
-                            'hr_partner' => trim($row['L']),
-                            'location' => trim($row['M']),
-                            'emp_grade' => trim($row['N']),
-                            'status' => trim($row['O']),
-                            'resign_date' => !empty($row['P']) ? date('Y-m-d', strtotime($row['P'])) : null,
+                            'name' => trim_excel($row['A']),
+                            'gender' => trim_excel($row['B']),
+                            'email' => trim_excel($row['C']),
+                            'no_hp' => trim_excel($row['D']),
+                            'join_date' => !empty($row['E']) ? date('Y-m-d', strtotime($row['E'])) : null,
+                            'emp_type' => trim_excel($row['F']),
+                            'organization' => trim_excel($row['G']),
+                            'department' => trim_excel($row['H']),
+                            'job_title' => trim_excel($row['I']),
+                            'manager' => trim_excel($row['J']),
+                            'hr_partner' => trim_excel($row['K']),
+                            'location' => trim_excel($row['L']),
+                            'emp_grade' => trim_excel($row['M']),
+                            'status' => trim_excel($row['N']),
+                            'resign_date' => !empty($row['O']) ? date('Y-m-d', strtotime($row['O'])) : null,
                             'created_at' => date('Y-m-d H:i:s'),
                             'photo' => $emp_id . '.jpg'
                         ];
@@ -385,7 +392,7 @@ class Employee_info extends BaseController
                             $rowErrors = $this->EmployeeModel->errors();
                             $errors[] = [
                                 'row' => $i,
-                                'emp_id' => $data['emp_id'],
+                                // 'emp_id' => $data['emp_id'],
                                 'data' => $data,
                                 'errors' => $rowErrors,
                             ];

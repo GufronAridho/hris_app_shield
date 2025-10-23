@@ -20,15 +20,6 @@
                     <div class="card h-100 custom-card-purple custom-card-slim card-button">
                         <div class="h-100 d-flex justify-content-end align-items-center gap-2 flex-wrap">
 
-                            <button class="btn btn-split btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#add_modal">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">
-                                    <strong>
-                                        Add Data
-                                    </strong>
-                                </span>
-                            </button>
-
                             <button class="btn btn-split btn-info btn-sm" id="download_excel">
                                 <span class="btn-icon"><i class="fa fa-file-excel"></i></span>
                                 <span class="btn-text">
@@ -77,83 +68,6 @@
 </main>
 
 <!-- Modal -->
-<div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="add_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header modal-custom-purple">
-                <h5 class="modal-title" id="add_modalLabel">
-                    <i class="fas fa-calendar-plus me-2"></i> Add Interview
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="form_add">
-                <div class="modal-body">
-                    <div class="row g-2">
-                        <div class="col-md-12">
-                            <div class="card w-100">
-                                <div class="card-body">
-                                    <div class="row g-2">
-                                        <div class="col-md-6">
-                                            <label for="add_candidate_id" class="form-label">Candidate</label>
-                                            <select id="add_candidate_id" name="candidate_id" class="form-select" required>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_interviewer" class="form-label">Interviewer</label>
-                                            <input type="text" class="form-control" id="add_interviewer" name="interviewer" placeholder="Enter interviewer's name" required>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_interview_date" class="form-label">Interview Date & Time</label>
-                                            <input type="datetime-local" class="form-control" id="add_interview_date" name="interview_date" required>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_rating" class="form-label">Rating (0–10)</label>
-                                            <input type="number" class="form-control" id="add_rating" name="rating" placeholder="Enter rating score" min="0" max="10" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card w-100">
-                                <div class="card-body">
-                                    <div class="row g-2">
-                                        <div class="col-md-6">
-                                            <label for="add_status" class="form-label">Status</label>
-                                            <select id="add_status" name="status" class="form-select" required>
-                                                <option value="">Select Status</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Passed">Passed</option>
-                                                <option value="Failed">Failed</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="add_remarks" class="form-label">Remarks</label>
-                                            <textarea id="add_remarks" name="remarks" class="form-control" placeholder="Enter remarks or feedback"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-plus me-1"></i> Add Interview
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -166,28 +80,37 @@
             <form id="form_edit">
                 <div class="modal-body">
                     <input type="hidden" id="edit_interview_id" name="id">
+                    <input type="hidden" id="edit_candidate_id" name="candidate_id">
                     <div class="row g-2">
                         <div class="col-md-12">
                             <div class="card w-100">
                                 <div class="card-body">
                                     <div class="row g-2">
                                         <div class="col-md-6">
-                                            <label for="edit_candidate_id" class="form-label">Candidate</label>
-                                            <select id="edit_candidate_id" name="candidate_id" class="form-select" required>
+                                            <label for="edit_job_id" class="form-label">Job ID</label>
+                                            <input type="text" class="form-control" id="edit_job_id" name="job_id" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="edit_candidate_name" class="form-label">Candidate</label>
+                                            <input type="text" class="form-control" id="edit_candidate_name" name="candidate_name" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="edit_position" class="form-label">Position</label>
+                                            <input type="text" class="form-control" id="edit_position" name="position" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="edit_department" class="form-label">Departmment</label>
+                                            <input type="text" class="form-control" id="edit_department" name="department" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="edit_interviewer" class="form-label">Interviewer</label>
+                                            <select class="form-select" id="edit_interviewer" name="interviewer" required>
 
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="edit_interviewer" class="form-label">Interviewer</label>
-                                            <input type="text" class="form-control" id="edit_interviewer" name="interviewer" placeholder="Enter interviewer's name" required>
-                                        </div>
-                                        <div class="col-md-6">
                                             <label for="edit_interview_date" class="form-label">Interview Date & Time</label>
                                             <input type="datetime-local" class="form-control" id="edit_interview_date" name="interview_date" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="edit_rating" class="form-label">Rating (0–10)</label>
-                                            <input type="number" class="form-control" id="edit_rating" name="rating" placeholder="Enter rating score" min="0" max="10" required>
                                         </div>
                                     </div>
                                 </div>
@@ -198,6 +121,10 @@
                                 <div class="card-body">
                                     <div class="row g-2">
                                         <div class="col-md-6">
+                                            <label for="edit_rating" class="form-label">Rating (0–10)</label>
+                                            <input type="number" class="form-control" id="edit_rating" name="rating" placeholder="Enter rating score" min="0" max="10" required>
+                                        </div>
+                                        <div class="col-md-6">
                                             <label for="edit_status" class="form-label">Status</label>
                                             <select id="edit_status" name="status" class="form-select" required>
                                                 <option value="">Select Status</option>
@@ -206,7 +133,7 @@
                                                 <option value="Failed">Failed</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="edit_remarks" class="form-label">Remarks</label>
                                             <textarea id="edit_remarks" name="remarks" class="form-control" placeholder="Enter remarks or feedback"></textarea>
                                         </div>
@@ -227,6 +154,88 @@
     </div>
 </div>
 
+<div class="modal fade" id="view_modal" tabindex="-1" aria-labelledby="view_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header modal-custom-purple">
+                <h5 class="modal-title" id="view_modalLabel">
+                    <i class="fas fa-eye me-2"></i> View Interview Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-2">
+                    <div class="col-md-12">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="view_job_id" class="form-label">Job ID</label>
+                                        <input type="text" class="form-control" id="view_job_id" name="job_id" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="view_candidate_name" class="form-label">Candidate</label>
+                                        <input type="text" class="form-control" id="view_candidate_name" name="candidate_name" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="view_position" class="form-label">Position</label>
+                                        <input type="text" class="form-control" id="view_position" name="position" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="view_department" class="form-label">Department</label>
+                                        <input type="text" class="form-control" id="view_department" name="department" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="view_interviewer" class="form-label">Interviewer</label>
+                                        <input type="text" class="form-control" id="view_interviewer" name="interviewer" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="view_interview_date" class="form-label">Interview Date & Time</label>
+                                        <input type="text" class="form-control" id="view_interview_date" name="interview_date" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="view_rating" class="form-label">Rating (0–10)</label>
+                                        <input type="text" class="form-control" id="view_rating" name="rating" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="view_status" class="form-label">Status</label>
+                                        <input type="text" class="form-control" id="view_status" name="status" readonly>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="view_remarks" class="form-label">Remarks</label>
+                                        <textarea id="view_remarks" name="remarks" class="form-control" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <style>
 
@@ -235,12 +244,8 @@
 
 <?= $this->section('script'); ?>
 <script>
-    $('#add_modal').on('shown.bs.modal', function() {
-        initSelect2Ajax('#add_candidate_id', 'Select Candidate', "<?= base_url('select_form/candidateSelect') ?>", '#add_modal .modal-body');
-    });
-
     $('#edit_modal').on('shown.bs.modal', function() {
-        initSelect2Ajax('#edit_candidate_id', 'Select Candidate', "<?= base_url('select_form/candidateSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_interviewer', 'Select Interviewer', "<?= base_url('select_form/employeeSelect') ?>", '#edit_modal .modal-body');
     });
 
     $('#add_modal').on('hidden.bs.modal', function() {
@@ -293,21 +298,38 @@
         get_table();
 
         $(document).on('click', '.edit-btn', function() {
+            // var candidate_id = $(this).data('candidate_id');
+            // var candidate_name = $(this).data('candidate_name');
+            // var jobOption = new Option(candidate_name, candidate_id, true, true);
+            // $('#edit_candidate_id').append(jobOption).trigger('change');
             $('#edit_interview_id').val($(this).data('id'));
-
-            var candidate_id = $(this).data('candidate_id');
-            var candidate_name = $(this).data('candidate_name');
-            var jobOption = new Option(candidate_name, candidate_id, true, true);
-            $('#edit_candidate_id').append(jobOption).trigger('change');
-
-            $('#edit_interviewer').val($(this).data('interviewer'));
-            $('#edit_interviewer').val($(this).data('interviewer'));
+            $('#edit_candidate_id').val($(this).data('candidate_id'));
+            $('#edit_candidate_name').val($(this).data('candidate_name'));
+            // $('#edit_interviewer').val($(this).data('interviewer'));
+            var interviewer = $(this).data('interviewer');
+            var interviewerOption = new Option(interviewer, interviewer, true, true);
+            $('#edit_interviewer').append(interviewerOption).trigger('change');
             $('#edit_interview_date').val($(this).data('interview_date'));
             $('#edit_rating').val($(this).data('rating'));
             $('#edit_status').val($(this).data('status'));
             $('#edit_remarks').val($(this).data('remarks'));
-
+            $('#edit_job_id').val($(this).data('job_id'));
+            $('#edit_position').val($(this).data('position'));
+            $('#edit_department').val($(this).data('department'));
             $('#edit_modal').modal('show');
+        });
+
+        $(document).on('click', '.view-btn', function() {
+            $('#view_candidate_name').val($(this).data('candidate_name'));
+            $('#view_interviewer').val($(this).data('interviewer'));
+            $('#view_interview_date').val($(this).data('interview_date'));
+            $('#view_rating').val($(this).data('rating'));
+            $('#view_status').val($(this).data('status'));
+            $('#view_remarks').val($(this).data('remarks'));
+            $('#view_job_id').val($(this).data('job_id'));
+            $('#view_position').val($(this).data('position'));
+            $('#view_department').val($(this).data('department'));
+            $('#view_modal').modal('show');
         });
 
 
@@ -357,6 +379,56 @@
                 }
             });
         });
+
+        $(document).on('click', '.onboarding-btn', function() {
+            var candidate_id = $(this).data('candidate_id');
+            var candidate_name = $(this).data('candidate_name');
+            var emp_id = $(this).data('emp_id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: `Create onboarding task for '${candidate_name}'!`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Confirm!",
+                showLoaderOnConfirm: true,
+                allowOutsideClick: () => !Swal.isLoading(),
+                preConfirm: () => {
+                    return $.ajax({
+                        url: "<?= base_url('recruitment/create_onboarding') ?>",
+                        type: "POST",
+                        data: {
+                            candidate_id: candidate_id,
+                            emp_id: emp_id
+                        },
+                        dataType: "json"
+                    }).then((res) => {
+                        if (!res.status) {
+                            throw new Error(res.message);
+                        }
+                        return res;
+                    }).catch((error) => {
+                        Swal.showValidationMessage(
+                            `Request failed: ${error.message || error}`
+                        );
+                    });
+                }
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: result.value.message,
+                        timer: 1000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        get_table();
+                    });
+                }
+            });
+        });
     });
 
     function get_table() {
@@ -364,7 +436,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
-
+        $('#table_detail_body').html(`
+        <tr id="table_loading">
+            <td colspan="7" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('recruitment/interview_table'); ?>",
             type: "GET",
@@ -434,56 +515,6 @@
             datatable.button('.buttons-excel').trigger();
         });
     }
-
-    $("#form_add").on("submit", function(e) {
-        e.preventDefault();
-
-        let dataForm = new FormData(this);
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "Add this Interview!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Confirm!",
-            showLoaderOnConfirm: true,
-            allowOutsideClick: () => !Swal.isLoading(),
-            preConfirm: () => {
-                return $.ajax({
-                    url: "<?= base_url('recruitment/create_interview') ?>",
-                    type: "POST",
-                    data: dataForm,
-                    processData: false,
-                    contentType: false,
-                    dataType: "json"
-                }).then((res) => {
-                    if (!res.status) {
-                        throw new Error(res.message);
-                    }
-                    return res;
-                }).catch((error) => {
-                    Swal.showValidationMessage(
-                        `Request failed: ${error.message || error}`
-                    );
-                });
-            }
-        }).then((result) => {
-            if (result.isConfirmed && result.value) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: result.value.message,
-                    timer: 1000,
-                    showConfirmButton: false
-                }).then(() => {
-                    $('#add_modal').modal('hide');
-                    get_table();
-                });
-            }
-        });
-    });
 
     $("#form_edit").on("submit", function(e) {
         e.preventDefault();

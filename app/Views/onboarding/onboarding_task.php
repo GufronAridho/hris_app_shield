@@ -39,15 +39,15 @@
                         <div class="col-md-3 d-flex justify-content-center">
                             <div class="card shadow-sm onboarding-card">
                                 <div class="section-header">Employee</div>
-                                <div class="section-body">XXX</div>
+                                <div class="section-body"><strong><?= $name; ?></strong></div>
                                 <hr class="section-divider">
 
                                 <div class="section-header">Head of Department</div>
-                                <div class="section-body">XXX</div>
+                                <div class="section-body"><strong><?= $dept_head; ?></strong></div>
                                 <hr class="section-divider">
 
                                 <div class="section-header">HR</div>
-                                <div class="section-body">XXX</div>
+                                <div class="section-body"><strong><?= $hr_partner; ?></strong></div>
                             </div>
                         </div>
 
@@ -89,15 +89,18 @@
 
 <?= $this->section('script'); ?>
 <script>
+    const emp_id = "<?= $emp_id; ?>";
+
     $(document).ready(function() {
         get_checklist_item()
     });
 
     function get_checklist_item() {
         $.ajax({
-            url: "<?= base_url('onboarding/get_checklist_item'); ?>",
+            url: "<?= base_url('onboarding/onboarding_table'); ?>",
             type: "GET",
             data: {
+                emp_id: emp_id,
                 check_cat: "Onboarding"
             },
             success: function(res) {
@@ -109,5 +112,61 @@
             }
         })
     }
+
+    function uploadFile(input, id, check_cat) {
+        if (input.files.length === 0) return;
+        const file = input.files[0];
+
+        let dataForm = new FormData();
+        dataForm.append('file', file);
+        dataForm.append('id', id);
+        dataForm.append('check_cat', check_cat);
+        // console.log("FormData contents:");
+        // for (let pair of dataForm.entries()) {
+        //     console.log(pair[0] + ": ", pair[1]);
+        // }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Add this Document!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Confirm!",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading(),
+            preConfirm: () => {
+                return $.ajax({
+                    url: "<?= base_url('onboarding/upload_document') ?>",
+                    type: "POST",
+                    data: dataForm,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json"
+                }).then((res) => {
+                    if (!res.status) {
+                        throw new Error(res.message);
+                    }
+                    return res;
+                }).catch((error) => {
+                    Swal.showValidationMessage(
+                        `Request failed: ${error.message || error}`
+                    );
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.value.message,
+                    timer: 1000,
+                    showConfirmButton: false
+                }).then(() => {
+                    get_checklist_item();
+                });
+            }
+        });
+    };
 </script>
 <?= $this->endSection() ?>

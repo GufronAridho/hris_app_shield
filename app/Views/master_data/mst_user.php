@@ -20,34 +20,13 @@
                     <div class="card h-100 custom-card-purple custom-card-slim card-button">
                         <div class="h-100 d-flex justify-content-end align-items-center gap-2 flex-wrap">
 
-                            <button class="btn btn-split btn-primary btn-sm">
+                            <button class="btn btn-split btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#add_modal">
                                 <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Primary</span>
-                            </button>
-
-                            <button class="btn btn-split btn-info btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Info</span>
-                            </button>
-
-                            <button class="btn btn-split btn-success btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Success</span>
-                            </button>
-
-                            <button class="btn btn-split btn-warning btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Warning</span>
-                            </button>
-
-                            <button class="btn btn-split btn-secondary btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Secondary</span>
-                            </button>
-
-                            <button class="btn btn-split btn-danger btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Danger</span>
+                                <span class="btn-text">
+                                    <strong>
+                                        Add Data
+                                    </strong>
+                                </span>
                             </button>
 
                         </div>
@@ -68,9 +47,10 @@
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th style="width:40%;">Check Category</th>
-                                <th style="width:40%;">Question</th>
-                                <th style="width:20%; text-align:center;">Action</th>
+                                <th class="text-center" style="width:10%;">Check ID</th>
+                                <th class="text-center" style="width:30%;">Check Category</th>
+                                <th class="text-center" style="width:50%;">Question</th>
+                                <th class="text-center" style="width:10%;">Action</th>
                             </tr>
                         </thead>
                         <tbody id="table_body">
@@ -84,6 +64,99 @@
     <!--end::App Content-->
 </main>
 
+<!-- Modal -->
+<div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="add_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header modal-custom-purple">
+                <h5 class="modal-title" id="add_modalLabel">
+                    <i class="fas fa-square-plus me-2"></i> Add Master Data
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_add">
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="card w-100">
+                            <div class="card-header bg-light"></div>
+                            <div class="card-body">
+                                <div class="col-md-7">
+                                    <label for="add_check_cat" class="form-label">Check Category</label>
+                                    <select class="form-select" id="add_check_cat" name="check_cat" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Document">Document</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Onboarding">Onboarding</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="add_check_quest" class="form-label">Question</label>
+                                    <textarea class="form-control" id="add_check_quest" name="check_quest" rows="3" required></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus me-1"></i> Add Master Data
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header modal-custom-purple">
+                <h5 class="modal-title" id="edit_modalLabel">
+                    <i class="fas fa-pen-to-square me-2"></i> Edit Master Data
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form_edit">
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="card w-100">
+                            <div class="card-header bg-light"></div>
+                            <div class="card-body">
+                                <input type="hidden" id="edit_id" name="id">
+
+                                <div class="col-md-7">
+                                    <label for="edit_check_cat" class="form-label">Check Category</label>
+                                    <select class="form-select" id="edit_check_cat" name="check_cat" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Document">Document</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Onboarding">Onboarding</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 mt-2">
+                                    <label for="edit_check_quest" class="form-label">Question</label>
+                                    <textarea class="form-control" id="edit_check_quest" name="check_quest" rows="3" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i> Update Master Data
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <style>
 
 </style>
@@ -93,6 +166,66 @@
 <script>
     $(document).ready(function() {
         get_table();
+
+        $(document).on('click', '.edit-btn', function() {
+
+            const id = $(this).data('id');
+            const checkCat = $(this).data('check_cat');
+            const checkQuest = $(this).data('check_quest');
+
+            $('#edit_id').val(id);
+            $('#edit_check_cat').val(checkCat);
+            $('#edit_check_quest').val(checkQuest);
+
+            $('#edit_modal').modal('show');
+        });
+
+        $(document).on('click', '.delete-btn', function() {
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Delete this Questiion!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Confirm!",
+                showLoaderOnConfirm: true,
+                allowOutsideClick: () => !Swal.isLoading(),
+                preConfirm: () => {
+                    return $.ajax({
+                        url: "<?= base_url('master_data/delete_check_cat') ?>",
+                        type: "POST",
+                        data: {
+                            id: id
+                        },
+                        dataType: "json"
+                    }).then((res) => {
+                        if (!res.status) {
+                            throw new Error(res.message);
+                        }
+                        return res;
+                    }).catch((error) => {
+                        Swal.showValidationMessage(
+                            `Request failed: ${error.message || error}`
+                        );
+                    });
+                }
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: result.value.message,
+                        timer: 1000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        get_table();
+                    });
+                }
+            });
+        });
     });
 
     function get_table() {
@@ -100,6 +233,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
+        $('#table_body').html(`
+        <tr id="table_loading">
+            <td colspan="4" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('master_data/checklist_table'); ?>",
             type: "GET",
@@ -112,7 +255,7 @@
                 console.error("AJAX Error:", error);
                 $('#table_body').html(`
                 <tr>
-                    <td colspan="3" class="text-center text-black p-3">
+                    <td colspan="4" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -120,7 +263,6 @@
             }
         });
     }
-
 
     function initializeDataTable(tableId) {
         let table = $('#' + tableId);
@@ -132,7 +274,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 2) {
+            if (index === 3) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
@@ -157,5 +299,105 @@
             }
         });
     }
+
+    $("#form_add").on("submit", function(e) {
+        e.preventDefault();
+
+        let dataForm = new FormData(this);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Add this Question!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Confirm!",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading(),
+            preConfirm: () => {
+                return $.ajax({
+                    url: "<?= base_url('master_data/create_check_cat') ?>",
+                    type: "POST",
+                    data: dataForm,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json"
+                }).then((res) => {
+                    if (!res.status) {
+                        throw new Error(res.message);
+                    }
+                    return res;
+                }).catch((error) => {
+                    Swal.showValidationMessage(
+                        `Request failed: ${error.message || error}`
+                    );
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.value.message,
+                    timer: 1000,
+                    showConfirmButton: false
+                }).then(() => {
+                    $('#add_modal').modal('hide');
+                    get_table();
+                });
+            }
+        });
+    });
+
+    $("#form_edit").on("submit", function(e) {
+        e.preventDefault();
+
+        let dataForm = new FormData(this);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Edit this Question!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Confirm!",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading(),
+            preConfirm: () => {
+                return $.ajax({
+                    url: "<?= base_url('master_data/update_check_cat') ?>",
+                    type: "POST",
+                    data: dataForm,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json"
+                }).then((res) => {
+                    if (!res.status) {
+                        throw new Error(res.message);
+                    }
+                    return res;
+                }).catch((error) => {
+                    Swal.showValidationMessage(
+                        `Request failed: ${error.message || error}`
+                    );
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: result.value.message,
+                    timer: 1000,
+                    showConfirmButton: false
+                }).then(() => {
+                    $('#edit_modal').modal('hide');
+                    get_table();
+                });
+            }
+        });
+    });
 </script>
 <?= $this->endSection() ?>

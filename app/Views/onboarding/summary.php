@@ -20,34 +20,13 @@
                     <div class="card h-100 custom-card-purple custom-card-slim card-button">
                         <div class="h-100 d-flex justify-content-end align-items-center gap-2 flex-wrap">
 
-                            <button class="btn btn-split btn-primary btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Primary</span>
-                            </button>
-
-                            <button class="btn btn-split btn-info btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Info</span>
-                            </button>
-
-                            <button class="btn btn-split btn-success btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Success</span>
-                            </button>
-
-                            <button class="btn btn-split btn-warning btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Warning</span>
-                            </button>
-
-                            <button class="btn btn-split btn-secondary btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Secondary</span>
-                            </button>
-
-                            <button class="btn btn-split btn-danger btn-sm">
-                                <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">Danger</span>
+                            <button class="btn btn-split btn-info btn-sm" id="download_excel">
+                                <span class="btn-icon"><i class="fa fa-file-excel"></i></span>
+                                <span class="btn-text">
+                                    <strong>
+                                        Download
+                                    </strong>
+                                </span>
                             </button>
 
                         </div>
@@ -68,30 +47,22 @@
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center">No</th>
-                                <th>Colomn1</th>
-                                <th>Colomn2</th>
-                                <th>Colomn3</th>
-                                <th>Colomn4</th>
-                                <th>Colomn5</th>
+                                <th class="text-center">Employee ID</th>
+                                <th class="text-center">Employee Name</th>
+                                <th class="text-center">Join Date</th>
+                                <th class="text-center">Document Checklist</th>
+                                <th class="text-center">IT Checklist</th>
+                                <th class="text-center">Onboarding Task</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td>Colomn1</td>
-                                <td>Colomn2</td>
-                                <td>Colomn3</td>
-                                <td>Colomn4</td>
-                                <td>Colomn5</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td>Colomn1</td>
-                                <td>Colomn2</td>
-                                <td>Colomn3</td>
-                                <td>Colomn4</td>
-                                <td>Colomn5</td>
+                        <tbody id="table_detail_body">
+                            <tr id="table_loading">
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="mt-2 fw-bold text-muted">Loading data...</div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -110,16 +81,78 @@
 <?= $this->section('script'); ?>
 <script>
     $(document).ready(function() {
-        initializeDataTable('table_detail');
+        get_table()
     });
 
+    function get_table() {
+        if ($.fn.DataTable.isDataTable('#table_detail')) {
+            $('#table_detail').DataTable().destroy();
+            $('#table_detail tbody').empty();
+        }
+
+        $.ajax({
+            url: "<?= base_url('onboarding/summary_table'); ?>",
+            type: "GET",
+            dataType: "html",
+            success: function(res) {
+                $('#table_detail_body').html(res);
+                initializeDataTable('table_detail');
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+                $('#table_detail_body').html(`
+                <tr>
+                    <td colspan="6" class="text-center text-black p-3">
+                        Failed to load data. Please try again.
+                    </td>
+                </tr>
+            `);
+            }
+        });
+    }
+
     function initializeDataTable(tableId) {
-        $('#' + tableId).DataTable({
+        let table = $('#' + tableId);
+        $('#' + tableId + ' thead tr.search-row').remove();
+
+        $('#' + tableId + ' thead tr')
+            .clone(true)
+            .addClass('search-row')
+            .appendTo('#' + tableId + ' thead');
+
+        $('#' + tableId + ' thead tr.search-row th').each(function(index) {
+            $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
+        });
+
+        let datatable = table.DataTable({
             pageLength: 10,
             lengthChange: true,
             searching: true,
             ordering: true,
             scrollX: true,
+            orderCellsTop: true,
+            fixedHeader: true,
+            buttons: [{
+                extend: 'excelHtml5',
+                text: '',
+                title: 'Export to Excel',
+                filename: 'Recruitment Summary' + new Date().toISOString().slice(0, 10),
+                exportOptions: {
+                    columns: ':visible:not(:last-child)'
+                }
+            }],
+            initComplete: function() {
+                var api = this.api();
+                api.columns().every(function(colIdx) {
+                    $('input', $('.search-row th').eq(colIdx)).on('keyup change clear', function() {
+                        api.column(colIdx).search(this.value).draw();
+                    });
+                });
+            }
+        });
+
+        $('#download_excel').off('click').on('click', function() {
+            datatable.button('.buttons-excel').trigger();
         });
     }
 </script>

@@ -13,10 +13,10 @@
         <td class=""><?= $i['position']; ?> </td>
         <td class=""><?= $i['department']; ?> </td>
         <td class=""><?= $i['location']; ?> </td>
-        <td class="text-center">
-            <?php if (strtolower($i['status']) === 'open'): ?>
+        <td class="text-center" style="font-size: 18px;">
+            <?php if ($i['status'] == 'Open'): ?>
                 <span class="badge bg-success"><?= $i['status']; ?></span>
-            <?php elseif (strtolower($i['status']) === 'closed'): ?>
+            <?php elseif ($i['status'] == 'Closed'): ?>
                 <span class="badge bg-danger"><?= $i['status']; ?></span>
             <?php else: ?>
                 <span class="badge bg-secondary"><?= $i['status']; ?></span>

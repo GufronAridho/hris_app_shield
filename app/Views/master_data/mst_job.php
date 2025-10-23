@@ -210,6 +210,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
+        $('#table_body').html(`
+        <tr id="table_loading">
+            <td colspan="2" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('master_data/job_table'); ?>",
             type: "GET",

@@ -91,7 +91,9 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label for="add_position" class="form-label">Position</label>
-                                            <input type="text" class="form-control" id="add_position" name="position" placeholder="Enter job position title" required>
+                                            <select class="form-select" id="add_position" name="position" required>
+
+                                            </select>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="add_description" class="form-label">Description</label>
@@ -140,7 +142,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success">
-                                <i class="fas fa-plus me-1"></i> Add Master Data
+                                <i class="fas fa-plus me-1"></i> Add Job Opening
                             </button>
                         </div>
                     </div>
@@ -173,11 +175,13 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label for="edit_position" class="form-label">Position</label>
-                                            <input type="text" class="form-control" id="edit_position" name="position" placeholder="Enter position title" required>
+                                            <select class="form-select" id="edit_position" name="position" required>
+
+                                            </select>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="edit_description" class="form-label">Description</label>
-                                            <textarea class="form-control" id="edit_description" name="description" rows="2"></textarea>
+                                            <textarea class="form-control" id="edit_description" name="description" rows="2" placeholder="Enter Description"></textarea>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="edit_department" class="form-label">Department</label>
@@ -242,10 +246,12 @@
 <script>
     $('#add_modal').on('shown.bs.modal', function() {
         initSelect2Ajax('#add_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_position', 'Select Job Title', "<?= base_url('select_form/jobTitleSelect') ?>", '#add_modal .modal-body');
     });
 
     $('#edit_modal').on('shown.bs.modal', function() {
         initSelect2Ajax('#edit_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_position', 'Select Job Title', "<?= base_url('select_form/jobTitleSelect') ?>", '#edit_modal .modal-body');
     });
 
     $('#add_modal').on('hidden.bs.modal', function() {
@@ -294,6 +300,15 @@
         });
     }
 
+    function setSelect2Value(selector, value) {
+        if (value && value !== 'null' && value.trim() !== '') {
+            var opt = new Option(value, value, true, true);
+            $(selector).empty().append(opt).trigger('change');
+        } else {
+            $(selector).val(null).trigger('change');
+        }
+    }
+
     $(document).ready(function() {
         get_table();
 
@@ -301,10 +316,10 @@
 
             $('#edit_id').val($(this).data('id'));
             $('#edit_job_id').val($(this).data('job_id'));
-            $('#edit_position').val($(this).data('position'));
+            var position = $(this).data('position')
+            setSelect2Value('#edit_position', position)
             var department = $(this).data('department')
-            var departmentOption = new Option(department, department, true, true);
-            $('#edit_department').append(departmentOption).trigger('change');
+            setSelect2Value('#edit_department', department)
             $('#edit_location').val($(this).data('location'));
             $('#edit_status').val($(this).data('status'));
             $('#edit_posted_date').val($(this).data('posted_date'));
@@ -367,7 +382,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
-
+        $('#table_detail_body').html(`
+        <tr id="table_loading">
+            <td colspan="8" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('recruitment/opening_table'); ?>",
             type: "GET",

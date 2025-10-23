@@ -22,8 +22,8 @@ class InterviewModel extends Model
         'candidate_id'   => 'required|integer',
         'interviewer'    => 'required|safe_string',
         'interview_date' => 'required|valid_date',
-        'rating'         => 'required|integer|greater_than_equal_to[0]|less_than_equal_to[10]',
-        'status'         => 'required|safe_string',
+        'rating'         => 'permit_empty|integer|greater_than_equal_to[0]|less_than_equal_to[10]',
+        'status'         => 'permit_empty|safe_string',
         'remarks'        => 'permit_empty|safe_string'
     ];
 
@@ -41,13 +41,11 @@ class InterviewModel extends Model
             'valid_date' => 'Interview date must be in a valid format'
         ],
         'rating' => [
-            'required'                => 'Rating is required.',
             'integer'                 => 'Rating must be an integer.',
             'greater_than_equal_to'   => 'Rating must be at least 0.',
             'less_than_equal_to'      => 'Rating cannot exceed 10.'
         ],
         'status' => [
-            'required'    => 'Status is required.',
             'safe_string' => 'Status contains invalid characters.'
         ],
         'remarks' => [

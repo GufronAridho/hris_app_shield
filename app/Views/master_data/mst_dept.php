@@ -47,8 +47,9 @@
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width:40%;">Dept Code</th>
+                                <th class="text-center" style="width:20%;">Dept Code</th>
                                 <th class="text-center" style="width:50%;">Department</th>
+                                <th class="text-center" style="width:20%;">Dept Head</th>
                                 <th class="text-center" style="width:10%; text-align:center;">Action</th>
                             </tr>
                         </thead>
@@ -79,16 +80,25 @@
                         <div class="card w-100">
                             <div class="card-header bg-light"></div>
                             <div class="card-body">
-                                <div class="col-md-7">
-                                    <label for="add_dept_code" class="form-label">Dept Code</label>
-                                    <input type="text" class="form-control" id="add_dept_code" name="dept_code" required>
+                                <div class="row g-2">
+                                    <div class="col-md-5">
+                                        <label for="add_dept_code" class="form-label">Dept Code</label>
+                                        <input type="text" class="form-control" id="add_dept_code" name="dept_code" required>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label for="add_dept_head" class="form-label">Dept Head</label>
+                                        <select class="form-select" id="add_dept_head" name="dept_head" required>
+
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="add_department" class="form-label">Department</label>
-                                    <input type="text" class="form-control" id="add_department" name="department" required>
+                                <div class="row g-2">
+                                    <div class="col-md-12">
+                                        <label for="add_department" class="form-label">Department</label>
+                                        <input type="text" class="form-control" id="add_department" name="department" required>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -120,15 +130,23 @@
                             <div class="card-header bg-light"></div>
                             <div class="card-body">
                                 <input type="hidden" id="edit_id" name="id">
+                                <div class="row g-2">
+                                    <div class="col-md-5">
+                                        <label for="edit_dept_code" class="form-label">Dept Code</label>
+                                        <input type="text" class="form-control" id="edit_dept_code" name="dept_code" required>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label for="edit_dept_head" class="form-label">Dept Head</label>
+                                        <select class="form-select" id="edit_dept_head" name="dept_head" required>
 
-                                <div class="col-md-7">
-                                    <label for="edit_dept_code" class="form-label">Dept Code</label>
-                                    <input type="text" class="form-control" id="edit_dept_code" name="dept_code" required>
+                                        </select>
+                                    </div>
                                 </div>
-
-                                <div class="col-md-12 mt-2">
-                                    <label for="edit_department" class="form-label">Department</label>
-                                    <input type="text" class="form-control" id="edit_department" name="department" required>
+                                <div class="row g-2">
+                                    <div class="col-md-12 mt-2">
+                                        <label for="edit_department" class="form-label">Department</label>
+                                        <input type="text" class="form-control" id="edit_department" name="department" required>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,6 +171,69 @@
 
 <?= $this->section('script'); ?>
 <script>
+    $('#add_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#add_dept_head', 'Select Dept Head', "<?= base_url('select_form/employeeSelect') ?>", '#add_modal .modal-body');
+    });
+
+    $('#edit_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#edit_dept_head', 'Select Dept Head', "<?= base_url('select_form/employeeSelect') ?>", '#edit_modal .modal-body');
+    });
+
+    $('#add_modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+    });
+
+    $('#edit_modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+    });
+
+    function initSelect2Ajax(selector, placeholder, url, modal = null) {
+        $(selector).select2({
+            placeholder: placeholder,
+            allowClear: true,
+            width: '100%',
+            dropdownParent: modal ? $(modal) : null,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function(data) {
+                    if (!data.items) return {
+                        results: []
+                    };
+
+                    return {
+                        results: data.items.map(item => ({
+                            id: item.id,
+                            text: item.name
+                        }))
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
+    function setSelect2Value(selector, value) {
+        if (value && value !== 'null' && value.trim() !== '') {
+            var opt = new Option(value, value, true, true);
+            $(selector).empty().append(opt).trigger('change');
+        } else {
+            $(selector).val(null).trigger('change');
+        }
+    }
+
     $(document).ready(function() {
         get_table();
 
@@ -161,10 +242,12 @@
             const id = $(this).data('id');
             const dept_code = $(this).data('dept_code');
             const department = $(this).data('department');
+            const dept_head = $(this).data('dept_head');
 
             $('#edit_id').val(id);
             $('#edit_dept_code').val(dept_code);
             $('#edit_department').val(department);
+            setSelect2Value('#edit_dept_head', dept_head)
 
             $('#edit_modal').modal('show');
         });
@@ -223,6 +306,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
+        $('#table_body').html(`
+        <tr id="table_loading">
+            <td colspan="4" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('master_data/dept_table'); ?>",
             type: "GET",
@@ -235,7 +328,7 @@
                 console.error("AJAX Error:", error);
                 $('#table_body').html(`
                 <tr>
-                    <td colspan="3" class="text-center text-black p-3">
+                    <td colspan="4" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -254,7 +347,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 2) {
+            if (index === 3) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');

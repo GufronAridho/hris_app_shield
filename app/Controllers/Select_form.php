@@ -8,6 +8,8 @@ use App\Models\MstEmpTypeModel;
 use App\Models\MstDeptModel;
 use App\Models\OpeningModel;
 use App\Models\CandidateModel;
+use App\Models\EmployeeModel;
+
 
 class Select_form extends BaseController
 {
@@ -17,6 +19,7 @@ class Select_form extends BaseController
     protected $MstDeptModel;
     protected $OpeningModel;
     protected $CandidateModel;
+    protected $EmployeeModel;
 
     public function __construct()
     {
@@ -26,6 +29,7 @@ class Select_form extends BaseController
         $this->MstDeptModel = new MstDeptModel();
         $this->OpeningModel = new OpeningModel();
         $this->CandidateModel = new CandidateModel();
+        $this->EmployeeModel = new EmployeeModel();
     }
 
     public function statusSelect()
@@ -135,6 +139,7 @@ class Select_form extends BaseController
         $builder = $this->OpeningModel->builder();
         $builder->distinct();
         $builder->select('job_id, position');
+        $builder->where('status', 'Open');
 
         if (!empty($q)) {
             $builder->groupStart()
@@ -168,6 +173,7 @@ class Select_form extends BaseController
         if (!empty($q)) {
             $builder->like('candidate_name', $q);
         }
+        $builder->orderBy('candidate_name');
 
         $query = $builder->get();
         $results = $query->getResult();
@@ -177,6 +183,89 @@ class Select_form extends BaseController
             $items[] = [
                 'id' => $row->id,
                 'name' => $row->candidate_name
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function managerSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->EmployeeModel->builder();
+        $builder->distinct();
+        $builder->select('name');
+        $builder->like('job_title', 'Manager');
+
+        if (!empty($q)) {
+            $builder->like('name', $q);
+        }
+        $builder->orderBy('name');
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->name,
+                'name' => $row->name
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function hrSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->EmployeeModel->builder();
+        $builder->distinct();
+        $builder->select('name');
+        $builder->like('department', 'Human');
+
+        if (!empty($q)) {
+            $builder->like('name', $q);
+        }
+        $builder->orderBy('name');
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->name,
+                'name' => $row->name
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function employeeSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->EmployeeModel->builder();
+        $builder->distinct();
+        $builder->select('name');
+
+        if (!empty($q)) {
+            $builder->like('name', $q);
+        }
+        $builder->orderBy('name');
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->name,
+                'name' => $row->name
             ];
         }
 

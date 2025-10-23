@@ -47,7 +47,8 @@
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width:40%;">Check Category</th>
+                                <th class="text-center" style="width:10%;">Check ID</th>
+                                <th class="text-center" style="width:30%;">Check Category</th>
                                 <th class="text-center" style="width:50%;">Question</th>
                                 <th class="text-center" style="width:10%;">Action</th>
                             </tr>
@@ -81,7 +82,12 @@
                             <div class="card-body">
                                 <div class="col-md-7">
                                     <label for="add_check_cat" class="form-label">Check Category</label>
-                                    <input type="text" class="form-control" id="add_check_cat" name="check_cat" required>
+                                    <select class="form-select" id="add_check_cat" name="check_cat" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Document">Document</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Onboarding">Onboarding</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="add_check_quest" class="form-label">Question</label>
@@ -123,7 +129,12 @@
 
                                 <div class="col-md-7">
                                     <label for="edit_check_cat" class="form-label">Check Category</label>
-                                    <input type="text" class="form-control" id="edit_check_cat" name="check_cat" required>
+                                    <select class="form-select" id="edit_check_cat" name="check_cat" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Document">Document</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Onboarding">Onboarding</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-12 mt-2">
@@ -222,7 +233,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
-
+        $('#table_body').html(`
+        <tr id="table_loading">
+            <td colspan="4" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('master_data/checklist_table'); ?>",
             type: "GET",
@@ -235,7 +255,7 @@
                 console.error("AJAX Error:", error);
                 $('#table_body').html(`
                 <tr>
-                    <td colspan="3" class="text-center text-black p-3">
+                    <td colspan="4" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -254,7 +274,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 2) {
+            if (index === 3) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');

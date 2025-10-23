@@ -139,8 +139,13 @@ class Master_data extends BaseController
     public function create_check_cat()
     {
         if ($this->request->is('post')) {
+
+            $check_cat = $this->request->getPost('check_cat');
+            $check_id = $this->MstChecklistModel->generateCheckID($check_cat);
+
             $data = [
-                'check_cat' => $this->request->getPost('check_cat'),
+                'check_id' => $check_id,
+                'check_cat' => $check_cat,
                 'check_quest' => $this->request->getPost('check_quest'),
             ];
 
@@ -211,6 +216,7 @@ class Master_data extends BaseController
             $data = [
                 'dept_code' => $this->request->getPost('dept_code'),
                 'department' => $this->request->getPost('department'),
+                'dept_head' => $this->request->getPost('dept_head'),
             ];
 
             try {
@@ -232,6 +238,7 @@ class Master_data extends BaseController
             $data = [
                 'dept_code' => $this->request->getPost('dept_code'),
                 'department' => $this->request->getPost('department'),
+                'dept_head' => $this->request->getPost('dept_head'),
             ];
 
             try {

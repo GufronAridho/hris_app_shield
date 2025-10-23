@@ -6,10 +6,11 @@
             </span>
         </td>
         <td class=""><?= $i['department']; ?> </td>
+        <td class=""><?= $i['dept_head']; ?> </td>
         <td class="text-center">
             <button class="btn btn-sm btn-info edit-btn me-1"
                 data-id="<?= $i['id']; ?>" data-dept_code="<?= $i['dept_code']; ?>"
-                data-department="<?= $i['department']; ?>">
+                data-department="<?= $i['department']; ?>" data-dept_head="<?= $i['dept_head']; ?>">
                 <i class="fa fa-edit"></i>
             </button>
             <button class="btn btn-sm btn-danger delete-btn"

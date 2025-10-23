@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th style="width:10%;">Row</th>
-            <th style="width:15%;">Emp ID</th>
             <th style="width:20%;">Field</th>
             <th style="width:25%;">Value</th>
             <th style="width:30%;">Error</th>
@@ -13,7 +12,6 @@
             <?php foreach ($err['errors'] as $field => $message): ?>
                 <tr>
                     <td style="text-align: center;"><?= $err['row']; ?></td>
-                    <td><?= $err['emp_id']; ?></td>
                     <td><?= $field; ?></td>
                     <td><?= $err['data'][$field]; ?></td>
                     <td><?= $message; ?></td>
