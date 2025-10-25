@@ -41,11 +41,14 @@ class Menu
             ['label' => 'Job', 'url' => 'master_data/mst_job', 'icon' => 'fas fa-briefcase'],
             ['label' => 'Status', 'url' => 'master_data/mst_status', 'icon' => 'fas fa-toggle-on'],
             ['label' => 'User', 'url' => 'master_data/mst_user', 'icon' => 'fas fa-user-cog'],
+            ['label' => 'Shift', 'url' => 'master_data/mst_shift', 'icon' => 'fas fa-business-time'],
+
         ],
         'attendance' => [
             ['label' => 'Home', 'url' => 'home/index', 'icon' => 'fas fa-home'],
             ['label' => 'Attendance', 'url' => 'attendance/attendance', 'icon' => 'fas fa-clipboard-check'],
             ['label' => 'Summary', 'url' => 'attendance/summary', 'icon' => 'fas fa-chart-pie'],
+            ['label' => 'Leave', 'url' => 'attendance/leave', 'icon' => 'fas fa-umbrella-beach'],
         ],
     ];
 }

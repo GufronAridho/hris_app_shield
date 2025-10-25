@@ -19,16 +19,10 @@
                 <div class="col-md-9">
                     <div class="card h-100 custom-card-purple custom-card-slim card-button">
                         <div class="h-100 d-flex justify-content-end align-items-center gap-2 flex-wrap">
-
                             <button class="btn btn-split btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#add_modal">
                                 <span class="btn-icon"><i class="fa fa-plus"></i></span>
-                                <span class="btn-text">
-                                    <strong>
-                                        Add Data
-                                    </strong>
-                                </span>
+                                <span class="btn-text"><strong>Add Shift</strong></span>
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -42,18 +36,20 @@
     <div class="app-content">
         <div class="container-fluid">
             <div class="card shadow-sm rounded-3 custom-card-purple card-table">
-                <!-- Card Body with Table -->
-                <div class="card-body p-3">
+                <div class="card-body p-4">
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width:90%;">Job Title</th>
-                                <th class="text-center" style="width:10%; text-align:center;">Action</th>
+                                <th class="text-center">Shift Name</th>
+                                <th class="text-center">Start Time</th>
+                                <th class="text-center">End Time</th>
+                                <th class="text-center">Break (min)</th>
+                                <th class="text-center">Total Hours</th>
+                                <th class="text-center">Grace (min)</th>
+                                <th class="text-center" style="width:10%;">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="table_body">
-
-                        </tbody>
+                        <tbody id="table_body"></tbody>
                     </table>
                 </div>
             </div>
@@ -62,36 +58,47 @@
     <!--end::App Content-->
 </main>
 
-<!-- Modal -->
+<!-- Add Modal -->
 <div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="add_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
-                <h5 class="modal-title" id="add_modalLabel">
-                    <i class="fas fa-square-plus me-2"></i> Add Master Data
-                </h5>
+                <h5 class="modal-title"><i class="fas fa-square-plus me-2"></i> Add Shift</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="form_add">
                 <div class="modal-body">
-                    <div class="col-md-12">
-                        <div class="card w-100">
-                            <div class="card-header bg-light"></div>
-                            <div class="card-body">
-                                <div class="col-md-7">
-                                    <label for="add_job_title" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" id="add_job_title" name="job_title" required>
-                                </div>
-                            </div>
-
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Shift Name</label>
+                            <input type="text" class="form-control" name="shift_name" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Start Time</label>
+                            <input type="time" class="form-control" name="start_time" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">End Time</label>
+                            <input type="time" class="form-control" name="end_time" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Break (minutes)</label>
+                            <input type="number" class="form-control" name="break_minutes">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Total Hours</label>
+                            <input type="number" class="form-control" name="total_hours" step="0.01">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Grace (minutes)</label>
+                            <input type="number" class="form-control" name="grace_minutes">
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-plus me-1"></i> Add Master Data
+                        <i class="fas fa-plus me-1"></i> Add Shift
                     </button>
                 </div>
             </form>
@@ -99,36 +106,48 @@
     </div>
 </div>
 
+<!-- Edit Modal -->
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
-                <h5 class="modal-title" id="edit_modalLabel">
-                    <i class="fas fa-pen-to-square me-2"></i> Edit Master Data
-                </h5>
+                <h5 class="modal-title"><i class="fas fa-pen-to-square me-2"></i> Edit Shift</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="form_edit">
                 <div class="modal-body">
-                    <div class="col-md-12">
-                        <div class="card w-100">
-                            <div class="card-header bg-light"></div>
-                            <div class="card-body">
-                                <input type="hidden" id="edit_id" name="id">
-
-                                <div class="col-md-7">
-                                    <label for="edit_job_title" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" id="edit_job_title" name="job_title" required>
-                                </div>
-                            </div>
+                    <input type="hidden" id="edit_id" name="shift_id">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Shift Name</label>
+                            <input type="text" class="form-control" id="edit_shift_name" name="shift_name" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Start Time</label>
+                            <input type="time" class="form-control" id="edit_start_time" name="start_time" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">End Time</label>
+                            <input type="time" class="form-control" id="edit_end_time" name="end_time" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Break (minutes)</label>
+                            <input type="number" class="form-control" id="edit_break_minutes" name="break_minutes">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Total Hours</label>
+                            <input type="number" class="form-control" id="edit_total_hours" name="total_hours" step="0.01">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Grace (minutes)</label>
+                            <input type="number" class="form-control" id="edit_grace_minutes" name="grace_minutes">
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save me-1"></i> Update Master Data
+                        <i class="fas fa-save me-1"></i> Update Shift
                     </button>
                 </div>
             </form>
@@ -147,13 +166,14 @@
         get_table();
 
         $(document).on('click', '.edit-btn', function() {
-
-            const id = $(this).data('id');
-            const job_title = $(this).data('job_title');
-
-            $('#edit_id').val(id);
-            $('#edit_job_title').val(job_title);
-
+            const data = $(this).data();
+            $('#edit_id').val(data.id);
+            $('#edit_shift_name').val(data.shift_name);
+            $('#edit_start_time').val(data.start_time);
+            $('#edit_end_time').val(data.end_time);
+            $('#edit_break_minutes').val(data.break_minutes);
+            $('#edit_total_hours').val(data.total_hours);
+            $('#edit_grace_minutes').val(data.grace_minutes);
             $('#edit_modal').modal('show');
         });
 
@@ -162,7 +182,7 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "Delete this Job Title!",
+                text: "Delete this Shift!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -172,7 +192,7 @@
                 allowOutsideClick: () => !Swal.isLoading(),
                 preConfirm: () => {
                     return $.ajax({
-                        url: "<?= base_url('master_data/delete_job') ?>",
+                        url: "<?= base_url('master_data/delete_shift') ?>",
                         type: "POST",
                         data: {
                             id: id
@@ -212,7 +232,7 @@
         }
         $('#table_body').html(`
         <tr id="table_loading">
-            <td colspan="2" class="text-center py-4">
+            <td colspan="7" class="text-center py-4">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -221,7 +241,7 @@
         </tr>
         `);
         $.ajax({
-            url: "<?= base_url('master_data/job_table'); ?>",
+            url: "<?= base_url('master_data/shift_table'); ?>",
             type: "GET",
             dataType: "html",
             success: function(res) {
@@ -232,7 +252,7 @@
                 console.error("AJAX Error:", error);
                 $('#table_body').html(`
                 <tr>
-                    <td colspan="2" class="text-center text-black p-3">
+                    <td colspan="7" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -252,7 +272,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 1) {
+            if (index === 6) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
@@ -285,7 +305,7 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Add this Job Title!",
+            text: "Add this Shift!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -295,7 +315,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('master_data/create_job') ?>",
+                    url: "<?= base_url('master_data/create_shift') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,
@@ -335,7 +355,7 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Edit this Job Title!",
+            text: "Edit this Shift!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -345,7 +365,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('master_data/update_job') ?>",
+                    url: "<?= base_url('master_data/update_shift') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,

@@ -9,7 +9,7 @@ use App\Models\MstDeptModel;
 use App\Models\OpeningModel;
 use App\Models\CandidateModel;
 use App\Models\EmployeeModel;
-
+use App\Models\MstShiftModel;
 
 class Select_form extends BaseController
 {
@@ -20,6 +20,7 @@ class Select_form extends BaseController
     protected $OpeningModel;
     protected $CandidateModel;
     protected $EmployeeModel;
+    protected $MstShiftModel;
 
     public function __construct()
     {
@@ -30,6 +31,7 @@ class Select_form extends BaseController
         $this->OpeningModel = new OpeningModel();
         $this->CandidateModel = new CandidateModel();
         $this->EmployeeModel = new EmployeeModel();
+        $this->MstShiftModel = new MstShiftModel();
     }
 
     public function statusSelect()
@@ -266,6 +268,63 @@ class Select_form extends BaseController
             $items[] = [
                 'id' => $row->name,
                 'name' => $row->name
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function employeeIDSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->EmployeeModel->builder();
+        $builder->distinct();
+        $builder->select('emp_id, name');
+
+        if (!empty($q)) {
+            $builder->groupStart()
+                ->like('emp_id', $q)
+                ->orLike('name', $q)
+                ->groupEnd();
+        }
+        $builder->orderBy('emp_id');
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->emp_id,
+                'name' => $row->emp_id . ' - ' . $row->name
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function shiftSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->MstShiftModel->builder();
+        $builder->distinct();
+        $builder->select('shift_id, shift_name');
+
+        if (!empty($q)) {
+            $builder->like('shift_name', $q);
+        }
+        $builder->orderBy('shift_name');
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->shift_id,
+                'name' => $row->shift_name
             ];
         }
 

@@ -45,11 +45,11 @@ class MstChecklistModel extends Model
     ];
     protected $validationMessages = [
         'check_cat' => [
-            'required'    => 'Checklist category is required.',
+            'required' => 'Checklist category is required.',
             'safe_string' => 'Checklist category contains invalid characters.'
         ],
         'check_quest' => [
-            'required'    => 'Checklist question is required.',
+            'required' => 'Checklist question is required.',
             'safe_string' => 'Checklist question contains invalid characters.'
         ]
     ];

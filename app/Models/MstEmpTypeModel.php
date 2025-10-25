@@ -19,9 +19,9 @@ class MstEmpTypeModel extends Model
     ];
     protected $validationMessages = [
         'type' => [
-            'required'    => 'Type is required.',
+            'required' => 'Type is required.',
             'safe_string' => 'Type contains invalid characters.',
-            'is_unique'   => 'Type must be unique.',
+            'is_unique' => 'Type must be unique.',
         ],
         'updated_by' => [
             'safe_string' => 'Updated by contains invalid characters.',

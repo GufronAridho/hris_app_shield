@@ -7,6 +7,7 @@ use App\Models\MstDeptModel;
 use App\Models\MstEmpTypeModel;
 use App\Models\MstJobModel;
 use App\Models\MstStatusModel;
+use App\Models\MstShiftModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use CodeIgniter\Controller;
@@ -18,6 +19,7 @@ class Master_data extends BaseController
     protected $MstEmpTypeModel;
     protected $MstJobModel;
     protected $MstStatusModel;
+    protected $MstShiftModel;
     protected $users;
     protected $user;
     public function __construct()
@@ -27,6 +29,7 @@ class Master_data extends BaseController
         $this->MstEmpTypeModel = new MstEmpTypeModel();
         $this->MstJobModel = new MstJobModel();
         $this->MstStatusModel = new MstStatusModel();
+        $this->MstShiftModel = new MstShiftModel();
         $this->users = auth()->getProvider();
         $this->user = auth()->user();
     }
@@ -79,6 +82,13 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_user', [
             'title' => 'User Managment',
+        ]);
+    }
+
+    public function mst_shift()
+    {
+        return view('master_data/mst_shift', [
+            'title' => 'Shift',
         ]);
     }
 
@@ -136,6 +146,15 @@ class Master_data extends BaseController
         dd($data);
     }
 
+    public function shift_table()
+    {
+        $item = $this->MstShiftModel->findAll();
+        $data = [
+            'item' => $item
+        ];
+        return view('master_data/partial/shift_table', $data);
+    }
+
     public function create_check_cat()
     {
         if ($this->request->is('post')) {
@@ -171,7 +190,7 @@ class Master_data extends BaseController
             $id = $this->request->getPost('id');
 
             $data = [
-                'check_cat' => $this->request->getPost('check_cat'),
+                'chec_cat' => $this->request->getPost('check_cat'),
                 'check_quest' => $this->request->getPost('check_quest'),
             ];
 
@@ -434,6 +453,71 @@ class Master_data extends BaseController
                     return $this->_json_response(true, 'Status deleted successfully');
                 }
                 return $this->_json_response(false, 'Failed to delete status');
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function create_shift()
+    {
+        if ($this->request->is('post')) {
+            $data = [
+                'shift_name' => $this->request->getPost('shift_name'),
+                'start_time' => $this->request->getPost('start_time'),
+                'end_time' => $this->request->getPost('end_time'),
+                'break_minutes' => $this->request->getPost('break_minutes'),
+                'total_hours' => $this->request->getPost('total_hours'),
+                'grace_minutes' => $this->request->getPost('grace_minutes'),
+            ];
+
+            try {
+                if ($this->MstShiftModel->insert($data)) {
+                    return $this->_json_response(true, 'Shift created successfully');
+                }
+                return $this->_json_response(false, implode(', ', $this->MstShiftModel->errors()));
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function update_shift()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('shift_id');
+            $data = [
+                'shift_name' => $this->request->getPost('shift_name'),
+                'start_time' => $this->request->getPost('start_time'),
+                'end_time' => $this->request->getPost('end_time'),
+                'break_minutes' => $this->request->getPost('break_minutes'),
+                'total_hours' => $this->request->getPost('total_hours'),
+                'grace_minutes' => $this->request->getPost('grace_minutes'),
+            ];
+
+            try {
+                if ($this->MstShiftModel->update($id, $data)) {
+                    return $this->_json_response(true, 'Shift updated successfully');
+                }
+                return $this->_json_response(false, implode(', ', $this->MstShiftModel->errors()));
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function delete_shift()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+            try {
+                if ($this->MstShiftModel->delete($id)) {
+                    return $this->_json_response(true, 'Shift deleted successfully');
+                }
+                return $this->_json_response(false, 'Failed to delete shift');
             } catch (\Exception $e) {
                 return $this->_json_response(false, $e->getMessage());
             }

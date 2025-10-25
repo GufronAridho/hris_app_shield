@@ -7,7 +7,7 @@
     $work_status = $i->work_status;
 ?>
     <tr>
-        <td class="text-center"><?= $i->name; ?></td>
+        <td class="text-center"><?= $i->emp_id . ' - ' . $i->name; ?></td>
         <td class="text-center"><?= $att_date; ?></td>
         <td class="text-center"><?= $time_in; ?></td>
         <td class="text-center"><?= $time_out; ?></td>
@@ -21,7 +21,7 @@
                 <span class="badge bg-danger d-inline-flex align-items-center justify-content-center" style="height:28px; width:90px;">
                     <?= $action_status; ?>
                 </span>
-            <?php elseif ($action_status == 'Holiday'): ?>
+            <?php elseif ($action_status == 'On Leave'): ?>
                 <span class="badge bg-info text-black d-inline-flex align-items-center justify-content-center" style="height:28px; width:90px;">
                     <?= $action_status; ?>
                 </span>

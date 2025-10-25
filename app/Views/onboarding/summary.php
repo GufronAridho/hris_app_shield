@@ -89,7 +89,16 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
-
+        $('#table_body').html(`
+        <tr id="table_loading">
+            <td colspan="6" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="mt-2 fw-bold text-muted">Loading data...</div>
+            </td>
+        </tr>
+        `);
         $.ajax({
             url: "<?= base_url('onboarding/summary_table'); ?>",
             type: "GET",

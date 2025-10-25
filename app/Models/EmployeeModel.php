@@ -27,7 +27,8 @@ class EmployeeModel extends Model
         'updated_at',
         'email',
         'photo',
-        'no_hp'
+        'no_hp',
+        'shift_id'
     ];
 
     public function generateEmpId()
@@ -48,52 +49,52 @@ class EmployeeModel extends Model
     protected $skipValidation = false;
 
     protected $validationRules = [
-        'emp_id'       => 'required|safe_string|is_unique[mst_employee.emp_id]',
-        'name'         => 'required|safe_string',
-        'gender'       => 'required|safe_string',
-        'join_date'    => 'required',
-        'emp_type'     => 'required|safe_string',
+        'emp_id' => 'required|safe_string|is_unique[mst_employee.emp_id]',
+        'name' => 'required|safe_string',
+        'gender' => 'required|safe_string',
+        'join_date' => 'required',
+        'emp_type' => 'required|safe_string',
         'organization' => 'permit_empty|safe_string',
-        'department'   => 'required|safe_string',
-        'job_title'    => 'required|safe_string',
-        'manager'      => 'permit_empty|safe_string',
-        'hr_partner'   => 'permit_empty|safe_string',
-        'location'     => 'permit_empty|safe_string',
-        'emp_grade'    => 'permit_empty|decimal',
-        'status'       => 'required|safe_string',
-        'email'        => 'permit_empty|valid_email',
+        'department' => 'required|safe_string',
+        'job_title' => 'required|safe_string',
+        'manager' => 'permit_empty|safe_string',
+        'hr_partner' => 'permit_empty|safe_string',
+        'location' => 'permit_empty|safe_string',
+        'emp_grade' => 'permit_empty|decimal',
+        'status' => 'required|safe_string',
+        'email' => 'permit_empty|valid_email',
     ];
 
     protected $validationMessages = [
         'emp_id' => [
-            'required'    => 'Employee ID is required',
+            'required' => 'Employee ID is required',
             'safe_string' => 'Employee ID contains invalid characters',
-            'is_unique'   => 'Employee ID must be unique',
+            'is_unique' => 'Employee ID must be unique',
         ],
         'name' => [
-            'required'    => 'Name is required',
+            'required' => 'Name is required',
             'safe_string' => 'Name contains invalid characters',
         ],
         'gender' => [
-            'required'    => 'Gender is required',
+            'required' => 'Gender is required',
             'safe_string' => 'Gender contains invalid characters',
         ],
         'join_date' => [
-            'required'    => 'Join date is required',
+            'required' => 'Join date is required',
         ],
         'emp_type' => [
-            'required'    => 'Employee type is required',
+            'required' => 'Employee type is required',
             'safe_string' => 'Employee type contains invalid characters',
         ],
         'organization' => [
             'safe_string' => 'Organization contains invalid characters',
         ],
         'department' => [
-            'required'    => 'Department is required',
+            'required' => 'Department is required',
             'safe_string' => 'Department contains invalid characters',
         ],
         'job_title' => [
-            'required'    => 'Job title is required',
+            'required' => 'Job title is required',
             'safe_string' => 'Job title contains invalid characters',
         ],
         'manager' => [
@@ -103,14 +104,14 @@ class EmployeeModel extends Model
             'safe_string' => 'HR Partner contains invalid characters',
         ],
         'location' => [
-            'required'    => 'Location is required',
+            'required' => 'Location is required',
             'safe_string' => 'Location contains invalid characters',
         ],
         'emp_grade' => [
             'decimal' => 'Employee grade contain only numbers (you can include decimals)',
         ],
         'status' => [
-            'required'    => 'Status is required',
+            'required' => 'Status is required',
             'safe_string' => 'Status contains invalid characters',
         ],
         'email' => [

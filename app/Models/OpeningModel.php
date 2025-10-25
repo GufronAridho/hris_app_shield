@@ -21,11 +21,11 @@ class OpeningModel extends Model
     protected $skipValidation = false;
 
     protected $validationRules = [
-        'job_id'      => 'required|safe_string|is_unique[tbl_opening.job_id]',
-        'position'    => 'required|safe_string',
-        'department'  => 'required|safe_string',
-        'location'    => 'required|safe_string',
-        'status'      => 'required|safe_string',
+        'job_id' => 'required|safe_string|is_unique[tbl_opening.job_id]',
+        'position' => 'required|safe_string',
+        'department' => 'required|safe_string',
+        'location' => 'required|safe_string',
+        'status' => 'required|safe_string',
         'description' => 'permit_empty|safe_string',
         'posted_date' => 'required|valid_date',
         'closing_date' => 'required|valid_date'
@@ -33,36 +33,36 @@ class OpeningModel extends Model
 
     protected $validationMessages = [
         'job_id' => [
-            'required'    => 'Job ID is required.',
+            'required' => 'Job ID is required.',
             'safe_string' => 'Job ID contains invalid characters.',
-            'is_unique'   => 'Job ID must be unique.'
+            'is_unique' => 'Job ID must be unique.'
         ],
         'position' => [
-            'required'    => 'Position is required.',
+            'required' => 'Position is required.',
             'safe_string' => 'Position contains invalid characters.'
         ],
         'department' => [
-            'required'    => 'Department is required.',
+            'required' => 'Department is required.',
             'safe_string' => 'Department contains invalid characters.'
         ],
         'location' => [
-            'required'    => 'Location is required.',
+            'required' => 'Location is required.',
             'safe_string' => 'Location contains invalid characters.'
         ],
         'status' => [
-            'required'    => 'Status is required.',
+            'required' => 'Status is required.',
             'safe_string' => 'Status contains invalid characters.'
         ],
         'description' => [
             'safe_string' => 'Description contains invalid characters.'
         ],
         'posted_date' => [
-            'required'    => 'Posted Date is required.',
-            'valid_date'  => 'Posted Date must be a valid date.'
+            'required' => 'Posted Date is required.',
+            'valid_date' => 'Posted Date must be a valid date.'
         ],
         'closing_date' => [
-            'required'    => 'Closing Date is required.',
-            'valid_date'  => 'Closing Date must be a valid date.'
+            'required' => 'Closing Date is required.',
+            'valid_date' => 'Closing Date must be a valid date.'
         ]
     ];
 }

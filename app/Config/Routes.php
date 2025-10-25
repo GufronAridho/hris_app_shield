@@ -74,8 +74,10 @@ $routes->group('onboarding', function ($routes) {
     $routes->get('document_table', 'Onboarding::document_table');
     $routes->get('it_table', 'Onboarding::it_table');
     $routes->get('onboarding_table', 'Onboarding::onboarding_table');
+    $routes->get('profile_table', 'Onboarding::profile_table');
 
     $routes->post('upload_document', 'Onboarding::upload_document');
+    $routes->post('update_profile', 'Onboarding::update_profile');
 });
 
 // $routes->get('employee_info/(:any)', 'Employee_info::$1');
@@ -113,6 +115,8 @@ $routes->group('select_form',  function ($routes) {
     $routes->get('managerSelect', 'Select_form::managerSelect');
     $routes->get('hrSelect', 'Select_form::hrSelect');
     $routes->get('employeeSelect', 'Select_form::employeeSelect');
+    $routes->get('employeeIDSelect', 'Select_form::employeeIDSelect');
+    $routes->get('shiftSelect', 'Select_form::shiftSelect');
 });
 
 $routes->get('attendance/(:any)', 'Attendance::$1');

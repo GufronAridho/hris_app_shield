@@ -96,7 +96,7 @@ class AttendanceModel extends Model
         return ['success' => true, 'time' => $time_now];
     }
 
-    public function summary_table($attendance_date)
+    public function summary_table($attendance_date, $shift)
     {
         return $this->select("attendance_id, tbl_attendance.emp_id, b.name, attendance_date,
         c.shift_name, time_in, time_out, attendance_status,
@@ -111,7 +111,32 @@ class AttendanceModel extends Model
             ->join('mst_employee b', 'tbl_attendance.emp_id = b.emp_id')
             ->join('mst_shift c', 'b.shift_id = c.shift_id')
             ->where('attendance_date', $attendance_date)
+            ->where('b.shift_id', $shift)
             ->get()
             ->getResult();
+    }
+
+    public function update_leave_attendance($emp_id, $start_date)
+    {
+        $current_date = $start_date;
+        $time_now = date('Y-m-d H:i:s');
+
+        $attendance = $this->where('emp_id', $emp_id)
+            ->where('attendance_date', $current_date)
+            ->first();
+
+        if (!$attendance) {
+            return ['success' => true];
+        }
+
+        $this->skipValidation(true)
+            ->where('emp_id', $emp_id)
+            ->where('attendance_date', $current_date)
+            ->set([
+                'attendance_status' => 'On Leave',
+                'updated_at' => $time_now
+            ])->update();
+
+        return ['success' => true, 'time' => $time_now];
     }
 }

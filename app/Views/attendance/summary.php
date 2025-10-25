@@ -18,46 +18,54 @@
 
                 <div class="col-md-9">
                     <div class="card h-100 custom-card-purple custom-card-slim card-button p-3">
-                        <div class="row g-3 align-items-center">
+                        <div class="row g-2 align-items-center">
+                            <div class="d-flex flex-wrap align-items-center gap-2">
 
-                            <div class="col-auto">
                                 <div class="form-floating">
                                     <input type="date" class="form-control bg-light" id="attendance_date_filter" name="attendance_date_filter">
                                     <label for="attendance_date_filter">Attendance Date</label>
                                 </div>
-                            </div>
 
-                            <div class="col-auto">
+                                <div class="flex-grow-1" style="max-width: 150px; background-color: #f8f9fa; padding: 0.2rem; border-radius: 8px;">
+                                    <small class="text-secondary">Shift</small>
+                                    <select class="form-select bg-light" id="shift_filter" name="shift_filter"></select>
+                                </div>
+
+                                <button class="btn btn-split btn-primary btn-sm" onclick="get_table()">
+                                    <span class="btn-icon"><i class="fa fa-search"></i></span>
+                                    <span class="btn-text"><strong>Search</strong></span>
+                                </button>
+
                                 <button class="btn btn-split btn-info btn-sm" id="download_excel">
                                     <span class="btn-icon"><i class="fa fa-file-excel"></i></span>
                                     <span class="btn-text"><strong>Download</strong></span>
                                 </button>
                             </div>
 
-                            <div class="col-12">
-                                <div class="row g-2 text-center mb-3">
-                                    <div class="col">
+                            <div class="col-12 mt-2">
+                                <div class="row g-2 text-center">
+                                    <div class="col-6 col-md-3">
                                         <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
                                             <i class="fa fa-user"></i>
                                             <span><strong>Employees:</strong> <strong><span id="totalEmployees">0</span></strong></span>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6 col-md-3">
                                         <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
                                             <i class="fa fa-check-circle"></i>
                                             <span><strong>Present:</strong> <strong><span id="presentCount">0</span></strong></span>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6 col-md-3">
                                         <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
                                             <i class="fa fa-times-circle"></i>
                                             <span><strong>Absent:</strong> <strong><span id="absentCount">0</span></strong></span>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-6 col-md-3">
                                         <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
-                                            <i class="fa fa-calendar-alt"></i>
-                                            <span><strong>Holiday:</strong> <strong><span id="holidayCount">0</span></strong></span>
+                                            <i class="fa fa-umbrella-beach"></i>
+                                            <span><strong>On Leave:</strong> <strong><span id="leaveCount">0</span></strong></span>
                                         </div>
                                     </div>
                                 </div>
@@ -73,52 +81,50 @@
     <!--begin::App Content-->
     <div class="app-content">
         <div class="container-fluid">
-            <div class="container-fluid">
-                <div class="card shadow-sm rounded-3 custom-card-purple card-table">
-                    <div class="card-body p-4">
-                        <div class="row g-2 text-center">
-                            <div class="col">
-                                <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
-                                    <i class="fa fa-clock"></i>
-                                    <span><strong>On Time:</strong> <strong><span id="onTimeCount">0</span></strong></span>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
-                                    <i class="fa fa-exclamation-triangle"></i>
-                                    <span><strong>Late:</strong> <strong><span id="lateCount">0</span></strong></span>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
-                                    <i class="fa fa-arrow-left"></i>
-                                    <span><strong>Left Early:</strong> <strong><span id="leftEarlyCount">0</span></strong></span>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
-                                    <i class="fa fa-exclamation-circle"></i>
-                                    <span><strong>Late & Left Early:</strong> <strong><span id="lateLeftEarlyCount">0</span></strong></span>
-                                </div>
+            <div class="card shadow-sm rounded-3 custom-card-purple card-table">
+                <div class="card-body p-4">
+                    <div class="row g-2 text-center">
+                        <div class="col-md-3">
+                            <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
+                                <i class="fa fa-clock"></i>
+                                <span><strong>On Time:</strong> <strong><span id="onTimeCount">0</span></strong></span>
                             </div>
                         </div>
-                        <table class="table table-bordered table-striped table-hover table-custom-emp mt-2" id="table_detail">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Employee</th>
-                                    <th class="text-center">Date</th>
-                                    <th class="text-center">Time In</th>
-                                    <th class="text-center">Time Out</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Work Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table_detail_body">
-
-                            </tbody>
-                        </table>
+                        <div class="col-md-3">
+                            <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <span><strong>Late:</strong> <strong><span id="lateCount">0</span></strong></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
+                                <i class="fa fa-arrow-left"></i>
+                                <span><strong>Left Early:</strong> <strong><span id="leftEarlyCount">0</span></strong></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-2 rounded d-flex align-items-center justify-content-center gap-2 shadow-sm status-badge">
+                                <i class="fa fa-exclamation-circle"></i>
+                                <span><strong>Late & Left Early:</strong> <strong><span id="lateLeftEarlyCount">0</span></strong></span>
+                            </div>
+                        </div>
                     </div>
+                    <table class="table table-bordered table-striped table-hover table-custom-emp mt-2" id="table_detail">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Employee</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Time In</th>
+                                <th class="text-center">Time Out</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Work Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table_detail_body">
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -223,14 +229,47 @@
         $(this).find('.is-invalid').removeClass('is-invalid');
     });
 
+    function initSelect2Ajax(selector, placeholder, url, modal = null) {
+        $(selector).select2({
+            placeholder: placeholder,
+            allowClear: true,
+            width: '100%',
+            dropdownParent: modal ? $(modal) : null,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function(data) {
+                    if (!data.items) return {
+                        results: []
+                    };
+
+                    return {
+                        results: data.items.map(item => ({
+                            id: item.id,
+                            text: item.name
+                        }))
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
     $(document).ready(function() {
         let today = new Date().toISOString().split('T')[0];
         $('#attendance_date_filter').val(today);
-        get_table();
 
-        $('#attendance_date_filter').on('change', function() {
-            get_table();
-        });
+        initSelect2Ajax('#shift_filter', 'Select Shift', "<?= base_url('select_form/shiftSelect') ?>");
+        let shiftOption = new Option('Morning Shift', 1, true, true);
+        $('#shift_filter').append(shiftOption).trigger('change');
+
+        get_table();
 
         $(document).on('click', '.edit-btn', function() {
             $('#edit_att').val($(this).data('id'));
@@ -297,6 +336,7 @@
 
     function get_table() {
         let attendance_date = $('#attendance_date_filter').val();
+        let shift = $('#shift_filter').val();
 
         if ($.fn.DataTable.isDataTable('#table_detail')) {
             $('#table_detail').DataTable().destroy();
@@ -316,7 +356,8 @@
             url: "<?= base_url('attendance/summary_table'); ?>",
             type: "GET",
             data: {
-                attendance_date: attendance_date
+                attendance_date: attendance_date,
+                shift: shift
             },
             dataType: "json",
             success: function(res) {
@@ -324,7 +365,7 @@
                 $('#totalEmployees').text(res.statusCount.total_employees);
                 $('#presentCount').text(res.statusCount.Present);
                 $('#absentCount').text(res.statusCount.Absent);
-                $('#holidayCount').text(res.statusCount.Holiday);
+                $('#leaveCount').text(res.statusCount['On Leave'] ?? 0);
                 $('#onTimeCount').text(res.workStatusCount['On Time'] ?? 0);
                 $('#lateCount').text(res.workStatusCount['Late'] ?? 0);
                 $('#leftEarlyCount').text(res.workStatusCount['Left Early'] ?? 0);

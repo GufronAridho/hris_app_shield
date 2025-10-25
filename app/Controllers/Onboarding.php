@@ -160,6 +160,26 @@ class Onboarding extends BaseController
         return view('onboarding/partial/summary_table', $data);
     }
 
+    public function profile_table()
+    {
+        $item = $this->OnboardingModel
+            ->select("tbl_onboarding.emp_id, b.name, b.join_date,
+            organization, manager, hr_partner, email, emp_grade,
+            CASE 
+                WHEN organization IS NULL OR manager IS NULL OR hr_partner IS NULL OR email IS NULL 
+                THEN 'Incomplete' 
+                ELSE 'Complete' 
+            END AS status", false)
+            ->join('mst_employee b', 'tbl_onboarding.emp_id = b.emp_id')
+            ->groupBy('tbl_onboarding.emp_id, b.name, b.join_date, organization, manager, hr_partner, email')
+            ->findAll();
+
+        $data = [
+            'item' => $item
+        ];
+        return view('onboarding/partial/profile_table', $data);
+    }
+
     public function upload_document()
     {
         if ($this->request->is('post')) {
@@ -186,7 +206,7 @@ class Onboarding extends BaseController
                 $document->move($destinationFolder, $new_name);
 
                 $data = [
-                    'document' => $new_name,
+                    'document' => $this->request->getPost('emp_id'),
                     'status' => 'OK',
                     'completed_at' => date('Y-m-d H:i:s')
                 ];
@@ -207,6 +227,34 @@ class Onboarding extends BaseController
             }
         }
 
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function update_profile()
+    {
+        if ($this->request->is('post')) {
+            $emp_id = $this->request->getPost('emp_id');
+            if (empty($emp_id)) {
+                return $this->_json_response(false, 'Missing ID.');
+            }
+            $data = [
+                'email' => ($this->request->getPost('email') === '') ? null : $this->request->getPost('email'),
+                'manager' => $this->request->getPost('manager') ?? null,
+                'hr_partner' => $this->request->getPost('hr_partner') ?? null,
+                'emp_grade' => $this->request->getPost('emp_grade') ?? null,
+                'organization' => ($this->request->getPost('organization') == '') ? null : $this->request->getPost('organization'),
+            ];
+            if ($this->EmployeeModel->where('emp_id', $emp_id)
+                ->set($data)
+                ->update()
+            ) {
+                return $this->_json_response(true, 'Update profile successfully');
+            } else {
+                $errors = $this->EmployeeModel->errors();
+                $message = implode(', ', $errors);
+                return $this->_json_response(false, $message);
+            }
+        }
         return $this->_json_response(false, 'Invalid request method');
     }
 }

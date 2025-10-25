@@ -20,15 +20,15 @@ class MstDeptModel extends Model
     ];
     protected $validationMessages = [
         'dept_code' => [
-            'required'    => 'Dept code is required.',
+            'required' => 'Dept code is required.',
             'safe_string' => 'Dept code is required contains invalid characters.',
         ],
         'department' => [
-            'required'    => 'Department is required.',
+            'required' => 'Department is required.',
             'safe_string' => 'Department contains invalid characters.'
         ],
         'dept_head' => [
-            'required'    => 'Dept Head is required.',
+            'required' => 'Dept Head is required.',
             'safe_string' => 'Dept Head contains invalid characters.'
         ]
     ];

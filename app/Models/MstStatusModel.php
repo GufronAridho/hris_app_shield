@@ -19,9 +19,9 @@ class MstStatusModel extends Model
     ];
     protected $validationMessages = [
         'status' => [
-            'required'    => 'Status is required.',
+            'required' => 'Status is required.',
             'safe_string' => 'Status contains invalid characters.',
-            'is_unique'   => 'Status must be unique.',
+            'is_unique' => 'Status must be unique.',
         ],
         'updated_by' => [
             'safe_string' => 'Updated by contains invalid characters.',

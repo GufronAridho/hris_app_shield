@@ -19,9 +19,9 @@ class MstJobModel extends Model
     ];
     protected $validationMessages = [
         'job_title' => [
-            'required'    => 'Job title is required.',
+            'required' => 'Job title is required.',
             'safe_string' => 'Job title contains invalid characters.',
-            'is_unique'   => 'Job title must be unique.',
+            'is_unique' => 'Job title must be unique.',
         ],
         'updated_by' => [
             'safe_string' => 'Updated by contains invalid characters.',

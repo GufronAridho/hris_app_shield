@@ -151,7 +151,7 @@
                                             <label for="add_name" class="form-label">Name</label>
                                             <input type="text" class="form-control" id="add_name" name="name" required>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="add_email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="add_email" name="email" required>
                                         </div>
@@ -188,6 +188,10 @@
                                         <div class="col-md-6">
                                             <label for="add_department" class="form-label">Department</label>
                                             <select class="form-select" id="add_department" name="department" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="add_shift_id" class="form-label">Shift</label>
+                                            <select class="form-select" id="add_shift_id" name="shift_id" required></select>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="add_job_title" class="form-label">Job Title</label>
@@ -289,7 +293,7 @@
                                             <label for="edit_name" class="form-label">Name</label>
                                             <input type="text" class="form-control" id="edit_name" name="name" required>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="edit_email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="edit_email" name="email" required>
                                         </div>
@@ -325,6 +329,10 @@
                                         <div class="col-md-6">
                                             <label for="edit_department" class="form-label">Department</label>
                                             <select class="form-select" id="edit_department" name="department" required></select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="edit_shift_id" class="form-label">Shift</label>
+                                            <select class="form-select" id="edit_shift_id" name="shift_id" required></select>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="edit_job_title" class="form-label">Job Title</label>
@@ -463,6 +471,8 @@
         initSelect2Ajax('#add_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#add_modal .modal-body');
         initSelect2Ajax('#add_manager', 'Select Manager', "<?= base_url('select_form/managerSelect') ?>", '#add_modal .modal-body');
         initSelect2Ajax('#add_hr_partner', 'Select HR Partner', "<?= base_url('select_form/hrSelect') ?>", '#add_modal .modal-body');
+        initSelect2Ajax('#add_shift_id', 'Select Shift', "<?= base_url('select_form/shiftSelect') ?>", '#add_modal .modal-body');
+
     });
 
     $('#edit_modal').on('shown.bs.modal', function() {
@@ -472,6 +482,7 @@
         initSelect2Ajax('#edit_department', 'Select Department', "<?= base_url('select_form/deptSelect') ?>", '#edit_modal .modal-body');
         initSelect2Ajax('#edit_manager', 'Select Manager', "<?= base_url('select_form/managerSelect') ?>", '#edit_modal .modal-body');
         initSelect2Ajax('#edit_hr_partner', 'Select HR Partner', "<?= base_url('select_form/hrSelect') ?>", '#edit_modal .modal-body');
+        initSelect2Ajax('#edit_shift_id', 'Select Shift', "<?= base_url('select_form/shiftSelect') ?>", '#edit_modal .modal-body');
     });
 
     $('#add_modal').on('hidden.bs.modal', function() {
@@ -760,6 +771,10 @@
             $('#edit_resign_date').val(emp.resign_date);
             $('#edit_email').val(emp.email);
             $('#edit_no_hp').val(emp.no_hp);
+
+            var shiftOption = new Option(emp.shift_name, emp.shift_id, true, true);
+            $('#edit_shift_id').append(shiftOption).trigger('change');
+
             var preview = $('#edit_preview');
             if (emp.photo) {
                 var baseUrl = "<?= base_url() ?>";

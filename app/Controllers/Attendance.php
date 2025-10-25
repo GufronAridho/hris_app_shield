@@ -68,6 +68,14 @@ class Attendance extends BaseController
         return view('attendance/check_out', $data);
     }
 
+    public function leave()
+    {
+        $data = [
+            'title' => 'Leave',
+        ];
+        return view('attendance/leave', $data);
+    }
+
     public function emp_check_in()
     {
         if ($this->request->is('post')) {
@@ -121,13 +129,14 @@ class Attendance extends BaseController
     public function summary_table()
     {
         $attendance_date = $this->request->getGet('attendance_date');
-        $item = $this->AttendanceModel->summary_table($attendance_date);
+        $shift = $this->request->getGet('shift');
+        $item = $this->AttendanceModel->summary_table($attendance_date, $shift);
 
         $statusCount = [
             'total_employees' => 0,
             'Present' => 0,
             'Absent' => 0,
-            'Holiday' => 0
+            'On Leave' => 0
         ];
         $workStatusCount = [
             'On Time' => 0,
@@ -155,6 +164,15 @@ class Attendance extends BaseController
             'statusCount' => $statusCount,
             'workStatusCount' => $workStatusCount
         ]);
+    }
+
+    public function leave_table()
+    {
+        $item = $this->LeaveModel->leave_table();
+        $data = [
+            'item' => $item
+        ];
+        return view('attendance/partial/leave_table', $data);
     }
 
     public function update_attendance()
@@ -202,6 +220,96 @@ class Attendance extends BaseController
                     return $this->_json_response(true, 'Attendance deleted successfully');
                 } else {
                     return $this->_json_response(false, 'Failed to delete attendance');
+                }
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function create_leave()
+    {
+        if ($this->request->is('post')) {
+            $data = [
+                'emp_id' => $this->request->getPost('emp_id'),
+                'leave_type' => $this->request->getPost('leave_type'),
+                'start_date' => $this->request->getPost('start_date'),
+                'end_date' => $this->request->getPost('end_date'),
+                'reason' => $this->request->getPost('reason'),
+                'approval_status' => 'Pending',
+            ];
+            try {
+                if ($this->LeaveModel->insert($data)) {
+                    return $this->_json_response(true, 'Leave approval created successfully');
+                } else {
+                    $errors = $this->LeaveModel->errors();
+                    $message = implode(', ', $errors);
+                    return $this->_json_response(false, $message);
+                };
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function update_leave()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+            if (empty($id)) {
+                return $this->_json_response(false, 'Missing ID.');
+            }
+            $emp_id = $this->request->getPost('emp_id');
+            $start_date = $this->request->getPost('start_date');
+            $approval_status = $this->request->getPost('approval_status');
+            $data = [
+                'leave_type' => $this->request->getPost('leave_type'),
+                'start_date' => $start_date,
+                'end_date' => $this->request->getPost('end_date'),
+                'reason' => $this->request->getPost('reason'),
+                'approval_status' => $approval_status,
+                'approved_by' => $this->request->getPost('approved_by'),
+            ];
+            try {
+                if ($this->LeaveModel->update($id, $data)) {
+                    if ($approval_status == 'Approved') {
+                        $update_leave_attendance = $this->AttendanceModel->update_leave_attendance($emp_id, $start_date);
+                        if ($update_leave_attendance['success']) {
+                            return $this->_json_response(true, 'Leave approval updated successfully');
+                        } else {
+                            return $this->_json_response(false, $update_leave_attendance['error']);
+                        }
+                    } else {
+                        return $this->_json_response(true, 'Leave approval updated successfully');
+                    }
+                } else {
+                    $errors = $this->LeaveModel->errors();
+                    $message = implode(', ', $errors);
+                    return $this->_json_response(false, $message);
+                };
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function delete_leave()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+            if (empty($id)) {
+                return $this->_json_response(false, 'Missing ID.');
+            }
+            $emp_id = $this->request->getPost('emp_id');
+
+            try {
+                if ($this->LeaveModel->delete($id)) {
+                    return $this->_json_response(true, 'Leave approval deleted successfully');
+                } else {
+                    return $this->_json_response(false, 'Failed to delete leave');
                 }
             } catch (\Exception $e) {
                 return $this->_json_response(false, $e->getMessage());

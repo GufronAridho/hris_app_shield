@@ -23,23 +23,23 @@ class CandidateModel extends Model
     protected $skipValidation = false;
 
     protected $validationRules = [
-        'job_id'         => 'required|safe_string',
+        'job_id' => 'required|safe_string',
         'candidate_name' => 'required|safe_string',
-        'gender'         => 'permit_empty|safe_string',
-        'age'            => 'permit_empty|integer|greater_than_equal_to[18]',
-        'education'      => 'permit_empty|safe_string',
-        'address'        => 'permit_empty|safe_string',
-        'phone'          => 'permit_empty|safe_string',
-        'email'          => 'permit_empty|valid_email',
+        'gender' => 'permit_empty|safe_string',
+        'age' => 'permit_empty|integer|greater_than_equal_to[18]',
+        'education' => 'permit_empty|safe_string',
+        'address' => 'permit_empty|safe_string',
+        'phone' => 'permit_empty|safe_string',
+        'email' => 'permit_empty|valid_email',
     ];
 
     protected $validationMessages = [
         'job_id' => [
-            'required'    => 'Job ID is required.',
+            'required' => 'Job ID is required.',
             'safe_string' => 'Job ID contains invalid characters.'
         ],
         'candidate_name' => [
-            'required'    => 'Candidate name is required.',
+            'required' => 'Candidate name is required.',
             'safe_string' => 'Candidate name contains invalid characters.'
         ],
         'gender' => [

@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                     <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Master Data</a></li>
+                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Attendance </a></li>
                             <li class="breadcrumb-item active"><?= $title; ?></li>
                         </ol>
                     </div>
@@ -24,7 +24,7 @@
                                 <span class="btn-icon"><i class="fa fa-plus"></i></span>
                                 <span class="btn-text">
                                     <strong>
-                                        Add Data
+                                        Request Leave
                                     </strong>
                                 </span>
                             </button>
@@ -43,15 +43,19 @@
         <div class="container-fluid">
             <div class="card shadow-sm rounded-3 custom-card-purple card-table">
                 <!-- Card Body with Table -->
-                <div class="card-body p-3">
+                <div class="card-body p-4">
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width:90%;">Job Title</th>
-                                <th class="text-center" style="width:10%; text-align:center;">Action</th>
+                                <th class="text-center">Employee ID</th>
+                                <th class="text-center">Leave Type</th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">End Date</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="table_body">
+                        <tbody id="table_detail_body">
 
                         </tbody>
                     </table>
@@ -68,31 +72,53 @@
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
                 <h5 class="modal-title" id="add_modalLabel">
-                    <i class="fas fa-square-plus me-2"></i> Add Master Data
+                    <i class="fas fa-square-plus me-2"></i> Add Leave/Approval
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form id="form_add">
                 <div class="modal-body">
-                    <div class="col-md-12">
-                        <div class="card w-100">
-                            <div class="card-header bg-light"></div>
-                            <div class="card-body">
-                                <div class="col-md-7">
-                                    <label for="add_job_title" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" id="add_job_title" name="job_title" required>
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <label for="add_emp_id" class="form-label">Employee</label>
+                                <select class="form-select" id="add_emp_id" name="emp_id" required>
+
+                                </select>
+                            </div>
+
+                            <div class="mb-2">
+                                <label for="add_leave_type" class="form-label">Leave Type</label>
+                                <select class="form-select" id="add_leave_type" name="leave_type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Sick Leave">Sick Leave</option>
+                                    <option value="Vacation Leave">Vacation Leave</option>
+                                    <option value="Emergency Leave">Emergency Leave</option>
+                                </select>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label for="add_start_date" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="add_start_date" name="start_date" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="add_end_date" class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="add_end_date" name="end_date" required>
                                 </div>
                             </div>
 
+                            <div class="mt-2">
+                                <label for="add_reason" class="form-label">Reason</label>
+                                <textarea class="form-control" id="add_reason" name="reason" rows="3" required></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-plus me-1"></i> Add Master Data
-                    </button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-plus me-1"></i> Add</button>
                 </div>
             </form>
         </div>
@@ -100,25 +126,66 @@
 </div>
 
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
                 <h5 class="modal-title" id="edit_modalLabel">
-                    <i class="fas fa-pen-to-square me-2"></i> Edit Master Data
+                    <i class="fas fa-pen-to-square me-2"></i> Edit Leave/Approval
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form id="form_edit">
                 <div class="modal-body">
-                    <div class="col-md-12">
-                        <div class="card w-100">
-                            <div class="card-header bg-light"></div>
-                            <div class="card-body">
-                                <input type="hidden" id="edit_id" name="id">
+                    <input type="hidden" id="edit_id" name="id">
+                    <input type="hidden" id="edit_emp_id" name="emp_id">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label for="edit_name" class="form-label">Employee</label>
+                                    <input type=" date" class="form-control" id="edit_name" name="name" readonly>
 
-                                <div class="col-md-7">
-                                    <label for="edit_job_title" class="form-label">Job Title</label>
-                                    <input type="text" class="form-control" id="edit_job_title" name="job_title" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit_leave_type" class="form-label">Leave Type</label>
+                                    <select class="form-select" id="edit_leave_type" name="leave_type" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Sick Leave">Sick Leave</option>
+                                        <option value="Vacation Leave">Vacation Leave</option>
+                                        <option value="Emergency Leave">Emergency Leave</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit_start_date" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="edit_start_date" name="start_date" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="edit_end_date" class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="edit_end_date" name="end_date" required>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="edit_reason" class="form-label">Reason</label>
+                                    <textarea class="form-control" id="edit_reason" name="reason" rows="3" required></textarea>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit_approval_status" class="form-label">Approval Status</label>
+                                    <select class="form-select" id="edit_approval_status" name="approval_status" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="edit_approved_by" class="form-label">Approved By</label>
+                                    <select class="form-select" id="edit_approved_by" name="approved_by" required>
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -127,14 +194,13 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save me-1"></i> Update Master Data
-                    </button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save me-1"></i> Save Changes</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 
 <style>
 
@@ -143,26 +209,94 @@
 
 <?= $this->section('script'); ?>
 <script>
+    $('#add_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#add_emp_id', 'Select Employee', "<?= base_url('select_form/employeeIDSelect') ?>", '#add_modal .modal-body');
+    });
+
+    $('#edit_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#edit_approved_by', 'Select Approver', "<?= base_url('select_form/employeeSelect') ?>", '#edit_modal .modal-body');
+    });
+
+    $('#add_modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+    });
+
+    $('#edit_modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+    });
+
+    function initSelect2Ajax(selector, placeholder, url, modal = null) {
+        $(selector).select2({
+            placeholder: placeholder,
+            allowClear: true,
+            width: '100%',
+            dropdownParent: modal ? $(modal) : null,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function(data) {
+                    if (!data.items) return {
+                        results: []
+                    };
+
+                    return {
+                        results: data.items.map(item => ({
+                            id: item.id,
+                            text: item.name
+                        }))
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
+    function setSelect2Value(selector, value) {
+        if (value && value !== 'null' && value.trim() !== '') {
+            var opt = new Option(value, value, true, true);
+            $(selector).empty().append(opt).trigger('change');
+        } else {
+            $(selector).val(null).trigger('change');
+        }
+    }
+
     $(document).ready(function() {
         get_table();
 
         $(document).on('click', '.edit-btn', function() {
-
-            const id = $(this).data('id');
-            const job_title = $(this).data('job_title');
-
-            $('#edit_id').val(id);
-            $('#edit_job_title').val(job_title);
+            $('#edit_id').val($(this).data('id'));
+            $('#edit_emp_id').val($(this).data('emp_id'));
+            $('#edit_name').val($(this).data('name'));
+            $('#edit_leave_type').val($(this).data('leave_type'));
+            $('#edit_start_date').val($(this).data('start_date'));
+            $('#edit_end_date').val($(this).data('end_date'));
+            $('#edit_reason').val($(this).data('reason'));
+            $('#edit_approval_status').val($(this).data('approval_status'));
+            const approved_by = $(this).data('approved_by');
+            setSelect2Value('#edit_approved_by', approved_by);
 
             $('#edit_modal').modal('show');
         });
 
         $(document).on('click', '.delete-btn', function() {
             var id = $(this).data('id');
+            var emp_id = $(this).data('emp_id');
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "Delete this Job Title!",
+                text: "Delete this Approval!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -172,10 +306,11 @@
                 allowOutsideClick: () => !Swal.isLoading(),
                 preConfirm: () => {
                     return $.ajax({
-                        url: "<?= base_url('master_data/delete_job') ?>",
+                        url: "<?= base_url('attendance/delete_leave') ?>",
                         type: "POST",
                         data: {
-                            id: id
+                            id: id,
+                            emp_id: emp_id
                         },
                         dataType: "json"
                     }).then((res) => {
@@ -210,9 +345,9 @@
             $('#table_detail').DataTable().destroy();
             $('#table_detail tbody').empty();
         }
-        $('#table_body').html(`
+        $('#table_detail_body').html(`
         <tr id="table_loading">
-            <td colspan="2" class="text-center py-4">
+            <td colspan="7" class="text-center py-4">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -221,18 +356,18 @@
         </tr>
         `);
         $.ajax({
-            url: "<?= base_url('master_data/job_table'); ?>",
+            url: "<?= base_url('attendance/leave_table'); ?>",
             type: "GET",
             dataType: "html",
             success: function(res) {
-                $('#table_body').html(res);
+                $('#table_detail_body').html(res);
                 initializeDataTable('table_detail');
             },
             error: function(xhr, status, error) {
                 console.error("AJAX Error:", error);
-                $('#table_body').html(`
+                $('#table_detail_body').html(`
                 <tr>
-                    <td colspan="2" class="text-center text-black p-3">
+                    <td colspan="7" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -240,7 +375,6 @@
             }
         });
     }
-
 
     function initializeDataTable(tableId) {
         let table = $('#' + tableId);
@@ -252,7 +386,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 1) {
+            if (index === 6) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
@@ -285,7 +419,7 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Add this Job Title!",
+            text: "Add this Approval!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -295,7 +429,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('master_data/create_job') ?>",
+                    url: "<?= base_url('attendance/create_leave') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,
@@ -332,10 +466,12 @@
         e.preventDefault();
 
         let dataForm = new FormData(this);
-
+        for (let [key, value] of dataForm.entries()) {
+            console.log(key + ":", value);
+        }
         Swal.fire({
             title: "Are you sure?",
-            text: "Edit this Job Title!",
+            text: "Edit this Approval!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -345,7 +481,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('master_data/update_job') ?>",
+                    url: "<?= base_url('attendance/update_leave') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,

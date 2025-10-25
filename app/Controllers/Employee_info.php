@@ -88,7 +88,9 @@ class Employee_info extends BaseController
             'location',
             'emp_grade',
             'status',
-            'resign_date'
+            'resign_date',
+            'shift_id',
+            'shift_name',
         ];
 
         // --- total record tanpa filter ---
@@ -97,7 +99,8 @@ class Employee_info extends BaseController
 
         // --- base builder untuk filter + data ---
         $builder = $this->EmployeeModel->builder();
-        $builder->select('*');
+        $builder->select('mst_employee.*, s.shift_name')
+            ->join('mst_shift s', 'mst_employee.shift_id = s.shift_id');
 
         // --- apply filters ---
         if ($status) {
@@ -217,6 +220,7 @@ class Employee_info extends BaseController
                 'photo' => $photoName,
                 'email' => $this->request->getPost('email') ?: null,
                 'no_hp' => $this->request->getPost('no_hp') ?: null,
+                'shift_id' => $this->request->getPost('shift_id'),
             ];
             try {
                 if ($this->EmployeeModel->insert($data)) {
@@ -285,6 +289,7 @@ class Employee_info extends BaseController
                 'photo' => $photoName,
                 'email' => $this->request->getPost('email') ?: null,
                 'no_hp' => $this->request->getPost('no_hp') ?: null,
+                'shift_id' => $this->request->getPost('shift_id'),
             ];
             try {
                 if ($this->EmployeeModel->update($id, $data)) {
