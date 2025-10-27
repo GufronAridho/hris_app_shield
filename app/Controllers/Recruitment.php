@@ -431,6 +431,7 @@ class Recruitment extends BaseController
             'no_hp' => $employee['phone'],
             'photo' => $emp_id . '.jpg',
             'email' => null,
+            'created_at' => null,
         ];
 
         try {

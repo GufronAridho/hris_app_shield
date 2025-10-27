@@ -5,13 +5,21 @@ namespace App\Controllers;
 use App\Models\EmployeeModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use App\Models\InfoRecognitionModel;
+use App\Models\InfoWorkExperienceModel;
+
 
 class Employee_info extends BaseController
 {
     protected $EmployeeModel;
+    protected $RecognitionModel;
+    protected $WorkExperienceModel;
+
     public function __construct()
     {
         $this->EmployeeModel = new EmployeeModel();
+        $this->RecognitionModel = new InfoRecognitionModel();
+        $this->WorkExperienceModel = new InfoWorkExperienceModel();
     }
 
     public function employee_managment()
@@ -41,10 +49,40 @@ class Employee_info extends BaseController
     public function employee_profile($emp_id = null)
     {
         $employee = $this->EmployeeModel->where('emp_id', $emp_id)->first();
+        $recognition = $this->RecognitionModel->where('emp_id', $emp_id)
+            ->orderby('date_given', 'desc')->findAll();
+        $latest_recognition = reset($recognition) ?? null;
+        $previous_exp = $this->WorkExperienceModel
+            ->select('company_name, job_title, start_date, end_date')->where('emp_id', $emp_id)
+            ->orderby('start_date', 'desc')->findAll();
+        if ($employee) {
+            $current_exp = [
+                'company_name' => 'HRiS Company',
+                'job_title' => $employee['job_title'],
+                'start_date' => $employee['join_date'],
+                'end_date' => null,
+            ];
+            array_unshift($previous_exp, $current_exp);
+        }
+        $work_exp = $previous_exp;
+        $org_chart = null;
+        if ($employee) {
+            $org_chart = $this->EmployeeModel->getOrg($employee['department']);
+        }
+
         $data = [
             'title' => 'Employee Profile',
-            'emp' => $employee
+            'emp' => $employee,
+            'recognition' => $recognition,
+            'latest_recognition' => $latest_recognition,
+            'work_exp' => $work_exp,
+            'org_chart' => $org_chart
         ];
+        // echo "<pre>";
+        // var_dump($data);
+        // echo "</pre>";
+        // exit;
+
         return view('employee_info/employee_profile', $data);
     }
 
@@ -179,7 +217,7 @@ class Employee_info extends BaseController
                     'errors' => [
                         'uploaded' => 'Please select an image file.',
                         'is_image' => 'The uploaded file is not a valid image.',
-                        'mime_in'  => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
+                        'mime_in' => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
                     ]
                 ]
             ];
@@ -210,7 +248,7 @@ class Employee_info extends BaseController
                 'department' => $this->request->getPost('department'),
                 'job_title' => $this->request->getPost('job_title'),
                 'manager' => $this->request->getPost('manager') ?: null,
-                'hr_partner'  => $this->request->getPost('hr_partner') ?: null,
+                'hr_partner' => $this->request->getPost('hr_partner') ?: null,
                 'organization' => $this->request->getPost('organization') ?: null,
                 'location' => $this->request->getPost('location'),
                 'emp_grade' => $this->request->getPost('emp_grade'),
@@ -256,7 +294,7 @@ class Employee_info extends BaseController
                         'rules' => 'is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/gif,image/png]',
                         'errors' => [
                             'is_image' => 'The uploaded file is not a valid image.',
-                            'mime_in'  => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
+                            'mime_in' => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
                         ]
                     ]
                 ];
@@ -279,7 +317,7 @@ class Employee_info extends BaseController
                 'department' => $this->request->getPost('department'),
                 'job_title' => $this->request->getPost('job_title'),
                 'manager' => $this->request->getPost('manager') ?: null,
-                'hr_partner'  => $this->request->getPost('hr_partner') ?: null,
+                'hr_partner' => $this->request->getPost('hr_partner') ?: null,
                 'organization' => $this->request->getPost('organization') ?: null,
                 'location' => $this->request->getPost('location'),
                 'emp_grade' => $this->request->getPost('emp_grade'),
@@ -336,7 +374,7 @@ class Employee_info extends BaseController
                     'rules' => 'uploaded[excel_file]|mime_in[excel_file,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]',
                     'errors' => [
                         'uploaded' => 'Please select an Excel file to upload.',
-                        'mime_in'  => 'Only .xls and .xlsx files are allowed.',
+                        'mime_in' => 'Only .xls and .xlsx files are allowed.',
                     ]
                 ]
             ];

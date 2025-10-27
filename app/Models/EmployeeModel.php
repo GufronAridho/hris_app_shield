@@ -28,7 +28,8 @@ class EmployeeModel extends Model
         'email',
         'photo',
         'no_hp',
-        'shift_id'
+        'shift_id',
+        'description'
     ];
 
     public function generateEmpId()
@@ -63,7 +64,18 @@ class EmployeeModel extends Model
         'emp_grade' => 'permit_empty|decimal',
         'status' => 'required|safe_string',
         'email' => 'permit_empty|valid_email',
+        'description' => 'permit_empty|safe_string',
     ];
+
+    public function getOrg($department)
+    {
+        return $this->db->table('mst_employee e')
+            ->select('e.id, e.name, e.job_title, b.id AS manager_id, b.name AS manager_name, e.photo')
+            ->join('mst_employee b', 'e.manager = b.name', 'left')
+            ->where('e.department', $department)
+            ->get()
+            ->getResult();
+    }
 
     protected $validationMessages = [
         'emp_id' => [
@@ -116,6 +128,9 @@ class EmployeeModel extends Model
         ],
         'email' => [
             'valid_email' => 'Please enter a valid email address'
+        ],
+        'description' => [
+            'safe_string' => 'Description contains invalid characters',
         ],
     ];
 }

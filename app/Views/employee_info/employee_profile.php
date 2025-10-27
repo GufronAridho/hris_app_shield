@@ -107,71 +107,141 @@
                     <div class="row g-2">
                         <div class="col-md-10">
                             <div class="card shadow-sm border-0">
-                                <h5 class="card-header fw-bold bg-light p-2">About</h5>
-                                <div class="card-body">
-                                    <div class="row g-2">
-                                        <div class="col-md-2">
-                                            Description
+                                <div class="card-header bg-light fw-semibold py-2 px-3 fs-5">
+                                    <i class="fa-solid fa-user me-1 fs-5"></i> About
+                                </div>
+                                <div class="card-body py-2">
+                                    <?php if (!empty($emp['description'])): ?>
+                                        <p class="mb-0" style="line-height: 1.6;">
+                                            <?= nl2br(esc($emp['description'])); ?>
+                                        </p>
+                                    <?php else: ?>
+                                        <div class="text-center py-4">
+                                            <i class="fa-regular fa-circle-question mb-2 text-muted" style="font-size:1.5rem;"></i>
+                                            <p class="mb-0 fw-semibold">No description provided.</p>
                                         </div>
-                                        <div class="col-md-10">
-                                            DescriptionDescriptionDescriptionDescriptio
-                                            nDescriptionDescriptionDescriptionDescriptio
-                                            nDescriptionDescriptionDescriptionDescriptionDe
-                                            scriptionDescriptionDescriptionDescriptionDesc
-                                            riptionDescriptionDescriptionDescriptionDescriptio
-                                            nDescriptionDescriptionDescriptionDescriptionDescripti
-                                            onDescriptionDescription
-                                        </div>
-                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
+
                             <div class="card shadow-sm border-0 mt-2">
-                                <h5 class="card-header fw-bold bg-light p-2">Experiance</h5>
-                                <div class="card-body">
-                                    <div class="row g-2 align-items-center mb-2">
-                                        <div class="col-md-2">
-                                            Employer
+                                <div class="card-header bg-light fw-semibold py-2 px-3 fs-5">
+                                    <i class="fa-solid fa-briefcase me-1 fs-5"></i> Experience
+                                </div>
+                                <div class="card-body py-2">
+                                    <?php if (!empty($work_exp)): ?>
+                                        <?php foreach ($work_exp as $index => $work):
+                                            $start_date = date('M Y', strtotime($work['start_date']));
+                                            $end_date = $work['end_date'] ? date('M Y', strtotime($work['end_date'])) : 'Now';
+                                        ?>
+                                            <div class="mb-3 pb-2 border-bottom">
+                                                <h6 class="mb-1 text-dark fw-bold fs-6">
+                                                    <i class="fa-solid fa-building text-muted me-1"></i><?= esc($work['company_name']); ?>
+                                                </h6>
+                                                <div class="fs-6">
+                                                    <i class="fa-solid fa-user-tie me-1 text-muted"></i><?= esc($work['job_title']); ?>
+                                                    <span class="mx-2">•</span>
+                                                    <i class="fa-solid fa-calendar-days me-1 text-muted"></i><?= $start_date . ' - ' . $end_date; ?>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class="text-center py-4">
+                                            <i class="fa-regular fa-circle-question mb-2 text-muted" style="font-size:1.5rem;"></i>
+                                            <p class="mb-0 fw-semibold">No work experience provided.</p>
                                         </div>
-                                        <div class="col-md-10">
-                                            Employer
-                                        </div>
-                                        <div class="col-md-2">
-                                            Title
-                                        </div>
-                                        <div class="col-md-10">
-                                            HR Senior Manager
-                                        </div>
-                                        <div class="col-md-2">
-                                            Periode
-                                        </div>
-                                        <div class="col-md-10">
-                                            Auh 2020 - Oct 2025
-                                        </div>
-                                        <hr>
-                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-2">
                             <div class="card shadow-sm border-0">
-                                <h5 class="card-header fw-bold bg-light p-2">Reward</h5>
-                                <div class="card-body">
+                                <div class="card-header bg-light fw-semibold fs-5 py-2 px-3 d-flex align-items-center">
+                                    <i class="fa-solid fa-trophy me-1 text-warning"></i> Reward
+                                </div>
+                                <div class="card-body text-center py-4">
+                                    <i class="fa-solid fa-gift text-warning mb-2" style="font-size: 1.8rem;"></i>
+                                    <p class="fw-semibold mb-0 text-secondary">Coming soon...</p>
+                                </div>
+                            </div>
 
+                            <div class="card shadow-sm border-0 mt-2">
+                                <div class="card-header bg-light fw-semibold fs-5 py-2 px-3 d-flex align-items-center">
+                                    <i class="fa-solid fa-medal me-1 text-success"></i> Badge Received
+                                </div>
+                                <div class="card-body text-center py-4">
+                                    <?php if (!empty($latest_recognition)): ?>
+                                        <div class="border rounded-pill py-2 px-3 d-inline-block bg-light">
+                                            <h6 class="fw-bold mb-0 text-dark">
+                                                <i class="fa-solid fa-award me-1 text-success"></i>
+                                                <?= esc($latest_recognition['title']); ?>
+                                            </h6>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="text-center py-2">
+                                            <i class="fa-regular fa-circle-question mb-2 text-secondary" style="font-size:1.5rem;"></i>
+                                            <p class="mb-0 fw-semibold">No badge provided.</p>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="card-footer text-center bg-light">
+                                    <small class="fw-medium text-secondary">
+                                        <i class="fa-solid fa-thumbs-up me-1 text-success"></i> Keep up the great work!
+                                    </small>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
 
                 <div class="tab-pane fade" id="orgchart" role="tabpanel" aria-labelledby="orgchart-tab">
-                    <div id="">
-                        orgchart
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-light fw-semibold py-2 px-3 fs-5">
+                            <i class="fa-solid fa-sitemap me-1 fs-5"></i> Organization
+                        </div>
+                        <div class="card-body py-2">
+                            <?php if (!empty($org_chart)): ?>
+                                <div id="tree"></div>
+                            <?php else: ?>
+                                <div class="text-center py-4">
+                                    <i class="fa-regular fa-circle-question mb-2 text-muted" style="font-size:1.5rem;"></i>
+                                    <p class="mb-0 fw-semibold">No Organization provided.</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
 
                 <div class="tab-pane fade" id="recognition" role="tabpanel" aria-labelledby="recognition-tab">
-                    <div id="">
-                        recognition
+                    <div class="row h-100">
+                        <?php if (!empty($recognition)): ?>
+                            <?php foreach ($recognition as $reg): ?>
+                                <div class="col-md-4">
+                                    <div class="card example-card mb-3">
+                                        <div class="card-header">
+                                            <h5 class="fw-semibold mb-0"><?= $reg['title']; ?></h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><?= $reg['description']; ?></p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span><?= $reg['given_by']; ?></span>
+                                                <span><?= $reg['date_given']; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-center py-4">
+                                <i class="fa-regular fa-circle-question mb-2 text-muted" style="font-size:1.5rem;"></i>
+                                <p class="mb-0 fw-semibold">No recognition provided.</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -239,16 +309,86 @@
     .gold {
         color: #ffc107
     }
+
+    .example-card {
+        background-color: #ffffff;
+        border-left: 6px solid #5f0188eb;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .example-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .example-card .card-header {
+        font-weight: 600;
+        color: #5f0188eb;
+    }
 </style>
 <?= $this->endSection() ?>
 
 <?= $this->section('script'); ?>
+<script src="https://balkan.app/js/orgchart.js"></script>
+
 <script>
     let typingTimer;
     const typingDelay = 500;
 
     $(document).ready(function() {
 
+    });
+
+    const org_chart = <?= json_encode($org_chart) ?>;
+
+    const base_url = "<?= base_url(); ?>";
+    const employees = org_chart.map(emp => ({
+        id: emp.id,
+        pid: emp.manager_id,
+        name: emp.name,
+        title: emp.job_title,
+        img: emp.photo ?
+            `${base_url}/assets/profile/${emp.photo}` : `${base_url}/assets/profile/avatar4.png`
+    }));
+
+    OrgChart.templates.ula = Object.assign({}, OrgChart.templates.ula);
+
+    OrgChart.templates.ula.node =
+        `<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" stroke-width="1" stroke="#aeaeae"></rect>
+    <line x1="0" y1="0" x2="250" y2="0" stroke-width="2" stroke="#5f0188eb"></line>`;
+
+    OrgChart.templates.ula.field_0 =
+        `<text data-width="145" style="font-size: 18px;" fill="#5f0188eb" x="100" y="55">{val}</text>`;
+    OrgChart.templates.ula.field_1 =
+        `<text data-width="145" data-text-overflow="multiline" style="font-size: 14px;" fill="#000000" x="100" y="76">{val}</text>`;
+
+    OrgChart.templates.ula.img_0 =
+        `<clipPath id="{randId}"><circle cx="50" cy="60" r="40"></circle></clipPath>
+    <image preserveAspectRatio="xMidYMid slice" clip-path="url(#{randId})" xlink:href="{val}" x="10" y="20" width="80" height="80"></image>`;
+
+    let chart = new OrgChart("#tree", {
+        nodes: employees,
+        nodeBinding: {
+            field_0: "name",
+            field_1: "title",
+            img_0: "img"
+        },
+        template: "ula",
+        enableDragDrop: false,
+        draggable: false,
+        mouseScrool: OrgChart.action.none,
+        scaleInitial: OrgChart.match.boundary,
+        collapse: {
+            level: 2
+        },
+        nodeMouseClick: OrgChart.action.none,
+        pan: false,
+        zoom: {
+            speed: 0
+        },
     });
 </script>
 <?= $this->endSection() ?>
