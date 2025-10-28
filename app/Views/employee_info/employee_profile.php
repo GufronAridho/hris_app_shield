@@ -113,7 +113,7 @@
                                 <div class="card-body py-2">
                                     <?php if (!empty($emp['description'])): ?>
                                         <p class="mb-0" style="line-height: 1.6;">
-                                            <?= nl2br(esc($emp['description'])); ?>
+                                            <?= nl2br($emp['description']); ?>
                                         </p>
                                     <?php else: ?>
                                         <div class="text-center py-4">
@@ -136,10 +136,10 @@
                                         ?>
                                             <div class="mb-3 pb-2 border-bottom">
                                                 <h6 class="mb-1 text-dark fw-bold fs-6">
-                                                    <i class="fa-solid fa-building text-muted me-1"></i><?= esc($work['company_name']); ?>
+                                                    <i class="fa-solid fa-building text-muted me-1"></i><?= $work['company_name']; ?>
                                                 </h6>
                                                 <div class="fs-6">
-                                                    <i class="fa-solid fa-user-tie me-1 text-muted"></i><?= esc($work['job_title']); ?>
+                                                    <i class="fa-solid fa-user-tie me-1 text-muted"></i><?= $work['job_title']; ?>
                                                     <span class="mx-2">•</span>
                                                     <i class="fa-solid fa-calendar-days me-1 text-muted"></i><?= $start_date . ' - ' . $end_date; ?>
                                                 </div>
@@ -175,7 +175,7 @@
                                         <div class="border rounded-pill py-2 px-3 d-inline-block bg-light">
                                             <h6 class="fw-bold mb-0 text-dark">
                                                 <i class="fa-solid fa-award me-1 text-success"></i>
-                                                <?= esc($latest_recognition['title']); ?>
+                                                <?= $latest_recognition['title']; ?>
                                             </h6>
                                         </div>
                                     <?php else: ?>
@@ -216,7 +216,7 @@
                 </div>
 
                 <div class="tab-pane fade" id="recognition" role="tabpanel" aria-labelledby="recognition-tab">
-                    <div class="row h-100">
+                    <div class="row h-100 g-2">
                         <?php if (!empty($recognition)): ?>
                             <?php foreach ($recognition as $reg): ?>
                                 <div class="col-md-4">
@@ -252,14 +252,66 @@
                 </div>
 
                 <div class="tab-pane fade" id="workspace" role="tabpanel" aria-labelledby="workspace-tab">
-                    <div id="">
-                        workspace
+                    <div class="row h-100 g-2">
+                        <?php if (!empty($workspace)): ?>
+                            <?php foreach ($workspace as $gr): ?>
+                                <div class="col-md-3">
+                                    <div class="card shadow-sm rounded-3 h-100 example-card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="badge bg-gradient bg-success"><?= $gr['workspace_type']; ?></span>
+                                                <small><?= $gr['status']; ?></small>
+                                            </div>
+                                            <h5 class="mt-2 mb-1 card-header"><?= $gr['workspace_name']; ?></h5>
+                                            <p class="small mb-0"><?= $gr['description']; ?></p>
+                                        </div>
+                                        <div class="card-footer border-0 bg-transparent">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small><?= $gr['role_in_workspace']; ?></small>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-center py-4">
+                                <i class="fa-regular fa-circle-question mb-2 text-muted" style="font-size:1.5rem;"></i>
+                                <p class="mb-0 fw-semibold">No workspace provided.</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
                 <div class="tab-pane fade" id="groups" role="tabpanel" aria-labelledby="groups-tab">
-                    <div id="">
-                        groups
+                    <div class="row h-100 g-2">
+                        <?php if (!empty($group)): ?>
+                            <?php foreach ($group as $gr): ?>
+                                <div class="col-md-3">
+                                    <div class="card example-card mb-3">
+                                        <div class="card-header">
+                                            <h5 class="fw-semibold mb-0"><?= $gr['group_name']; ?></h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <span class="badge 
+                <?= $gr['group_type'] === 'Team' ? 'bg-primary' : ($gr['group_type'] === 'Project' ? 'bg-success' : 'bg-secondary'); ?>">
+                                                <?= $gr['group_type']; ?>
+                                            </span>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span><?= $gr['role']; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-center py-4">
+                                <i class="fa-regular fa-circle-question mb-2 text-muted" style="font-size:1.5rem;"></i>
+                                <p class="mb-0 fw-semibold">No groups provided.</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 

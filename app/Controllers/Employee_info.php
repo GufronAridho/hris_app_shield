@@ -7,6 +7,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use App\Models\InfoRecognitionModel;
 use App\Models\InfoWorkExperienceModel;
+use App\Models\InfoEmployeeGroupModel;
+use App\Models\InfoEmployeeWorkspaceModel;
 
 
 class Employee_info extends BaseController
@@ -14,12 +16,16 @@ class Employee_info extends BaseController
     protected $EmployeeModel;
     protected $RecognitionModel;
     protected $WorkExperienceModel;
+    protected $EmployeeGroupModel;
+    protected $EmployeeWorkspaceModel;
 
     public function __construct()
     {
         $this->EmployeeModel = new EmployeeModel();
         $this->RecognitionModel = new InfoRecognitionModel();
         $this->WorkExperienceModel = new InfoWorkExperienceModel();
+        $this->EmployeeGroupModel = new InfoEmployeeGroupModel();
+        $this->EmployeeWorkspaceModel = new InfoEmployeeWorkspaceModel();
     }
 
     public function employee_managment()
@@ -66,8 +72,12 @@ class Employee_info extends BaseController
         }
         $work_exp = $previous_exp;
         $org_chart = null;
+        $group = null;
+        $workspace = null;
         if ($employee) {
             $org_chart = $this->EmployeeModel->getOrg($employee['department']);
+            $group = $this->EmployeeGroupModel->employee_group($emp_id);
+            $workspace = $this->EmployeeWorkspaceModel->get_workspace($emp_id);
         }
 
         $data = [
@@ -76,7 +86,9 @@ class Employee_info extends BaseController
             'recognition' => $recognition,
             'latest_recognition' => $latest_recognition,
             'work_exp' => $work_exp,
-            'org_chart' => $org_chart
+            'org_chart' => $org_chart,
+            'group' => $group,
+            'workspace' => $workspace
         ];
         // echo "<pre>";
         // var_dump($data);
