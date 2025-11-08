@@ -84,7 +84,7 @@ $menu_items = Menu::$menus[$module] ?? [];
                     <div class="d-none d-md-flex align-items-center mb-2 mb-md-0">
                         <a href="<?= base_url("home/index"); ?>" style="text-decoration: none;">
                             <img src="<?= base_url('dist/adminLte/assets/img/AdminLTELogo.png'); ?>" alt="Logo" class="me-2" style="height: 42px;">
-                            <span class="fw-bold fs-5 text-warning">Your Company</span>
+                            <span class="fw-bold fs-5 text-warning">ORION SOLUTIONS</span>
                         </a>
                     </div>
 
@@ -97,25 +97,19 @@ $menu_items = Menu::$menus[$module] ?? [];
                     </div>
 
                     <div class="d-flex align-items-center flex-wrap">
-                        <span class="me-1 text-warning fw-semibold"><?= $username = auth()->user()->username; ?></span>
-                        <i class="fas fa-user-circle fa-2x text-white me-2"></i>
-
                         <div class="dropdown me-2">
-                            <button class="btn btn-sm btn-outline-warning rounded-pill layout-btn" data-bs-toggle="dropdown">
-                                <i class="fas fa-cog"></i> Settings
-                            </button>
+                            <a class="d-flex align-items-center text-warning fw-semibold text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
+                                <span class="me-2"><?= auth()->user()->username; ?></span>
+                                <i class="fas fa-user-circle fa-2x text-white"></i>
+                            </a>
                             <ul class="dropdown-menu dropdown-menu-end layout-dropdown">
                                 <li><a class="dropdown-item layout-dropdown-item" href="#"><i class="fas fa-key me-2"></i>Change Password</a></li>
                                 <li><a class="dropdown-item layout-dropdown-item" href="<?= base_url('master_data/mst_user') ?>"><i class="fas fa-user-cog me-2"></i>Master Data</a></li>
+                                <li><a class="dropdown-item layout-dropdown-item" href="<?= url_to('logout') ?>"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                             </ul>
                         </div>
-
                         <a href="#" class="btn btn-sm btn-outline-warning rounded-pill me-2 layout-btn">
                             <i class="fas fa-question-circle me-1"></i> Help
-                        </a>
-
-                        <a href="<?= url_to('logout') ?>" class="btn btn-sm btn-outline-warning rounded-pill layout-btn">
-                            <i class="fas fa-sign-out-alt me-1"></i> Logout
                         </a>
                     </div>
                 </div>
