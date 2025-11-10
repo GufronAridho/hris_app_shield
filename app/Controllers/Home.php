@@ -65,4 +65,14 @@ class home extends BaseController
             'csrfHash' => csrf_hash()
         ]);
     }
+
+    public function refresh_session()
+    {
+        session()->set('last_action', time());
+
+        return $this->response->setJSON([
+            'status' => true,
+            'message' => 'Session refreshed'
+        ]);
+    }
 }

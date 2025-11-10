@@ -2,21 +2,21 @@
 <?= $this->section('content') ?>
 
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-image">
-    <div class="login-box w-100 px-3" style="max-width: 770px;">
+    <div class="login-box w-100 px-3" style="max-width: 740px;">
         <div class="card shadow-lg d-flex flex-column flex-md-row custom-card">
             <!-- Left Section (Branding) -->
-            <div class="col-12 col-md-5 branding-section d-flex flex-column justify-content-center align-items-center p-4">
-                <img src="<?= base_url('dist/adminLte/assets/img/AdminLTELogo.png'); ?>"
+            <div class="col-12 col-md-5 branding-section d-flex flex-column justify-content-center align-items-center p-3">
+                <img src="<?= base_url('assets/img/logo.png'); ?>"
                     alt="Company Logo"
-                    style="max-width:100px;"
+                    style="max-width:80px;"
                     class="mb-3 img-fluid">
-                <h2 class="fw-bold text-warning text-center">Your App</h2>
+                <h2 class="fw-bold text-warning text-center">HRiS</h2>
                 <p class="text-warning text-center">Attendance Portal</p>
             </div>
 
             <!-- Right Section (Check-In Form) -->
-            <div class="col-12 col-md-7 p-4 form-section d-flex flex-column justify-content-center">
-                <div class="text-center mb-4">
+            <div class="col-12 col-md-7 p-3 form-section d-flex flex-column justify-content-center">
+                <div class="text-center mb-3">
                     <h3 class="fw-bold text-dark">Check-In</h3>
                     <p class="">Enter your Employee ID to record attendance</p>
                 </div>
@@ -30,7 +30,7 @@
                         <div class="alert alert-success"><?= esc(session('message')) ?></div>
                     <?php endif ?>
 
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-3">
                         <div class="form-floating flex-grow-1">
                             <input type="text" class="form-control bg-light bg-opacity-75 text-center fs-5 fw-semibold"
                                 id="emp_id"
@@ -59,15 +59,14 @@
 
 <style>
     .bg-image {
-        background: url('<?= base_url("/assets/img/before-conference.jpg"); ?>') no-repeat center center;
-        background-size: cover;
+        background: url('<?= base_url("/assets/img/before-conference.jpg"); ?>') no-repeat center center/cover;
     }
 
     .custom-card {
         border-radius: 16px;
         overflow: hidden;
         background: transparent !important;
-        min-height: 400px;
+        min-height: 250px;
     }
 
     .branding-section {

@@ -278,10 +278,68 @@ $menu_items = Menu::$menus[$module] ?? [];
                         if (res.csrfHash) {
                             $('meta[name="csrf-token"]').attr("content", res.csrfHash);
                         }
+                        sessionTimer = 0;
                     } catch (e) {}
                 }
             });
         });
+
+        const SESSION_EXPIRATION = 900;
+        const WARNING_BEFORE = 60;
+        let sessionTimer = 0;
+        setInterval(() => {
+            sessionTimer++;
+            if (sessionTimer >= (SESSION_EXPIRATION - WARNING_BEFORE)) {
+                check_session();
+                sessionTimer = 0;
+            }
+
+        }, 1000);
+
+        function check_session() {
+            Swal.fire({
+                title: "Session Expiration Notice",
+                text: "Your session is about to expire. Do you want to stay logged in or log out?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Stay Logged In",
+                cancelButtonText: "Logout",
+                showLoaderOnConfirm: true,
+                allowOutsideClick: () => false,
+                preConfirm: () => {
+                    return $.ajax({
+                        url: "<?= base_url('home/refresh_session') ?>",
+                        type: "GET",
+                        dataType: "json"
+                    }).then((res) => {
+                        if (!res.status) {
+                            throw new Error(res.message);
+                        }
+                        return res;
+                    }).catch((error) => {
+                        Swal.showValidationMessage(
+                            "Session has expired, please Logout"
+                        );
+                    });
+                }
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: result.value.message,
+                        timer: 1000,
+                        showConfirmButton: false
+                    }).then(() => {
+
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = "<?= url_to('logout') ?>";
+                }
+            });
+        }
     </script>
 
     <?= $this->renderSection('script'); ?>

@@ -92,6 +92,11 @@
                 }
             });
         });
+
+        const RELOAD_AFTER = 14 * 60 * 1000;
+        setTimeout(() => {
+            location.reload();
+        }, RELOAD_AFTER);
     </script>
     <!--end::OverlayScrollbars Configure-->
     <!--end::Script-->
