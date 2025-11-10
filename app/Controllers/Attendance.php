@@ -16,7 +16,7 @@ class Attendance extends BaseController
     protected $MstHolidayModel;
     protected $EmployeeModel;
     protected $MstShiftModel;
-
+    protected $layout_emp;
     public function __construct()
     {
         $this->AttendanceModel = new AttendanceModel();
@@ -24,6 +24,7 @@ class Attendance extends BaseController
         $this->MstHolidayModel = new MstHolidayModel();
         $this->EmployeeModel = new EmployeeModel();
         $this->MstShiftModel = new MstShiftModel();
+        $this->layout_emp = $this->EmployeeModel->get_layout_emp();
     }
 
     private function _json_response($status, $message, $is_validation = false)
@@ -40,6 +41,7 @@ class Attendance extends BaseController
     {
         $data = [
             'title' => 'Attendance',
+            'layout_emp' => $this->layout_emp
         ];
         return view('attendance/attendance', $data);
     }
@@ -48,6 +50,7 @@ class Attendance extends BaseController
     {
         $data = [
             'title' => 'Summary',
+            'layout_emp' => $this->layout_emp
         ];
         return view('attendance/summary', $data);
     }
@@ -56,6 +59,7 @@ class Attendance extends BaseController
     {
         $data = [
             'title' => 'Check in',
+            'layout_emp' => $this->layout_emp
         ];
         return view('attendance/check_in', $data);
     }
@@ -64,6 +68,7 @@ class Attendance extends BaseController
     {
         $data = [
             'title' => 'Check out',
+            'layout_emp' => $this->layout_emp
         ];
         return view('attendance/check_out', $data);
     }
@@ -72,6 +77,7 @@ class Attendance extends BaseController
     {
         $data = [
             'title' => 'Leave',
+            'layout_emp' => $this->layout_emp
         ];
         return view('attendance/leave', $data);
     }

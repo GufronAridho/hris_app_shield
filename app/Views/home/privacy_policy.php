@@ -5,16 +5,17 @@
     <!--begin::App Content Header-->
     <div class="app-content-header">
         <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Dashboard v2</h3>
+            <div class="row align-items-stretch g-2">
+
+                <div class="col-md-3">
+                    <div class="card h-100 custom-card-breadcrumb custom-card-slim d-flex align-items-left justify-content-center">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="<?= base_url("home/index"); ?>">Home</a></li>
+                            <li class="breadcrumb-item active"><?= $title; ?></li>
+                        </ol>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end mb-0">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active"><?= $title; ?></li>
-                    </ol>
-                </div>
+
             </div>
         </div>
     </div>
@@ -23,17 +24,20 @@
     <!--begin::App Content-->
     <div class="app-content">
         <div class="container-fluid">
-
-
+            <div class="card shadow-sm rounded-3 custom-card-purple card-table">
+            </div>
         </div>
-        <!--end::App Content-->
+    </div>
+    <!--end::App Content-->
 </main>
+
+<style>
+
+</style>
 <?= $this->endSection() ?>
 
 <?= $this->section('script'); ?>
 <script>
-    $(document).ready(function() {
 
-    });
 </script>
 <?= $this->endSection() ?>

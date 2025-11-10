@@ -7,33 +7,38 @@
             <section class="intro-section fade-in py-2 my-3">
                 <div class="row align-items-center">
                     <div class="col-md-4 text-center intro-img-container">
-                        <img src="<?= base_url('assets/img/6159467.jpg'); ?>" alt="HRiS" class="img-fluid rounded-4 shadow-lg intro-img">
+                        <img src="<?= base_url('assets/img/4565.jpg'); ?>" alt="HRiS" class="img-fluid rounded-4 shadow-lg intro-img">
                     </div>
                     <div class="col-md-8 mt-3 mt-md-0 text-center text-md-start">
-                        <h1 class="fw-bold text-gradient mb-2 intro-title">Employee Attendance Portal</h1>
+                        <h1 class="fw-bold text-gradient mb-2 intro-title">Human Resource Information System (HRiS)</h1>
                         <p class="text-muted fs-4" style="max-width: 900px; margin: 0 auto;">
-                            Track and manage your attendance effortlessly.
+                            Simplifying Work, Amplifying Potential
                         </p>
                     </div>
                 </div>
             </section>
+
             <section class="feature-section fade-in py-2">
-                <div class="row g-3 justify-content-center">
+                <div class="row g-3 justify-content-center align-items-stretch">
                     <?php
                     $card = [
-                        ['title' => 'Check-In', 'desc' => 'Record your arrival time accurately.', 'icon' => 'fa-sign-in-alt', 'link' => 'attendance/check_in'],
-                        ['title' => 'Check-Out', 'desc' => 'Log your departure time at the end of the day.', 'icon' => 'fa-sign-out-alt', 'link' => 'attendance/check_out'],
+                        ['title' => 'Recruitment', 'desc' => 'Manage candidate sourcing and hiring process efficiently.', 'icon' => 'fa-user-plus', 'link' => 'recruitment/summary'],
+                        ['title' => 'Onboarding', 'desc' => 'Streamline employee orientation and setup.', 'icon' => 'fa-handshake', 'link' => 'onboarding/summary'],
+                        ['title' => 'Employee Info', 'desc' => 'Centralize employee data and personal records.', 'icon' => 'fa-id-badge', 'link' => 'employee_info/employee_managment'],
+                        ['title' => 'Time Sheet', 'desc' => 'Track employee attendance and working hours.', 'icon' => 'fa-clock', 'link' => 'attendance/attendance'],
+                        ['title' => 'Payroll', 'desc' => 'Automate salary, tax, and deduction processing.', 'icon' => 'fa-money-bill-wave', 'link' => 'recruitment/summary'],
+                        ['title' => 'Performance', 'desc' => 'Evaluate employee growth and performance metrics.', 'icon' => 'fa-chart-line', 'link' => 'recruitment/summary'],
                     ];
                     ?>
 
                     <?php foreach ($card as $c): ?>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-lg-4">
                             <a href="<?= base_url($c['link']); ?>" class="card-link">
-                                <div class="card gradient-card vertical-card h-100 w-100">
-                                    <div class="card-top d-flex justify-content-center align-items-center">
-                                        <i class="fas <?= $c['icon']; ?> top-icon"></i>
+                                <div class="card gradient-card split-card h-100">
+                                    <div class="card-left d-flex justify-content-center align-items-center">
+                                        <i class="fas <?= $c['icon']; ?> left-icon"></i>
                                     </div>
-                                    <div class="card-bottom text-center">
+                                    <div class="card-right">
                                         <h5><?= $c['title']; ?></h5>
                                         <p><?= $c['desc']; ?></p>
                                     </div>
@@ -41,7 +46,6 @@
                             </a>
                         </div>
                     <?php endforeach; ?>
-
                 </div>
             </section>
 
@@ -50,6 +54,7 @@
 </main>
 
 <style>
+    /* Gradient Text */
     .text-gradient {
         background: linear-gradient(135deg, #5f0188, #6f1a94);
         -webkit-background-clip: text;
@@ -74,9 +79,10 @@
 
     .intro-section {
         background: #f8f9fa;
-        border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         border: 2px solid #4d056bff;
+
     }
 
     .intro-img {
@@ -102,55 +108,63 @@
         font-size: 1.25rem;
     }
 
-    .vertical-card {
+    .split-card {
         display: flex;
-        flex-direction: column;
-        border-radius: 16px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 2px solid #4d056bff;
         height: 100%;
-        width: 100%;
+        position: relative;
+        border: 2px solid #4d056bff;
     }
 
-    .vertical-card:hover {
+    .split-card:hover {
         transform: translateY(-4px) scale(1.03);
-        box-shadow: 0 16px 35px rgba(111, 26, 148, 0.35);
+        box-shadow: 0 12px 25px rgba(111, 26, 148, 0.35);
     }
 
-    .card-top {
-        flex: 0 0 50%;
+    .card-left {
+        flex: 0 0 100px;
+        min-width: 100px;
         background: #dfcce7;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: inset -4px 0 6px rgba(0, 0, 0, 0.05);
+        border-top-right-radius: 11px;
+        border-bottom-right-radius: 11px;
+        z-index: 2;
     }
 
-    .top-icon {
-        font-size: 80px;
+    .left-icon {
+        font-size: 40px;
         color: #5f0188;
     }
 
-    .card-bottom {
+    .card-right {
         flex: 1 1 auto;
         background: linear-gradient(135deg, #5f0188, #6f1a94);
         color: #fff;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 1.5rem;
+        padding: 1rem;
+        margin-left: -9px;
+        z-index: 1;
     }
 
-    .card-bottom h5 {
+    .card-right h5 {
         color: #ffd700;
         font-weight: 600;
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
     }
 
-    .card-bottom p {
-        font-size: 1rem;
+    .card-right p {
+        font-size: 0.95rem;
         color: #f5f5f5;
         margin: 0;
     }
@@ -160,24 +174,34 @@
     }
 
     @media (max-width:768px) {
-        .top-icon {
-            font-size: 60px;
+        .split-card {
+            flex-direction: row;
+            flex-wrap: nowrap;
         }
 
-        .card-bottom h5 {
-            font-size: 1.2rem;
+        .card-left {
+            flex: 0 0 80px;
+            min-width: 80px;
         }
 
-        .card-bottom p {
-            font-size: 0.9rem;
+        .left-icon {
+            font-size: 36px;
         }
 
-        .intro-section h1 {
-            font-size: 2rem;
+        .card-right h5 {
+            font-size: 1.1rem;
         }
 
-        .intro-section p {
-            font-size: 1rem;
+        .card-right p {
+            font-size: 0.85rem;
+        }
+
+        .intro-title {
+            font-size: 1.3rem;
+        }
+
+        .intro-desc {
+            font-size: 0.8rem;
         }
 
         .intro-img {

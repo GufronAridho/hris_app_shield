@@ -77,6 +77,13 @@ class EmployeeModel extends Model
             ->getResult();
     }
 
+    public function get_layout_emp()
+    {
+        $userEmail = auth()->user()->email;
+        return $this->select('emp_id, name, photo')
+            ->where('email', $userEmail)->first();
+    }
+
     protected $validationMessages = [
         'emp_id' => [
             'required' => 'Employee ID is required',

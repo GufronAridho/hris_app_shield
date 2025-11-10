@@ -1,42 +1,40 @@
-<?= $this->extend('shared/layout') ?>
+<?= $this->extend('shared/layout_home') ?>
 
 <?= $this->section('content') ?>
 <main class="app-main">
+    <section class="intro-section fade-in text-center py-5 shadow-sm">
+        <div class="intro-content d-flex flex-column align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                <div class="hris-badge">HRiS</div>
+                <div class="intro-text text-start">
+                    <h1 class="fw-bold text-gradient m-0">Human Resource</h1>
+                    <h1 class="fw-bold text-gradient m-0">Information System</h1>
+                </div>
+            </div>
+            <p class="tagline">Simplifying Work, Amplifying Potential</p>
+        </div>
+    </section>
     <div class="app-content">
         <div class="container-fluid">
-            <section class="intro-section fade-in py-2 my-3">
-                <div class="row align-items-center">
-                    <div class="col-md-4 text-center text-md-start intro-img-container">
-                        <img src="<?= base_url('assets/img/4565.jpg'); ?>" alt="HRiS" class="img-fluid rounded-4 shadow-lg intro-img">
-                    </div>
-                    <div class="col-md-8 mt-3 mt-md-0 text-center text-md-start">
-                        <h1 class="fw-bold text-gradient mb-2 intro-title">Human Resource Information System (HRiS)</h1>
-                        <p class="text-muted fs-4" style="max-width: 900px; margin: 0 auto;">
-                            Simplifying Work, Amplifying Potential
-                        </p>
-                    </div>
-                </div>
-            </section>
-
             <section class="feature-section fade-in py-2">
-                <div class="row g-3 justify-content-center align-items-stretch">
+                <div class="row g-2 justify-content-center align-items-stretch">
                     <?php
                     $card = [
-                        ['title' => 'Recruitment', 'desc' => 'Manage candidate sourcing and hiring process efficiently.', 'icon' => 'fa-user-plus', 'link' => 'recruitment/summary'],
-                        ['title' => 'Onboarding', 'desc' => 'Streamline employee orientation and setup.', 'icon' => 'fa-handshake', 'link' => 'onboarding/summary'],
-                        ['title' => 'Employee Info', 'desc' => 'Centralize employee data and personal records.', 'icon' => 'fa-id-badge', 'link' => 'employee_info/employee_managment'],
-                        ['title' => 'Payroll', 'desc' => 'Automate salary, tax, and deduction processing.', 'icon' => 'fa-money-bill-wave', 'link' => 'recruitment/summary'],
-                        ['title' => 'Time Sheet', 'desc' => 'Track employee attendance and working hours.', 'icon' => 'fa-clock', 'link' => 'attendance/attendance'],
-                        ['title' => 'Performance', 'desc' => 'Evaluate employee growth and performance metrics.', 'icon' => 'fa-chart-line', 'link' => 'recruitment/summary'],
+                        ['title' => 'Recruitment', 'desc' => 'Manage candidate sourcing and hiring process efficiently.', 'img' => 'recruitment.png', 'link' => 'recruitment/summary'],
+                        ['title' => 'Onboarding', 'desc' => 'Streamline employee orientation and setup.', 'img' => 'onboarding.png', 'link' => 'onboarding/summary'],
+                        ['title' => 'Employee Info', 'desc' => 'Centralize employee data and personal records.', 'img' => 'employee.png', 'link' => 'employee_info/employee_managment'],
+                        ['title' => 'Time Sheet', 'desc' => 'Track employee attendance and working hours.', 'img' => 'attendance.png', 'link' => 'attendance/attendance'],
+                        ['title' => 'Payroll', 'desc' => 'Automate salary, tax, and deduction processing.', 'img' => 'payroll.png', 'link' => 'payroll/summary'],
+                        ['title' => 'Performance', 'desc' => 'Evaluate employee growth and performance metrics.', 'img' => 'performance.png', 'link' => 'performance/summary'],
                     ];
                     ?>
 
                     <?php foreach ($card as $c): ?>
                         <div class="col-md-6 col-lg-4">
                             <a href="<?= base_url($c['link']); ?>" class="card-link">
-                                <div class="card gradient-card split-card h-100">
+                                <div class="card split-card h-100">
                                     <div class="card-left d-flex justify-content-center align-items-center">
-                                        <i class="fas <?= $c['icon']; ?> left-icon"></i>
+                                        <img src="<?= base_url('assets/img/' . $c['img']); ?>" alt="<?= $c['title']; ?>" class="card-img">
                                     </div>
                                     <div class="card-right">
                                         <h5><?= $c['title']; ?></h5>
@@ -54,9 +52,8 @@
 </main>
 
 <style>
-    /* Gradient Text */
     .text-gradient {
-        background: linear-gradient(135deg, #5f0188, #6f1a94);
+        background: #f8f9fa;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -78,33 +75,53 @@
     }
 
     .intro-section {
-        background: #f8f9fa;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        padding: 2rem 1rem;
-        border: 2px solid #4d056bff;
-
+        position: relative;
+        background: url('<?= base_url("assets/img/image_home.png") ?>') no-repeat center/cover;
+        padding: 5rem 1rem;
+        overflow: hidden;
     }
 
-    .intro-img {
-        max-height: 150px;
-        transition: transform 0.4s ease;
+    body {
+        padding: 0;
+        margin: 0;
     }
 
-    .intro-img-container {
-        display: flex;
-        justify-content: flex-end;
+    .intro-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1;
     }
 
-    .intro-title {
-        font-size: 2.4rem;
-        display: inline-block;
-        border-bottom: 3px solid #5f0188;
-        padding-bottom: 4px;
+    .intro-content {
+        position: relative;
+        z-index: 2;
     }
 
-    .intro-section p {
-        font-size: 1.25rem;
+    .hris-badge {
+        background: linear-gradient(135deg, #5f0188, #6f1a94);
+        color: #f8f9fa;
+        font-weight: 700;
+        font-size: 3rem;
+        padding: 0.5rem 1.2rem;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(95, 1, 136, 0.3);
+    }
+
+    .intro-text h1 {
+        font-size: 2rem;
+        line-height: 1.1;
+    }
+
+    .tagline {
+        font-size: 1.15rem;
+        color: #f8f9fa;
+        font-weight: 500;
+        padding-top: 1.2rem;
     }
 
     .split-card {
@@ -113,11 +130,10 @@
         flex-wrap: nowrap;
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         height: 100%;
         position: relative;
-        border: 2px solid #4d056bff;
+        padding: 0.6rem;
     }
 
     .split-card:hover {
@@ -126,46 +142,43 @@
     }
 
     .card-left {
-        flex: 0 0 100px;
-        min-width: 100px;
-        background: linear-gradient(135deg, #e7d6f7, #d3b8f0);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: inset -4px 0 6px rgba(0, 0, 0, 0.05);
-        border-top-right-radius: 11px;
-        border-bottom-right-radius: 11px;
-        z-index: 2;
+        position: relative;
+        flex: 0 0 160px;
+        min-width: 160px;
+        background-color: #e0d2ea;
+        border-radius: 10px;
     }
 
-    .left-icon {
-        font-size: 40px;
-        color: #5f0188;
+    .card-img {
+        position: absolute;
+        z-index: 2;
+        height: auto;
+        width: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .card-right {
         flex: 1 1 auto;
-        background: linear-gradient(135deg, #5f0188, #6f1a94);
-        color: #fff;
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 1rem;
-        margin-left: -9px;
-        z-index: 1;
     }
 
     .card-right h5 {
-        color: #ffd700;
+        color: #f4922e;
         font-weight: 600;
-        font-size: 1.25rem;
+        font-size: 1.7rem;
         margin-bottom: 0.25rem;
     }
 
     .card-right p {
         font-size: 0.95rem;
-        color: #f5f5f5;
+        color: #5f0188;
         margin: 0;
+        font-weight: 600;
     }
 
     .card-link {
@@ -173,39 +186,23 @@
     }
 
     @media (max-width:768px) {
-        .split-card {
-            flex-direction: row;
-            flex-wrap: nowrap;
-        }
-
         .card-left {
             flex: 0 0 80px;
-            min-width: 80px;
         }
 
-        .left-icon {
-            font-size: 36px;
+        .intro-text h1 {
+            font-size: 1.6rem;
         }
 
-        .card-right h5 {
-            font-size: 1.1rem;
+        .hris-badge {
+            font-size: 1.8rem;
+            padding: 0.4rem 0.9rem;
         }
 
-        .card-right p {
-            font-size: 0.85rem;
-        }
-
-        .intro-title {
-            font-size: 1.3rem;
-        }
-
-        .intro-desc {
-            font-size: 0.8rem;
-        }
-
-        .intro-img {
-            max-height: 100px;
+        .tagline {
+            font-size: 1rem;
         }
     }
 </style>
+
 <?= $this->endSection() ?>

@@ -2,24 +2,37 @@
 
 namespace App\Controllers;
 
+use App\Models\EmployeeModel;
+
 class home extends BaseController
 {
     // public function index(): string
     // {
     //     return view('welcome_message');
     // }
+    protected $EmployeeModel;
+    protected $layout_emp;
+
+    public function __construct()
+    {
+        $this->EmployeeModel = new EmployeeModel();
+        $this->layout_emp = $this->EmployeeModel->get_layout_emp();
+    }
 
     public function trial()
     {
         return view('home/trial', [
             'title' => 'Trial',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
     public function index()
     {
+
         return view('home/index', [
             'title' => 'home',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -27,6 +40,7 @@ class home extends BaseController
     {
         return view('home/dashboard', [
             'title' => 'Dashboard',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 

@@ -79,33 +79,25 @@ $menu_items = Menu::$menus[$module] ?? [];
         <nav class="app-header navbar navbar-expand-md navbar-dark shadow-sm">
             <div class="container-fluid flex-column px-0">
 
-                <div class="d-flex flex-row align-items-center w-100 py-2 px-3 layout-top">
-
-                    <div class="d-md-flex align-items-center mb-2 mb-md-0 flex-fill">
+                <div class="d-flex align-items-center justify-content-between w-100 py-2 px-3 layout-bottom">
+                    <div class="d-md-flex align-items-center mb-2 mb-md-0">
                         <a href="<?= base_url("home/index"); ?>" class="layout-logo d-flex align-items-center text-decoration-none">
                             <img src="<?= base_url('assets/img/logo.png'); ?>" alt="Logo Icon" class="logo-icon me-2">
                             <img src="<?= base_url('assets/img/logo-text.png'); ?>" alt="Logo Text" class="logo-text">
                         </a>
                     </div>
 
-                    <div class="d-none d-md-flex align-items-center mb-2 mb-md-0 flex-fill">
-                        <i class="fas fa-cubes me-2 fa-2x text-white"></i>
-                        <div class="d-flex flex-column">
-                            <span class="fw-semibold fs-5 text-warning">HRiS</span>
-                            <small class="text-warning">Human Resource Information System</small>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-center flex-wrap mb-2 mb-md-0 flex-fill justify-content-end">
+                    <div class="d-flex align-items-center flex-wrap">
                         <div class="dropdown me-2">
                             <a class="d-flex align-items-center text-white fw-semibold text-decoration-none" href="#" role="button" data-bs-toggle="dropdown">
                                 <div class="me-2 text-end">
                                     <div><?= $layout_emp['name'] ?? auth()->user()->username; ?></div>
                                     <small class="text-light"><?= $layout_emp['emp_id'] ?? 'Employee ID'; ?></small>
                                 </div>
-                                <img src="<?= base_url('assets/profile/' . ($layout_emp['photo'] ?? 'avatar5.png')); ?>"
+                                <img src="<?= base_url('assets/profile/' . ($layout_emp['photo'] ?? 'avatar4.png')); ?>"
                                     alt="User Image"
-                                    class="rounded-circle layout-profile-img">
+                                    class="rounded-circle layout-profile-img"
+                                    onerror="this.onerror=null; this.src='<?= base_url('assets/profile/avatar4.png'); ?>';">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end layout-dropdown">
                                 <li><a class="dropdown-item layout-dropdown-item" href="#"><i class="fas fa-key me-2"></i>Change Password</a></li>
@@ -113,26 +105,6 @@ $menu_items = Menu::$menus[$module] ?? [];
                                 <li><a class="dropdown-item layout-dropdown-item" href="<?= url_to('logout') ?>"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-center justify-content-between w-100 py-2 px-3 layout-bottom">
-                    <button class="btn btn-sm btn-outline-light d-md-none rounded" type="button" data-bs-toggle="collapse" data-bs-target="#bottomNavMenu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="collapse d-md-flex flex-grow-1" id="bottomNavMenu">
-                        <ul class="nav w-100 justify-content-center">
-                            <?php foreach ($menu_items as $item): ?>
-                                <li class="nav-item mx-1">
-                                    <a class="nav-link layout-link <?= (uri_string() == $item['url']) ? 'active' : '' ?>" href="<?= base_url($item['url']) ?>">
-                                        <?php if (!empty($item['icon'])): ?>
-                                            <i class="<?= $item['icon'] ?> layout-icon"></i>
-                                        <?php endif; ?>
-                                        <?= $item['label'] ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -159,9 +131,8 @@ $menu_items = Menu::$menus[$module] ?? [];
             padding-bottom: 0 !important;
         }
 
-        .layout-top {
-            background: #1e1e1f;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        .app-header {
+            border-bottom: 0 !important;
         }
 
         .layout-bottom {
@@ -178,68 +149,48 @@ $menu_items = Menu::$menus[$module] ?? [];
             position: relative;
         }
 
-        .layout-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffd700 !important;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .layout-link.active {
-            background-color: #7030a0 !important;
-            color: #fff !important;
-            font-weight: 600;
-        }
-
-        .layout-link.active::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 10%;
-            width: 80%;
-            height: 4px;
-            background: #ffd700;
-            border-radius: 4px;
-            box-shadow: 0 0 6px #ffd700;
-        }
-
         .layout-dropdown {
             border-radius: 12px;
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            border: 2px solid #4d056bff;
+            min-width: 200px;
+            padding: 4px 0;
         }
 
         .layout-dropdown-item {
-            color: #ffd700 !important;
-            transition: background 0.2s;
+            color: #5f0188 !important;
+            font-weight: 500;
+            padding: 10px 16px;
+            transition: all 0.25s ease;
+            border-radius: 8px;
         }
 
         .layout-dropdown-item:hover {
-            background-color: #3a3a3a;
+            background-color: #7030a0;
             color: #ffd700 !important;
+            transform: translateY(-3px);
         }
 
-        .layout-btn {
-            border-radius: 20px;
-            transition: all 0.3s;
+        .layout-dropdown-item i {
+            color: #ffd700;
         }
 
-        .layout-btn:hover {
-            background-color: #ffd700;
-            color: #1e1e1f !important;
-            box-shadow: 0 0 8px #ffd700;
-        }
-
-        .layout-logo img {
-            height: auto;
-            max-height: 32px;
-            width: auto;
-            transition: all 0.3s ease;
+        .dropdown-divider {
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 4px 0;
         }
 
         .app-main {
             background-color: #f2f0f8;
             color: #2a2a2a;
+        }
+
+        .layout-logo img {
+            height: auto;
+            max-height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
         }
 
         .layout-profile-img {
@@ -248,183 +199,13 @@ $menu_items = Menu::$menus[$module] ?? [];
             object-fit: cover;
         }
 
-        .custom-card-purple {
-            background: #5f0188;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            color: #f2f0f8;
-        }
-
-        .modal-custom-purple {
-            background: #5f0188eb;
-            color: #ffd700;
-        }
-
-        .custom-card-breadcrumb {
-            background: #5f0188eb;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-
-        /* .custom-card-purple,
-    .custom-card-breadcrumb,
-    .card-button,
-    .card-table {
-        background: rgba(128, 0, 128, 0.8);
-        backdrop-filter: blur(8px);
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        color: #fff;
-    } */
-
-        .custom-card-slim {
-            padding: 0.4rem 0.8rem !important;
-        }
-
-        .breadcrumb {
-            background: transparent;
-            margin-bottom: 0;
-            font-size: 1.2rem;
-            color: #ffd700;
-        }
-
-        .breadcrumb a {
-            color: #ffd700;
-            text-decoration: none;
-        }
-
-        .breadcrumb .active {
-            color: #ffd700;
-            font-weight: 600;
-        }
-
-        .breadcrumb-item+.breadcrumb-item::before {
-            content: "›";
-            color: #ffd700;
-        }
-
-        .btn-split {
-            display: flex;
-            padding: 0;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            font-size: 14px;
-        }
-
-        .btn-split .btn-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 8px;
-            color: #f2f0f8;
-        }
-
-        .btn-split .btn-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 8px;
-            background-color: #f2f0f8;
-            /* font-weight: bold; */
-        }
-
-        .btn:hover {
-            transform: translateY(-1px) scale(1.00);
-        }
-
-        .btn-primary .btn-text {
-            color: #5f0188eb;
-            border-left: 1px solid #5f0188eb;
-        }
-
-        .btn-info .btn-text {
-            color: #5f0188eb;
-            border-left: 1px solid #0dcaf0;
-        }
-
-        .btn-success .btn-text {
-            color: #5f0188eb;
-            border-left: 1px solid #198754;
-        }
-
-        .btn-warning .btn-text {
-            color: #5f0188eb;
-            border-left: 1px solid #ffd700;
-        }
-
-        .btn-secondary .btn-text {
-            color: #5f0188eb;
-            border-left: 1px solid #6c757d;
-        }
-
-        .btn-danger .btn-text {
-            color: #5f0188eb;
-            border-left: 1px solid #dc3545;
-        }
-
-        .btn-primary .btn-icon {
-            background-color: #5f0188eb;
-        }
-
-        .btn-info .btn-icon {
-            background-color: #0dcaf0;
-        }
-
-        .btn-success .btn-icon {
-            background-color: #198754;
-        }
-
-        .btn-warning .btn-icon {
-            background-color: #ffd700;
-        }
-
-        .btn-secondary .btn-icon {
-            background-color: #6c757d;
-        }
-
-        .btn-danger .btn-icon {
-            background-color: #dc3545;
-        }
-
-        .table-custom {
-            border: 1px solid #dee2e6;
-            border-collapse: separate;
-            border-spacing: 0;
-            overflow: hidden;
-        }
-
-        .table-custom th {
-            background-color: #ffd700 !important;
-            color: #1e1e1f;
-            text-align: center;
-            border: 1px solid #dee2e6;
-            border-radius: 0;
-        }
-
-        .table-custom td {
-            border: 1px solid #dee2e6;
-            border-radius: 0;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f5ff;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #efe6ff;
-        }
-
         @media (max-width: 768px) {
             .layout-logo .logo-icon {
-                max-height: 32px;
+                max-height: 36px;
             }
 
             .layout-logo .logo-text {
-                max-height: 32px;
+                max-height: 28px;
             }
         }
 
@@ -438,23 +219,8 @@ $menu_items = Menu::$menus[$module] ?? [];
             }
 
             .layout-logo .logo-icon {
-                max-height: 28px;
+                max-height: 32px;
             }
-        }
-
-        #add_modal .select2-container--default .select2-selection--single,
-        #edit_modal .select2-container--default .select2-selection--single {
-            height: calc(1.5em + 0.75rem + 2px);
-        }
-
-        #add_modal .select2-container--default .select2-selection--single .select2-selection__rendered,
-        #edit_modal .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: calc(1.5em + 0.75rem);
-        }
-
-        #add_modal .select2-container--default .select2-selection--single .select2-selection__arrow,
-        #edit_modal .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: calc(1.5em + 0.75rem + 2px);
         }
     </style>
     <!--begin::Script-->

@@ -17,6 +17,7 @@ class Recruitment extends BaseController
     protected $EmployeeModel;
     protected $MstChecklistModel;
     protected $OnboardingModel;
+    protected $layout_emp;
 
     public function __construct()
     {
@@ -26,6 +27,7 @@ class Recruitment extends BaseController
         $this->EmployeeModel = new EmployeeModel();
         $this->MstChecklistModel = new MstChecklistModel();
         $this->OnboardingModel = new OnboardingModel();
+        $this->layout_emp = $this->EmployeeModel->get_layout_emp();
     }
 
     private function _json_response($status, $message, $is_validation = false)
@@ -42,6 +44,7 @@ class Recruitment extends BaseController
     {
         return view('recruitment/summary', [
             'title' => 'Summary',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -49,6 +52,7 @@ class Recruitment extends BaseController
     {
         return view('recruitment/candidate', [
             'title' => 'Candidate',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -56,6 +60,7 @@ class Recruitment extends BaseController
     {
         return view('recruitment/interview', [
             'title' => 'Interview',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -63,6 +68,7 @@ class Recruitment extends BaseController
     {
         return view('recruitment/opening', [
             'title' => 'Opening',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 

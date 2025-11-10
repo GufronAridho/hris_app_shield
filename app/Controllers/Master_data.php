@@ -11,6 +11,7 @@ use App\Models\MstShiftModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use CodeIgniter\Controller;
+use App\Models\EmployeeModel;
 
 class Master_data extends BaseController
 {
@@ -22,6 +23,8 @@ class Master_data extends BaseController
     protected $MstShiftModel;
     protected $users;
     protected $user;
+    protected $EmployeeModel;
+    protected $layout_emp;
     public function __construct()
     {
         $this->MstChecklistModel = new MstChecklistModel();
@@ -32,6 +35,8 @@ class Master_data extends BaseController
         $this->MstShiftModel = new MstShiftModel();
         $this->users = auth()->getProvider();
         $this->user = auth()->user();
+        $this->EmployeeModel = new EmployeeModel();
+        $this->layout_emp = $this->EmployeeModel->get_layout_emp();
     }
     private function _json_response($status, $message, $is_validation = false)
     {
@@ -47,6 +52,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_checklist', [
             'title' => 'Checklist',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -54,6 +60,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_dept', [
             'title' => 'Department',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -61,6 +68,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_emp_type', [
             'title' => 'Emp Type',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -68,6 +76,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_job', [
             'title' => 'Job',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -75,6 +84,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_status', [
             'title' => 'Status',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -82,6 +92,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_user', [
             'title' => 'User Managment',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -89,6 +100,7 @@ class Master_data extends BaseController
     {
         return view('master_data/mst_shift', [
             'title' => 'Shift',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 

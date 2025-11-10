@@ -12,18 +12,20 @@ class Onboarding extends BaseController
     protected $MstChecklistModel;
     protected $OnboardingModel;
     protected $EmployeeModel;
-
+    protected $layout_emp;
     public function __construct()
     {
         $this->MstChecklistModel = new MstChecklistModel;
         $this->OnboardingModel = new OnboardingModel();
         $this->EmployeeModel = new EmployeeModel();
+        $this->layout_emp = $this->EmployeeModel->get_layout_emp();
     }
 
     public function summary()
     {
         return view('onboarding/summary', [
             'title' => 'Summary',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -31,6 +33,7 @@ class Onboarding extends BaseController
     {
         return view('onboarding/profile', [
             'title' => 'Profile',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -47,6 +50,7 @@ class Onboarding extends BaseController
             'dept_head' => $item['dept_head'] ?? 'No Recorded Data',
             'hr_partner' => $item['hr_partner'] ?? 'No Recorded Data',
             'title' => 'Document Checklist',
+            'layout_emp' => $this->layout_emp
         ];
         return view('onboarding/document_checklist', $data);
     }
@@ -64,6 +68,7 @@ class Onboarding extends BaseController
             'dept_head' => $item['dept_head'] ?? 'No Recorded Data',
             'hr_partner' => $item['hr_partner'] ?? 'No Recorded Data',
             'title' => 'IT Checklist',
+            'layout_emp' => $this->layout_emp
         ];
         return view('onboarding/it_checklist', $data);
     }
@@ -81,6 +86,7 @@ class Onboarding extends BaseController
             'dept_head' => $item['dept_head'] ?? 'No Recorded Data',
             'hr_partner' => $item['hr_partner'] ?? 'No Recorded Data',
             'title' => 'Onboarding Task',
+            'layout_emp' => $this->layout_emp
         ];
         return view('onboarding/onboarding_task', $data);
     }

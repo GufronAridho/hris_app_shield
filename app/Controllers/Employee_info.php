@@ -18,6 +18,7 @@ class Employee_info extends BaseController
     protected $WorkExperienceModel;
     protected $EmployeeGroupModel;
     protected $EmployeeWorkspaceModel;
+    protected $layout_emp;
 
     public function __construct()
     {
@@ -26,12 +27,14 @@ class Employee_info extends BaseController
         $this->WorkExperienceModel = new InfoWorkExperienceModel();
         $this->EmployeeGroupModel = new InfoEmployeeGroupModel();
         $this->EmployeeWorkspaceModel = new InfoEmployeeWorkspaceModel();
+        $this->layout_emp = $this->EmployeeModel->get_layout_emp();
     }
 
     public function employee_managment()
     {
         return view('employee_info/employee_managment', [
             'title' => 'Employee Management',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -40,6 +43,7 @@ class Employee_info extends BaseController
         // $count = $this->EmployeeModel->where('status', 'active')->countAllResults();
         $data = [
             'title' => 'People',
+            'layout_emp' => $this->layout_emp
             // 'count' => $count,
         ];
         return view('employee_info/people', $data);
@@ -49,6 +53,7 @@ class Employee_info extends BaseController
     {
         return view('employee_info/department', [
             'title' => 'Department',
+            'layout_emp' => $this->layout_emp
         ]);
     }
 
@@ -88,7 +93,8 @@ class Employee_info extends BaseController
             'work_exp' => $work_exp,
             'org_chart' => $org_chart,
             'group' => $group,
-            'workspace' => $workspace
+            'workspace' => $workspace,
+            'layout_emp' => $this->layout_emp
         ];
         // echo "<pre>";
         // var_dump($data);
