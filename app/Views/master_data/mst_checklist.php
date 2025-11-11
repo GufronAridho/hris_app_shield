@@ -185,7 +185,7 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "Delete this Questiion!",
+                text: "Delete this Question!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

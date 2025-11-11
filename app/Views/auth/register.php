@@ -1,7 +1,7 @@
 <?= $this->extend('shared/layout_login') ?>
 <?= $this->section('content') ?>
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-image">
-    <div class="login-box w-100 px-3" style="max-width: 900px;">
+    <div class="login-box w-100 px-3" style="max-width: 800px;">
         <div class="card shadow-lg d-flex flex-column flex-md-row custom-card">
             <div class="col-12 col-md-5 branding-section d-flex flex-column justify-content-center align-items-center p-3">
                 <img src="<?= base_url('assets/img/logo.png'); ?>"
@@ -101,47 +101,16 @@
 </div>
 
 <style>
-    .bg-image {
-        background: url('<?= base_url("/assets/img/before-conference.jpg"); ?>') no-repeat center center/cover;
-    }
-
     .custom-card {
         border-radius: 16px;
         overflow: hidden;
         background: transparent !important;
     }
 
-    .branding-section {
-        backdrop-filter: blur(12px);
-        background: rgba(64, 0, 96, 0.75);
-        text-align: center;
-    }
-
     .branding-logo {
         max-width: 80px;
     }
 
-    .form-section {
-        backdrop-filter: blur(12px);
-        background: rgba(230, 220, 250, 0.85);
-    }
-
-    .btn-primary {
-        background-color: #5f0188;
-        border-color: #5f0188;
-        padding: 0.75rem;
-        font-size: 1rem;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: 0.3s;
-    }
-
-    .btn-primary:hover {
-        background-color: #3d005b;
-        border-color: #3d005b;
-    }
-
-    .form-control,
     .form-select {
         border-radius: 8px;
     }

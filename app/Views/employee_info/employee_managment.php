@@ -287,7 +287,7 @@
                                     <div class="row g-2">
                                         <div class="col-md-5">
                                             <label for="edit_emp_id" class="form-label">Employee ID</label>
-                                            <input type="text" class="form-control" id="edit_emp_id" name="emp_id" disabled>
+                                            <input type="text" class="form-control" id="edit_emp_id" name="emp_id" readonly>
                                         </div>
                                         <div class="col-md-7">
                                             <label for="edit_name" class="form-label">Name</label>

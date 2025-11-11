@@ -94,10 +94,10 @@ $menu_items = Menu::$menus[$module] ?? [];
                                     <div><?= $layout_emp['name'] ?? auth()->user()->username; ?></div>
                                     <small class="text-light"><?= $layout_emp['emp_id'] ?? 'Employee ID'; ?></small>
                                 </div>
-                                <img src="<?= base_url('assets/profile/' . ($layout_emp['photo'] ?? 'avatar4.png')); ?>"
+                                <img src="<?= base_url('assets/profile/' . ($layout_emp['photo'] ?? 'avatar5.png')); ?>"
                                     alt="User Image"
                                     class="rounded-circle layout-profile-img"
-                                    onerror="this.onerror=null; this.src='<?= base_url('assets/profile/avatar4.png'); ?>';">
+                                    onerror="this.onerror=null; this.src='<?= base_url('assets/profile/avatar5.png'); ?>';">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end layout-dropdown">
                                 <li><a class="dropdown-item layout-dropdown-item" href="#"><i class="fas fa-key me-2"></i>Change Password</a></li>

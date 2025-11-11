@@ -330,4 +330,31 @@ class Select_form extends BaseController
 
         return $this->response->setJSON(['items' => $items]);
     }
+
+    public function emailSelect()
+    {
+        $q = $this->request->getGet('q');
+
+        $builder = $this->EmployeeModel->builder();
+        $builder->distinct();
+        $builder->select('email');
+
+        if (!empty($q)) {
+            $builder->like('email', $q);
+        }
+        $builder->orderBy('email');
+
+        $query = $builder->get();
+        $results = $query->getResult();
+
+        $items = [];
+        foreach ($results as $row) {
+            $items[] = [
+                'id' => $row->email,
+                'name' => $row->email
+            ];
+        }
+
+        return $this->response->setJSON(['items' => $items]);
+    }
 }

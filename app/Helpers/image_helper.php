@@ -3,7 +3,7 @@
 use Config\Services;
 
 if (!function_exists('compress_image')) {
-    function compress_image($file, $destinationFolder, $maxSizeMB = 1, $startQuality = 90, $minQuality = 10, $step = 5)
+    function compress_image($file, $destinationFolder, $emp_id, $maxSizeMB = 1, $startQuality = 90, $minQuality = 10, $step = 5)
     {
         if (!$file->isValid() || $file->hasMoved()) {
             throw new \RuntimeException('Invalid file upload.');
@@ -13,7 +13,13 @@ if (!function_exists('compress_image')) {
             mkdir($destinationFolder, 0755, true);
         }
 
-        $fileName = $file->getRandomName();
+        foreach (glob($destinationFolder . '/' . $emp_id . '.*') as $oldFile) {
+            if (is_file($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+        $extension = $file->getClientExtension();
+        $fileName  = $emp_id . '.' . $extension;
         $fileSizeMB = $file->getSize() / 1024 / 1024;
 
         if ($fileSizeMB <= $maxSizeMB) {

@@ -58,44 +58,11 @@
 </div>
 
 <style>
-    .bg-image {
-        background: url('<?= base_url("/assets/img/before-conference.jpg"); ?>') no-repeat center center/cover;
-    }
-
     .custom-card {
         border-radius: 16px;
         overflow: hidden;
         background: transparent !important;
         min-height: 250px;
-    }
-
-    .branding-section {
-        backdrop-filter: blur(12px);
-        background: rgba(64, 0, 96, 0.75);
-        text-align: center;
-    }
-
-    .form-section {
-        backdrop-filter: blur(12px);
-        background: rgba(230, 220, 250, 0.85);
-    }
-
-    .btn-primary {
-        background-color: #5f0188;
-        border-color: #5f0188;
-        padding: 0.75rem;
-        font-size: 1rem;
-        font-weight: 600;
-        border-radius: 8px;
-    }
-
-    .btn-primary:hover {
-        background-color: #3d005b;
-        border-color: #3d005b;
-    }
-
-    .form-control {
-        border-radius: 8px;
     }
 
     .input-group-text {

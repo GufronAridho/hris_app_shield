@@ -90,12 +90,17 @@ $routes->group('employee_info', function ($routes) {
     $routes->get('department', 'Employee_info::department');
     $routes->get('employee_profile', 'Employee_info::employee_profile');
     $routes->get('employee_profile/(:any)', 'Employee_info::employee_profile/$1');
+    $routes->get('work_exp_table', 'Employee_info::work_exp_table');
 
     $routes->post('employee_list', 'Employee_info::employee_list');
     $routes->post('create_employee', 'Employee_info::create_employee');
     $routes->post('update_employee', 'Employee_info::update_employee');
     $routes->post('delete_employee', 'Employee_info::delete_employee');
     $routes->post('upload_employee', 'Employee_info::upload_employee');
+    $routes->post('update_profile', 'Employee_info::update_profile');
+    $routes->post('create_work_exp', 'Employee_info::create_work_exp');
+    $routes->post('update_work_exp', 'Employee_info::update_work_exp');
+    $routes->post('delete_work_exp', 'Employee_info::delete_work_exp');
 
     $routes->get('get_department_profile', 'Employee_info::get_department_profile');
     $routes->get('count_employee_dept', 'Employee_info::count_employee_dept');
@@ -118,6 +123,7 @@ $routes->group('select_form',  function ($routes) {
     $routes->get('employeeSelect', 'Select_form::employeeSelect');
     $routes->get('employeeIDSelect', 'Select_form::employeeIDSelect');
     $routes->get('shiftSelect', 'Select_form::shiftSelect');
+    $routes->get('emailSelect', 'Select_form::emailSelect');
 });
 
 $routes->get('attendance/(:any)', 'Attendance::$1');

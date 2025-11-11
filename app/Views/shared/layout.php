@@ -124,7 +124,7 @@ $menu_items = Menu::$menus[$module] ?? [];
                         <ul class="nav w-100 justify-content-center">
                             <?php foreach ($menu_items as $item): ?>
                                 <li class="nav-item mx-1">
-                                    <a class="nav-link layout-link <?= (uri_string() == $item['url']) ? 'active' : '' ?>" href="<?= base_url($item['url']) ?>">
+                                    <a class="nav-link layout-link <?= (strpos(uri_string(), $item['url']) === 0) ? 'active' : '' ?>" href="<?= base_url($item['url']) ?>">
                                         <?php if (!empty($item['icon'])): ?>
                                             <i class="<?= $item['icon'] ?> layout-icon"></i>
                                         <?php endif; ?>

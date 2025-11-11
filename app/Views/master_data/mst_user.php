@@ -47,10 +47,12 @@
                     <table class="table table-bordered table-striped table-hover table-custom" id="table_detail">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width:10%;">Check ID</th>
-                                <th class="text-center" style="width:30%;">Check Category</th>
-                                <th class="text-center" style="width:50%;">Question</th>
-                                <th class="text-center" style="width:10%;">Action</th>
+                                <th class="text-center" style="width:2%;">No</th>
+                                <th class="text-center" style="width:20%;">Username</th>
+                                <th class="text-center" style="width:25%;">Email</th>
+                                <th class="text-center" style="width:18%;">EMP ID</th>
+                                <th class="text-center" style="width:15%;">Level</th>
+                                <th class="text-center" style="width:20%;">Action</th>
                             </tr>
                         </thead>
                         <tbody id="table_body">
@@ -65,50 +67,66 @@
 </main>
 
 <!-- Modal -->
-<div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="add_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="add_modal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header modal-custom-purple">
-                <h5 class="modal-title" id="add_modalLabel">
-                    <i class="fas fa-square-plus me-2"></i> Add Master Data
+                <h5 class="modal-title">
+                    <i class="fas fa-user-plus me-2"></i> Add New User
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <form id="form_add">
                 <div class="modal-body">
-                    <div class="col-md-12">
-                        <div class="card w-100">
-                            <div class="card-header bg-light"></div>
-                            <div class="card-body">
-                                <div class="col-md-7">
-                                    <label for="add_check_cat" class="form-label">Check Category</label>
-                                    <select class="form-select" id="add_check_cat" name="check_cat" required>
-                                        <option value="">Select Category</option>
-                                        <option value="Document">Document</option>
-                                        <option value="IT">IT</option>
-                                        <option value="Onboarding">Onboarding</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="add_check_quest" class="form-label">Question</label>
-                                    <textarea class="form-control" id="add_check_quest" name="check_quest" rows="3" required></textarea>
-                                </div>
-                            </div>
+                    <div class="col-md-12 mb-2">
+                        <label for="add_username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="add_username" name="username" required>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        <label for="add_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="add_email" name="email" required>
+                    </div> -->
+                    <div class="col-md-12 mb-2">
+                        <label for="add_email" class="form-label">Email <small class="text-muted">(manual OK if valid)</small>
+                        </label>
+                        <select class="form-select" id="add_email" name="email" required></select>
+                    </div>
 
+                    <div class="row h-100 g-2 mb-2">
+                        <div class="col-md-6">
+                            <label for="add_password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="add_password" name="password" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="comfirm_password" class="form-label">Repeat Password</label>
+                            <input type="password" class="form-control" id="comfirm_password" name="password_confirm" required>
                         </div>
                     </div>
-                </div>
 
+                    <div class="col-md-12">
+                        <label for="add_level" class="form-label">Level</label>
+                        <select class="form-select" id="add_level" name="level" required>
+                            <option value="">Select Level</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-plus me-1"></i> Add Master Data
+                        <i class="fas fa-save me-1"></i> Save User
                     </button>
                 </div>
+
             </form>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-md">
@@ -127,19 +145,29 @@
                             <div class="card-body">
                                 <input type="hidden" id="edit_id" name="id">
 
-                                <div class="col-md-7">
-                                    <label for="edit_check_cat" class="form-label">Check Category</label>
-                                    <select class="form-select" id="edit_check_cat" name="check_cat" required>
-                                        <option value="">Select Category</option>
-                                        <option value="Document">Document</option>
-                                        <option value="IT">IT</option>
-                                        <option value="Onboarding">Onboarding</option>
-                                    </select>
+                                <div class="col-md-12 mb-2">
+                                    <label for="edit_username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="edit_username" name="username" required>
                                 </div>
 
-                                <div class="col-md-12 mt-2">
-                                    <label for="edit_check_quest" class="form-label">Question</label>
-                                    <textarea class="form-control" id="edit_check_quest" name="check_quest" rows="3" required></textarea>
+                                <!-- <div class="col-md-12">
+                                    <label for="edit_email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="edit_email" name="email" required>
+                                </div> -->
+                                <div class="col-md-12 mb-2">
+                                    <label for="edit_email" class="form-label">Email
+                                        <small class="text-muted">(manual OK if valid)</small>
+                                    </label>
+                                    <select class="form-select" id="edit_email" name="email" required></select>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="edit_level" class="form-label">Level</label>
+                                    <select class="form-select" id="edit_level" name="level" required>
+                                        <option value="">Select Level</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="user">User</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -164,18 +192,98 @@
 
 <?= $this->section('script'); ?>
 <script>
+    $('#add_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#add_email', 'Select Email', "<?= base_url('select_form/emailSelect') ?>", '#add_modal .modal-body');
+    });
+
+    $('#edit_modal').on('shown.bs.modal', function() {
+        initSelect2Ajax('#edit_email', 'Select Email', "<?= base_url('select_form/emailSelect') ?>", '#edit_modal .modal-body');
+    });
+
+    $('#add_modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+        $(this).find('#add_preview').empty();
+    });
+
+    $('#edit_modal').on('hidden.bs.modal', function() {
+        $(this).find('form')[0].reset();
+        $(this).find('select').val(null).trigger('change');
+        $(this).find('.error, .invalid-feedback').remove();
+        $(this).find('.is-invalid').removeClass('is-invalid');
+        $(this).find('#edit_preview').empty();
+    });
+
+    function initSelect2Ajax(selector, placeholder, url, modal = null) {
+        $(selector).select2({
+            placeholder: placeholder,
+            allowClear: true,
+            width: '100%',
+            dropdownParent: modal ? $(modal) : null,
+            tags: true,
+            createTag: function(params) {
+                let term = $.trim(params.term);
+                let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (term === '' || !emailRegex.test(term)) {
+                    return null;
+                }
+                return {
+                    id: term,
+                    text: term,
+                    newTag: true
+                };
+            },
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function(data) {
+                    if (!data.items) return {
+                        results: []
+                    };
+
+                    return {
+                        results: data.items.map(item => ({
+                            id: item.id,
+                            text: item.name
+                        }))
+                    };
+                },
+                cache: true
+            }
+        });
+    }
+
+    function setSelect2Value(selector, value) {
+        if (value && value !== 'null' && value.trim() !== '') {
+            var opt = new Option(value, value, true, true);
+            $(selector).empty().append(opt).trigger('change');
+        } else {
+            $(selector).val(null).trigger('change');
+        }
+    }
+
     $(document).ready(function() {
         get_table();
 
         $(document).on('click', '.edit-btn', function() {
 
             const id = $(this).data('id');
-            const checkCat = $(this).data('check_cat');
-            const checkQuest = $(this).data('check_quest');
+            const username = $(this).data('username');
+            const email = $(this).data('email');
+            const level = $(this).data('level');
 
             $('#edit_id').val(id);
-            $('#edit_check_cat').val(checkCat);
-            $('#edit_check_quest').val(checkQuest);
+            $('#edit_username').val(username);
+            setSelect2Value('#edit_email', email);
+            $('#edit_level').val(level);
 
             $('#edit_modal').modal('show');
         });
@@ -185,7 +293,7 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "Delete this Questiion!",
+                text: "Delete this User!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -195,7 +303,7 @@
                 allowOutsideClick: () => !Swal.isLoading(),
                 preConfirm: () => {
                     return $.ajax({
-                        url: "<?= base_url('master_data/delete_check_cat') ?>",
+                        url: "<?= base_url('master_data/delete_user') ?>",
                         type: "POST",
                         data: {
                             id: id
@@ -235,7 +343,7 @@
         }
         $('#table_body').html(`
         <tr id="table_loading">
-            <td colspan="4" class="text-center py-4">
+            <td colspan="6" class="text-center py-4">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -244,7 +352,7 @@
         </tr>
         `);
         $.ajax({
-            url: "<?= base_url('master_data/checklist_table'); ?>",
+            url: "<?= base_url('master_data/user_table'); ?>",
             type: "GET",
             dataType: "html",
             success: function(res) {
@@ -255,7 +363,7 @@
                 console.error("AJAX Error:", error);
                 $('#table_body').html(`
                 <tr>
-                    <td colspan="4" class="text-center text-black p-3">
+                    <td colspan="6" class="text-center text-black p-3">
                         Failed to load data. Please try again.
                     </td>
                 </tr>
@@ -274,7 +382,7 @@
             .appendTo('#' + tableId + ' thead');
 
         $('#' + tableId + ' thead tr.search-row th').each(function(index) {
-            if (index === 3) {
+            if (index === 5) {
                 $(this).html('');
             } else {
                 $(this).html('<input type="text" placeholder="Search" class="form-control form-control-sm" />');
@@ -307,7 +415,7 @@
 
         Swal.fire({
             title: "Are you sure?",
-            text: "Add this Question!",
+            text: "Add this User!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -317,7 +425,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('master_data/create_check_cat') ?>",
+                    url: "<?= base_url('master_data/create_user') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,
@@ -354,10 +462,12 @@
         e.preventDefault();
 
         let dataForm = new FormData(this);
-
+        // for (const pair of dataForm.entries()) {
+        //     console.log(`${pair[0]}: ${pair[1]}`);
+        // }
         Swal.fire({
             title: "Are you sure?",
-            text: "Edit this Question!",
+            text: "Edit this User!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -367,7 +477,7 @@
             allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: () => {
                 return $.ajax({
-                    url: "<?= base_url('master_data/update_check_cat') ?>",
+                    url: "<?= base_url('master_data/update_user') ?>",
                     type: "POST",
                     data: dataForm,
                     processData: false,

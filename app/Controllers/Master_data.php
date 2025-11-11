@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use CodeIgniter\Controller;
 use App\Models\EmployeeModel;
+use CodeIgniter\Shield\Entities\User;
 
 class Master_data extends BaseController
 {
@@ -21,7 +22,7 @@ class Master_data extends BaseController
     protected $MstJobModel;
     protected $MstStatusModel;
     protected $MstShiftModel;
-    protected $users;
+    protected $MstUser;
     protected $user;
     protected $EmployeeModel;
     protected $layout_emp;
@@ -33,7 +34,7 @@ class Master_data extends BaseController
         $this->MstJobModel = new MstJobModel();
         $this->MstStatusModel = new MstStatusModel();
         $this->MstShiftModel = new MstShiftModel();
-        $this->users = auth()->getProvider();
+        $this->MstUser = auth()->getProvider();
         $this->user = auth()->user();
         $this->EmployeeModel = new EmployeeModel();
         $this->layout_emp = $this->EmployeeModel->get_layout_emp();
@@ -151,11 +152,26 @@ class Master_data extends BaseController
 
     public function user_table()
     {
-        $auth = auth()->user();
+        $users = $this->MstUser->withIdentities()
+            ->withGroups()
+            ->withPermissions()
+            ->findAll();
+        foreach ($users as &$user) {
+            $employee = $this->EmployeeModel
+                ->select('emp_id')
+                ->where('email', $user->email)
+                ->first();
+            $user->employee = $employee;
+        }
+        // echo "<pre>";
+        // print_r($users); 
+        // echo "</pre>";
+        // exit;
+
         $data = [
-            'item' => $auth
+            'item' => $users
         ];
-        dd($data);
+        return view('master_data/partial/user_table', $data);
     }
 
     public function shift_table()
@@ -534,6 +550,124 @@ class Master_data extends BaseController
                 return $this->_json_response(false, $e->getMessage());
             }
         }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    private function updateUserGroup($userId, $newGroup)
+    {
+        $users = auth()->getProvider();
+        $user  = $users->findById($userId);
+
+        if (!$user) {
+            return false;
+        }
+
+        foreach ($user->getGroups() as $oldGroup) {
+            $user->removeGroup($oldGroup);
+        }
+
+        if ($newGroup) {
+            $user->addGroup($newGroup);
+        }
+
+        return true;
+    }
+
+    public function create_user()
+    {
+        if ($this->request->is('post')) {
+
+            $validation = \Config\Services::validation();
+            if (!$validation->run($this->request->getPost(), 'create_user')) {
+                return $this->_json_response(false, implode(', ', $validation->getErrors()));
+            }
+
+            $username = $this->request->getPost('username');
+            $email = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
+            $level = $this->request->getPost('level');
+
+            $user_data = new User([
+                'username' => $username,
+                'email'    =>  $email,
+                'password' => $password,
+            ]);
+
+            try {
+                if ($this->MstUser->save($user_data)) {
+                    $id = $this->MstUser->getInsertID();
+                    $this->updateUserGroup($id, $level);
+                    return $this->_json_response(true, 'User created successfully');
+                } else {
+                    $errors = $this->MstUser->errors();
+                    $message = implode(', ', $errors);
+                    return $this->_json_response(false, $message);
+                }
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function update_user()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+
+            $validation = \Config\Services::validation();
+            $data = $this->request->getPost();
+            $data['id'] = $id;
+            if (! $validation->run($data, 'edits_user')) {
+                return $this->_json_response(false, implode(', ', $validation->getErrors()));
+            }
+
+            $username = $this->request->getPost('username');
+            $email = $this->request->getPost('email');
+            $level = $this->request->getPost('level');
+
+            $user_data = $this->MstUser->findById($id);
+            $user_data->fill(
+                [
+                    'username' => $username,
+                    'email' => $email,
+                ]
+            );
+
+            try {
+                if ($this->MstUser->save($user_data)) {
+                    $this->updateUserGroup($id, $level);
+                    return $this->_json_response(true, 'User updated successfully');
+                } else {
+                    $errors = $this->MstUser->errors();
+                    $message = implode(', ', $errors);
+                    return $this->_json_response(false, $message);
+                }
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function delete_user()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+
+            try {
+                if ($this->MstUser->delete($id, true)) {
+                    return $this->_json_response(true, 'User deleted successfully');
+                } else {
+                    return $this->_json_response(false, 'Failed to delete User');
+                }
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+
         return $this->_json_response(false, 'Invalid request method');
     }
 }

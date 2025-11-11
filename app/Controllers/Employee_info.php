@@ -59,6 +59,9 @@ class Employee_info extends BaseController
 
     public function employee_profile($emp_id = null)
     {
+        if ($emp_id === null && isset($this->layout_emp['emp_id'])) {
+            $emp_id = $this->layout_emp['emp_id'];
+        }
         $employee = $this->EmployeeModel->where('emp_id', $emp_id)->first();
         $recognition = $this->RecognitionModel->where('emp_id', $emp_id)
             ->orderby('date_given', 'desc')->findAll();
@@ -145,8 +148,8 @@ class Employee_info extends BaseController
             'emp_grade',
             'status',
             'resign_date',
-            'shift_id',
-            'shift_name',
+            'mst_employee.shift_id',
+            's.shift_name',
         ];
 
         // --- total record tanpa filter ---
@@ -248,14 +251,13 @@ class Employee_info extends BaseController
 
             $photoFile = $this->request->getFile('photo');
             $destinationFolder = FCPATH . 'assets/profile';
+            $emp_id = $this->EmployeeModel->generateEmpId();
 
             if ($photoFile && $photoFile->isValid()) {
-                $photoName = compress_image($photoFile, $destinationFolder);
+                $photoName = compress_image($photoFile, $destinationFolder, $emp_id);
             } else {
                 $photoName = null;
             }
-
-            $emp_id = $this->EmployeeModel->generateEmpId();
 
             $data = [
                 'emp_id' => $emp_id,
@@ -297,6 +299,7 @@ class Employee_info extends BaseController
     {
         if ($this->request->is('post')) {
             $id = $this->request->getPost('id');
+            $emp_id = $this->request->getPost('emp_id');
             if (!$id) {
                 return $this->_json_response(false, 'Employee ID is required');
             }
@@ -324,7 +327,7 @@ class Employee_info extends BaseController
                 }
 
                 $destinationFolder = FCPATH . 'assets/profile';
-                $photoName = compress_image($photoFile, $destinationFolder);
+                $photoName = compress_image($photoFile, $destinationFolder, $emp_id);
             }
 
             $data = [
@@ -346,6 +349,67 @@ class Employee_info extends BaseController
                 'email' => $this->request->getPost('email') ?: null,
                 'no_hp' => $this->request->getPost('no_hp') ?: null,
                 'shift_id' => $this->request->getPost('shift_id'),
+            ];
+            try {
+                if ($this->EmployeeModel->update($id, $data)) {
+                    return $this->_json_response(true, 'Employee updated successfully');
+                } else {
+                    $errors = $this->EmployeeModel->errors();
+                    $message = implode(', ', $errors);
+                    return $this->_json_response(false, $message);
+                }
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function update_profile()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+            $emp_id = $this->request->getPost('emp_id');
+            if (!$id) {
+                return $this->_json_response(false, 'Employee ID is required');
+            }
+
+            $employee = $this->EmployeeModel->select('photo')->where('id', $id)->first();
+            $existing_photo = $employee['photo'] ?? null;
+            $photoFile = $this->request->getFile('photo');
+            $photoName = $existing_photo;
+
+            if ($photoFile && $photoFile->isValid() && !$photoFile->hasMoved()) {
+                $validationRules = [
+                    'photo' => [
+                        'rules' => 'is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/gif,image/png]',
+                        'errors' => [
+                            'is_image' => 'The uploaded file is not a valid image.',
+                            'mime_in' => 'Only JPG, JPEG, GIF, and PNG images are allowed.'
+                        ]
+                    ]
+                ];
+
+                if (!$this->validate($validationRules)) {
+                    $errors = $this->validator->getErrors();
+                    $message = implode('<br>', $errors);
+                    return $this->_json_response(false, $message);
+                }
+
+                $destinationFolder = FCPATH . 'assets/profile';
+                $photoName = compress_image($photoFile, $destinationFolder, $emp_id);
+            }
+
+            $data = [
+                'name' => $this->request->getPost('name'),
+                'photo' => $photoName,
+                'no_hp' => $this->request->getPost('no_hp') ?: null,
+                'email' => $this->request->getPost('email') ?: null,
+                'department' => $this->request->getPost('department'),
+                'job_title' => $this->request->getPost('job_title'),
+                'manager' => $this->request->getPost('manager') ?: null,
+                'location' => $this->request->getPost('location'),
+                'description' => $this->request->getPost('description'),
             ];
             try {
                 if ($this->EmployeeModel->update($id, $data)) {
@@ -625,5 +689,84 @@ class Employee_info extends BaseController
         }
 
         return $this->response->setJSON(['items' => $items]);
+    }
+
+    public function work_exp_table()
+    {
+        $emp_id = $this->request->getGet('emp_id');
+        $work_exp = $this->WorkExperienceModel->where('emp_id', $emp_id)->orderby('start_date')->findAll();
+        $data = [
+            'item' => $work_exp
+        ];
+        return view('employee_info/partial/work_exp', $data);
+    }
+
+    public function create_work_exp()
+    {
+        if ($this->request->is('post')) {
+            $data = [
+                'emp_id' => $this->request->getPost('emp_id'),
+                'company_name' => $this->request->getPost('company_name'),
+                'job_title' => $this->request->getPost('job_title'),
+                'start_date' => $this->request->getPost('start_date'),
+                'end_date' => $this->request->getPost('end_date'),
+            ];
+
+            try {
+                if ($this->WorkExperienceModel->insert($data)) {
+                    return $this->_json_response(true, 'Work experience created successfully');
+                }
+
+                return $this->_json_response(false, implode(', ', $this->WorkExperienceModel->errors()));
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function update_work_exp()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('experience_id');
+
+            $data = [
+                'company_name' => $this->request->getPost('company_name'),
+                'job_title' => $this->request->getPost('job_title'),
+                'start_date' => $this->request->getPost('start_date'),
+                'end_date' => $this->request->getPost('end_date'),
+            ];
+
+            try {
+                if ($this->WorkExperienceModel->update($id, $data)) {
+                    return $this->_json_response(true, 'Work experience updated successfully');
+                }
+                return $this->_json_response(false, implode(', ', $this->WorkExperienceModel->errors()));
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+
+        return $this->_json_response(false, 'Invalid request method');
+    }
+
+    public function delete_work_exp()
+    {
+        if ($this->request->is('post')) {
+            $id = $this->request->getPost('id');
+
+            try {
+                if ($this->WorkExperienceModel->delete($id)) {
+                    return $this->_json_response(true, 'Work experience deleted successfully');
+                }
+
+                return $this->_json_response(false, 'Failed to delete work experience');
+            } catch (\Exception $e) {
+                return $this->_json_response(false, $e->getMessage());
+            }
+        }
+
+        return $this->_json_response(false, 'Invalid request method');
     }
 }
