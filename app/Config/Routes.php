@@ -32,6 +32,9 @@ $routes->group('home', function ($routes) {
     $routes->get('privacy_policy', 'Home::privacy_policy');
     $routes->get('test_csrf', 'Home::test_csrf');
     $routes->get('refresh_session', 'Home::refresh_session');
+    $routes->get('change_password', 'Home::change_password');
+
+    $routes->post('update_password', 'Home::update_password');
 });
 
 // $routes->get('recruitment/(:any)', 'Recruitment::$1');

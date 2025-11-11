@@ -108,7 +108,7 @@ $menu_items = Menu::$menus[$module] ?? [];
                                     class="rounded-circle layout-profile-img">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end layout-dropdown">
-                                <li><a class="dropdown-item layout-dropdown-item" href="#"><i class="fas fa-key me-2"></i>Change Password</a></li>
+                                <li><a class="dropdown-item layout-dropdown-item" href="<?= base_url('home/change_password') ?>"><i class="fas fa-key me-2"></i>Change Password</a></li>
                                 <li><a class="dropdown-item layout-dropdown-item" href="<?= base_url('master_data/mst_user') ?>"><i class="fas fa-user-cog me-2"></i>Master Data</a></li>
                                 <li><a class="dropdown-item layout-dropdown-item" href="<?= url_to('logout') ?>"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                             </ul>

@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="comfirm_password" class="form-label">Repeat Password</label>
+                            <label for="comfirm_password" class="form-label">Password (Again)</label>
                             <input type="password" class="form-control" id="comfirm_password" name="password_confirm" required>
                         </div>
                     </div>

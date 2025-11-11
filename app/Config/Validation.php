@@ -101,4 +101,18 @@ class Validation extends BaseConfig
             ],
         ],
     ];
+
+    public $change_pass = [
+        'password' => [
+            'label' => 'Auth.password',
+            'rules' => 'required|max_byte[72]|strong_password[]',
+            'errors' => [
+                'max_byte' => 'Auth.errorPasswordTooLongBytes'
+            ]
+        ],
+        'password_confirm' => [
+            'label' => 'Auth.passwordConfirm',
+            'rules' => 'required|matches[password]',
+        ],
+    ];
 }

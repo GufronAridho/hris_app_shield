@@ -57,7 +57,7 @@
 <body class="login-page bg-body-secondary">
     <style>
         .bg-image {
-            background: url('<?= base_url("/assets/img/2914.jpg"); ?>') no-repeat center center/cover;
+            background: url('<?= base_url("/assets/img/bg1.jpg"); ?>') no-repeat center center/cover;
         }
 
         .branding-section {
